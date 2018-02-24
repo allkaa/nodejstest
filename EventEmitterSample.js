@@ -22,7 +22,7 @@ console.log(myString.charAt(1));
 // The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays,
 // or properties from objects, into distinct variables.
 const req = { first: 1, method: 'POST', url: '/', last: 5 };
-const req2 = { method, url } = req;
+const { method, url } = req;
 
 //if (true) return;
 
