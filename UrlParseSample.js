@@ -1,0 +1,42 @@
+'use strict';
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+
+var dtVar = new Date();
+console.log('Program starts ==================================== ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+//var envObj = process.env;
+for (var prop in process.env) {
+  //console.log(prop + ": " + process.env[prop]);
+}
+var dtVar = new Date();
+console.log('==================================== ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+var dtVar = new Date();
+//console.log('set port=' + process.env.PORT + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+//var port = process.env.PORT; //  Windows - default port is 1337 for WebApp and 1542 for ConsoleApp;
+var port = 8081; // Linux - no default port.
+console.log('set port=' + port + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+var dtVar = new Date();
+console.log('before http.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+var objHttpServer = http.createServer(function (req, res) {
+    //res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    var objParsed = url.parse(req.url, true);
+    var q = objParsed.query; // parsed url query property object e.g. { f: '1', s: '2' }.
+    console.log("parsed url query property object:");
+    console.log(q);
+    var txt = '';
+    for (var key in q) {
+      txt = txt + key + ":" + q[key] + '<br />';
+    }
+    var dtVar2 = new Date();
+    res.write('<result><br />|<br />' + txt + '<br />' + dtVar2.getSeconds() + "." + dtVar2.getMilliseconds() +'<br />|</result>');
+    res.end();
+}); // return value is HTTP server object.
+var dtVar = new Date();
+console.log('after http.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+var dtVar = new Date();
+objHttpServer.listen(port); // no return value.
+console.log('HttpServer.listen(port) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
