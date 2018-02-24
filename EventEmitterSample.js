@@ -3,7 +3,7 @@
 // NB! The const declaration creates a read-only reference to a value. It does not mean the value it holds is immutable,
 // just that the variable identifier cannot be reassigned.
 // For instance, in the case where the content is an object, this means the object's contents (e.g., its parameters) can be altered.
-const myArr = [0, 1, 2];
+const myArr = [0, 1, 3];
 console.log(myArr[1]);
 myArr[1] = 10; // OK.
 console.log(myArr[1]);
