@@ -11,5 +11,12 @@
             "program": "${workspaceFolder}/EventEmitterSample.js",
             "cwd": "${workspaceFolder}"
         }
+        {
+            "type": "node",
+            "request":"launch",
+            "name": "Launch File",
+            "program": "${file}",
+            "cwd":"${workspaceFolder}"
+        }
     ]
 }
