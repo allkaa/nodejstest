@@ -7,10 +7,10 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch Project",
             "program": "${workspaceFolder}/EventEmitterSample.js",
             "cwd": "${workspaceFolder}"
-        }
+        },
         {
             "type": "node",
             "request":"launch",
