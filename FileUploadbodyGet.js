@@ -6,14 +6,14 @@ var qs = require('querystring');
 
 const hostname = 'localhost';
 const port = 8081; // process.env.Port;
-//const server = http.createServer((req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse>
+//const server = http.createServer((req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse> ...}
 const server = http.createServer();
 server.on('request', (req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse>
   // The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays,
   // or properties from objects, into distinct variables.
   const { method, url, headers } = req;
   const responseBody = { headers, method, url };
-  const respondeBodyStrintgify = JSON.stringify(responseBody);
+  const responceBodyStringify = JSON.stringify(responseBody);
   if (req.url.includes('/fileupload')) { // (req.url == '/fileupload')
     if (method == 'POST') { // if (req.method == 'POST') {
       let body = []; // at this point body as standard Javascript array.
