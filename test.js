@@ -5,7 +5,7 @@ var strReturn;
 //strReturn = addon.unld("123456", "12345678", "1234567");
 // blnOdd = LastDigitDayOfYear % 2; If blnOdd = 0 (false) theb LastDigitDayOfYear is even, but blnOdd = 1 (true) LastDigitDayOfYear if odd */'
 
-var i;
+var i; // initial.
 
 for (i = 0; i <= 9; i++) {
   console.log(`<=== Begin of ${i} ===>`); 
