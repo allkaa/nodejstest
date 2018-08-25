@@ -25,6 +25,8 @@ var person = {
   };
 
   console.log(person.name);
+  console.log(person['name']);
   console.log(person.name[1]);
+  console.log(person['name'][1]);
   person.bio();
   person.greeting();
