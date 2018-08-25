@@ -81,3 +81,16 @@ console.log(typeof myString);
 // Any value that is not false, undefined, null, 0, NaN, or an empty string ('') actually returns true
 // when tested as a conditional statement.
 
+var cats = ['Bonya', 'Sima', 'Asa'];
+var info = 'My cats names are ';
+//var i; // also ok.
+for (var i = 0; i < cats.length; i = i + 1) {
+    var sep;
+    if (i !== cats.length - 1) sep = ', '; else sep = '.';
+    info = info + cats[i] + sep;
+}
+console.log(info + ' Tolal ' + i.toString());
+
+var myArray = ['I', 'love', 'chocolate', 'frogs'];
+var madeAString = myArray.join(' ');
+console.log(madeAString);
