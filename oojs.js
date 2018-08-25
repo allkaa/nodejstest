@@ -25,8 +25,10 @@ var person = {
   };
 
   console.log(person.name);
-  console.log(person['name']);
+  console.log(person['name']); // using bracket notation.
   console.log(person.name[1]);
-  console.log(person['name'][1]);
+  console.log(person['name'][1]); // using bracket notation.
+  var strVar = 'name';
+  console.log(person[strVar][1]); // using bracket notation with variable.
   person.bio();
   person.greeting();
