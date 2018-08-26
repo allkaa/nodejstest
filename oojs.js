@@ -58,3 +58,10 @@ var person = new Object({
   person.farewell = function() { console.log("Bye everybody!"); };
   console.log(person.eyes);
   person.farewell();
+
+  var person2 = Object.create(person); // peson2 is created based on person as __proto__ .
+  console.log(person2.eyes); // using  __proto__ eyes property value.
+  person2.farewell();
+  person2.eyes = "green"; // creates new property eyes over __proto__ eyes.
+  console.log(person2.eyes);
+
