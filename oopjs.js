@@ -23,4 +23,4 @@ var person1 = new Person('Bob', 'Smith', 32, 'male', ['music', 'skiing']);
 console.log(person1['age']);
 console.log(person1.interests[1]);
 person1.bio();
-
+console.log(person1.valueOf());
