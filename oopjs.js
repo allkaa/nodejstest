@@ -1,6 +1,6 @@
 'use strict';
 
-// Constructor function.
+// Constructor function. Typically name starts with capital letter e.g. Person
 function Person(first, last, age, gender, interests) {
     this.name = {
       'first': first,
