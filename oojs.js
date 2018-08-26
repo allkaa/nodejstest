@@ -32,3 +32,9 @@ var person = {
   console.log(person[strVar][1]); // using bracket notation with variable.
   person.bio();
   person.greeting();
+
+  // Add new property and method
+  person["eyes"] = "hazel";
+  person.farewell = function() { console.log("Bye everybody!"); };
+  console.log(person.eyes);
+  person.farewell();
