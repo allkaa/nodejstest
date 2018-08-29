@@ -52,11 +52,11 @@ function PersTest(first, last, age, gender, interests) {
     this.gender = gender;
     this.interests = interests;
 }
-// Add frirst method.
+// Add frirst method in the prototype.
 PersTest.prototype.bio = function() {
     console.log(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. He likes ' + this.interests[0] + ' and ' + this.interests[1] + '.');
 };
-// Add second method.
+// Add second method in the prototype.
 PersTest.prototype.greeting = function() {
     console.log('Hi! I\'m ' + this.name.first + '.');
 };
