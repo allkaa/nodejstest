@@ -42,6 +42,7 @@ PersonOld.prototype.farewell = function() {
   };
 person1.farewell();
 
+// ====================================================================== //
 // Constructor function with only properties. Method will be added later.
 function Person(first, last, age, gender, interests) {
     this.name = {
@@ -82,8 +83,20 @@ function Teacher(first, last, age, gender, interests, subject) {
     this.subject = subject; // add new property - subject.
   };
 Teacher.prototype = Object.create(Person.prototype); // must be to use Person methods in Teacher.
- // NB! Teacher own prototype.constructor must be re-created (added) over Person prototype.consoructor in __proto__ to include subject property.
+ // NB! Teacher own prototype.constructor must be re-created (added) overlap Person prototype.consoructor in __proto__ to include subject property.
 Teacher.prototype.constructor = Teacher;
+// Create new greetings for Teacher overlapping Person greetings.
+Teacher.prototype.greeting = function() {
+    var prefix;
+    if (this.gender === 'male' || this.gender === 'Male' || this.gender === 'm' || this.gender === 'M') {
+      prefix = 'Mr.';
+    } else if (this.gender === 'female' || this.gender === 'Female' || this.gender === 'f' || this.gender === 'F') {
+      prefix = 'Mrs.';
+    } else {
+      prefix = 'Mx.';
+    }
+    console.log('Hello. My name is ' + prefix + ' ' + this.name.last + ', and I teach ' + this.subject + '.');
+  };
 
 var teacher1 = new Teacher('Trucky', 'Teacher', 66, 'male', ['entertainment', 'fun'], 'IT');
 console.log(teacher1.name.first);
