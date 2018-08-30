@@ -1,7 +1,7 @@
 'use strict';
 
 // Constructor function. Typically name starts with capital letter e.g. Person
-function Person(first, last, age, gender, interests) {
+function PersonOld(first, last, age, gender, interests) {
     this.name = {
       'first': first,
       'last' : last
@@ -18,7 +18,7 @@ function Person(first, last, age, gender, interests) {
   }
 
 // Constructor call.
-var person1 = new Person('Bob', 'Smith', 32, 'male', ['music', 'skiing']);
+var person1 = new PersonOld('Bob', 'Smith', 32, 'male', ['music', 'skiing']);
 
 console.log(person1['age']);
 console.log(person1.interests[1]);
@@ -36,14 +36,14 @@ console.log(person3.name.first);
 console.log(person3.age);
 person3.bio();
 
-// Modifying Person constructor prototype (adding new method).
-Person.prototype.farewell = function() {
+// Modifying PersonOld constructor prototype (adding new method).
+PersonOld.prototype.farewell = function() {
     console.log(this.name.first + ' has left the building. Bye for now!');
   };
 person1.farewell();
 
 // Constructor function with only properties. Method will be added later.
-function PersTest(first, last, age, gender, interests) {
+function Person(first, last, age, gender, interests) {
     this.name = {
       'first': first,
       'last' : last
@@ -53,22 +53,41 @@ function PersTest(first, last, age, gender, interests) {
     this.interests = interests;
 }
 // Add frirst method in the prototype.
-PersTest.prototype.bio = function() {
+Person.prototype.bio = function() {
     console.log(this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old. He likes ' + this.interests[0] + ' and ' + this.interests[1] + '.');
 };
 // Add second method in the prototype.
-PersTest.prototype.greeting = function() {
+Person.prototype.greeting = function() {
     console.log('Hi! I\'m ' + this.name.first + '.');
 };
+// Add third method in prototype.
+Person.prototype.farewell = function() {
+    console.log(this.name.first + ' has left the building. Bye for now!');
+  };
 
-var person4 = new PersTest('Alex', 'Raven', 65, 'male', ['music', 'sports']);
+  console.log("");
+var person4 = new Person('Alex', 'Raven', 65, 'male', ['music', 'sports']);
 console.log(person4.name.first);
 console.log(person4.age);
 console.log(person4.interests);
 console.log(person4.interests.toString());
 var tmpArr = person4.interests;
 console.log(tmpArr.toString());
-person4.bio();
+person4.bio(); // use second added prototype method.
+person4.greeting(); // use first added prototype method.
+person4.farewell(); // use third added prototype method.
+
+function Teacher(first, last, age, gender, interests, subject) {
+    Person.call(this, first, last, age, gender, interests); // this will be this value for Person.call constructor.
+    this.subject = subject; // add new property - subject.
+  };
+Teacher.prototype = Object.create(Person.prototype); // must be to use Person methods in Teacher.
+ // NB! Teacher own prototype.constructor must be re-created (added) over Person prototype.consoructor in __proto__ to include subject property.
+Teacher.prototype.constructor = Teacher;
+
+var teacher1 = new Teacher('Trucky', 'Teacher', 66, 'male', ['entertainment', 'fun'], 'IT');
+console.log(teacher1.name.first);
+teacher1.greeting();
 
 
 console.log("End of Program.");
