@@ -98,7 +98,7 @@ Teacher.prototype.greeting = function() {
     console.log('Hello. My name is ' + prefix + ' ' + this.name.last + ', and I teach ' + this.subject + '.');
   };
 
-var teacher1 = new Teacher('Trucky', 'Teacher', 66, 'male', ['entertainment', 'fun'], 'IT');
+var teacher1 = new Teacher('Tricky', 'Teacher', 66, 'male', ['entertainment', 'fun'], 'IT');
 console.log(teacher1.name.first);
 teacher1.greeting();
 
