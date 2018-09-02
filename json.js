@@ -83,5 +83,14 @@ let strVarJson3 = JSON.stringify('test string2')
 let objVar3 = JSON.parse("[1,2.3]");
 let strVarJson4 = JSON.stringify([3,4,5])
 
+// Function expression.
+let baz = function() {
+    console.log("baz function expression called");
+  };
+
+baz(); // call functioini expression.
+
+
+
 dtVar = new Date();
 console.log('====> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
