@@ -85,12 +85,43 @@ let strVarJson4 = JSON.stringify([3,4,5])
 
 // Function expression.
 let baz = function() {
-    console.log("baz function expression called");
-  };
+  console.log("baz function expression called");
+};
 
 baz(); // call functioini expression.
 
+// Any object which value is not undefined or null (including a Boolean object whose value is false!!!)
+// evaluates to true when passed to a conditional statement.
+let blnObj = new Boolean(false);
+if (blnObj) {
+  console.log(blnObj);
+}
+if (Boolean.prototype.valueOf(blnObj)) { // eval to false.
+  console.log(blnObj);
+}
+if (blnObj == false) { // comarisioin will be equal to true (false eq false).
+  console.log(blnObj.toString());
+}
+let blnObj2 = new Boolean(true);
+if (Boolean.prototype.valueOf(blnObj2)) { // also eval to false!!!
+  console.log(blnObj2);
+}
 
+console.log('');
+try {
+  //throw 'Error2';   // String type throw 'Error2'
+  //throw 42;         // Number type throw 42
+  //throw true;       // Boolean type throw ture
+  // Next statement throws object with overlapped to toSting method.
+  //throw {errorMsg: "Error code 0010"};
+  throw {toString: function() { return "I'm an e object! I report that exception occured."; }};
+}
+catch (e) {
+  //console.log("ERROR catched: " + e.errorMsg);
+  //console.log("ERROR catched: " + e.toString);
+  console.log("ERROR catched: " + e.toString());
+}
 
+console.log('');
 dtVar = new Date();
 console.log('====> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
