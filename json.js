@@ -112,7 +112,6 @@ try {
   //throw 'Error2';   // String type throw 'Error2'
   //throw 42;         // Number type throw 42
   //throw true;       // Boolean type throw ture
-  // Next statement throws object with overlapped to toSting method.
   //throw {errorMsg: "Error code 0010"};
   throw {toString: function() { return "I'm an e object! I report that exception occured."; }};
 }
