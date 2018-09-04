@@ -108,17 +108,23 @@ if (Boolean.prototype.valueOf(blnObj2)) { // also eval to false!!!
 }
 
 console.log('');
+var bad;
 try {
   //throw 'Error2';   // String type throw 'Error2'
   //throw 42;         // Number type throw 42
   //throw true;       // Boolean type throw ture
   //throw {errorMsg: "Error code 0010"};
-  throw {toString: function() { return "I'm an e object! I report that exception occured."; }};
+  // Next statement throws object with overlapped to toSting method.
+  //throw {toString: function() { return "I'm an e object! I report that exception occured."; }};
+  //throw (new Error("created Error object message")); // implicitly create Error object with name 'Error' and errormsg 'created Error object message'.
+  bad = ttt/0; // RefernceError exception thrown - new Error object will be created implicitly with name 'RefernceError' and message 'ttt is not defined'.
 }
 catch (e) {
   //console.log("ERROR catched: " + e.errorMsg);
   //console.log("ERROR catched: " + e.toString);
-  console.log("ERROR catched: " + e.toString());
+  //console.log("ERROR catched: " + e.toString());
+  console.log(e.name); // e.name got from __proto__ name as 'Error'.
+  console.log(e.message);
 }
 
 console.log('');
