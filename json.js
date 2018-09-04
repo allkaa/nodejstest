@@ -127,6 +127,38 @@ catch (e) {
   console.log(e.message);
 }
 
+var arr = [3, 5, 7];
+arr.foo = 'hello';
+for (var i in arr) {
+   console.log(i); // logs "0", "1", "2", "foo" - properties names.
+}
+
+for (var i of arr) {
+   console.log(i); // logs 3, 5, 7 - array iterable objects.
+}
+
+console.log('');
+var factorial = function fac(n) { return n < 2 ? 1 : n * fac(n - 1); };
+console.log('');
+console.log(factorial(3));
+
+
+console.log('');
+function map(f, a) {
+  var result = []; // Create a new Array
+  var i; // Declare variable
+  for (i = 0; i != a.length; i++)
+    result[i] = f(a[i]);
+  return result;
+}
+var f = function(x) {
+   return x * x * x; 
+}
+var numbers = [0, 1, 2, 5, 10];
+var cube = map(f,numbers);
+console.log(cube);
+
+
 console.log('');
 dtVar = new Date();
 console.log('====> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
