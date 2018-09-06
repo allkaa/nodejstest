@@ -142,7 +142,6 @@ var factorial = function fac(n) { return n < 2 ? 1 : n * fac(n - 1); };
 console.log('');
 console.log(factorial(3));
 
-
 console.log('');
 function map(f, a) {
   var result = []; // Create a new Array
@@ -155,8 +154,18 @@ var f = function(x) {
    return x * x * x; 
 }
 var numbers = [0, 1, 2, 5, 10];
-var cube = map(f,numbers);
+var cube = map(f,numbers); // function f passed as argument to other function cube;
 console.log(cube);
+
+// Using Funcion constructor to reate functions dynamically.
+var sum = new Function('a', 'b', 'return a + b'); // NB! all formal arguments as strings!!!
+console.log(sum(2, 6));
+
+let testvar = 3;
+function TestFunc(x,y){
+  return x + y + testvar;
+}
+console.log(TestFunc(1,2));
 
 
 console.log('');
