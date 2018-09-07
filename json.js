@@ -183,6 +183,23 @@ var result2 = outside(1)(5); // 1 for outside, 5 for inside - returns 6 and new 
 console.log(result2);
 
 
+
+// Counter nested function forms closure.
+function cnt(x) {
+  function counter() {
+    x = x + 1;
+    return x;
+  }
+  return counter;
+}
+var closure_counter = cnt(0); // Create closure a function expression that adds 1 to perserved x value starting from 0.
+var result3 = closure_counter(); //  Use closure closure_counter - returns 1.
+console.log(result3);
+var result3 = closure_counter(); //  Use closure closure_counter - returns 2.
+console.log(result3);
+
+
+
 console.log('');
 dtVar = new Date();
 console.log('====> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
