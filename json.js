@@ -167,6 +167,21 @@ function TestFunc(x,y){
 }
 console.log(TestFunc(1,2));
 
+// nested function forms closure.
+function outside(x) {
+  function inside(y) {
+    return x + y;
+  }
+  return inside;
+}
+var fn_inside = outside(3); // Create closure. Think of it like: create a function expression that adds 3 to whatever you give it.
+var result = fn_inside(5); //  Use closure fn_inside - returns 8.
+console.log(result);
+var result1 = outside(3)(5); // 3 for outside, 5 for insice - returns 8 and new closure is created for each call to outside.
+console.log(result1);
+var result2 = outside(1)(5); // 1 for outside, 5 for inside - returns 6 and new closure is created for each call to outside/
+console.log(result2);
+
 
 console.log('');
 dtVar = new Date();
