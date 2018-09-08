@@ -161,18 +161,30 @@ console.log(cube);
 var sum = new Function('a', 'b', 'return a + b'); // NB! all formal arguments as strings!!!
 console.log(sum(2, 6));
 
-let testvar = 3;
+// CLOSURES.
+// This does not create closures (only empty temporary one to hold possibel outer variables references).
 function TestFunc(x,y){
+  return x + y;
+}
+var tf = TestFunc(3,4);
+console.log(tf);
+
+// This construction create globally seen closure keeping outer reference to outer variable testvar=3.
+/*
+let testvar = 3;
+function TestFunc2(x,y){
   return x + y + testvar;
 }
-console.log(TestFunc(1,2));
+var tf2 = TestFunc2(1,1);
+console.log(tf2);
+*/
 
 // nested function forms closure.
 function outside(x) {
   function inside(y) {
     return x + y;
   }
-  return inside;
+  return inside; // // Return the inner function, thereby exposing it to outer scopes.
 }
 var fn_inside = outside(3); // Create closure. Think of it like: create a function expression that adds 3 to whatever you give it.
 var result = fn_inside(5); //  Use closure fn_inside - returns 8.
@@ -190,14 +202,67 @@ function cnt(x) {
     x = x + 1;
     return x;
   }
-  return counter;
+  return counter; // // Return the inner function, thereby exposing it to outer scopes.
 }
+// A closure is created when the inner function is somehow made available to any scope outside the outer function e.g.
 var closure_counter = cnt(0); // Create closure a function expression that adds 1 to perserved x value starting from 0.
 var result3 = closure_counter(); //  Use closure closure_counter - returns 1.
 console.log(result3);
 var result3 = closure_counter(); //  Use closure closure_counter - returns 2.
 console.log(result3);
 
+// An object containing methods for manipulating the inner variables of the outer function can be returned.
+var createPet = function(name) {
+  var sex; // outer variable for inner functions (object methods).
+  
+  return {
+
+    setName: function(newName) {
+      name = newName;
+    },
+    
+    getName: function() {
+      return name;
+    },
+    
+    getSex: function() {
+      return sex;
+    },
+    
+    setSex: function(newSex) {
+      if( typeof newSex === 'string' && (newSex.toLowerCase() === 'male' || newSex.toLowerCase() === 'female') ) {
+        sex = newSex;
+      }
+    }
+
+  } // end of return.
+} // end of function.
+
+var pet = createPet('Vivie');
+pet.getName();                  // Vivie
+pet.setName('Oliver');
+pet.setSex('male');
+pet.getSex();                   // male
+pet.getName();                  // Oliver
+
+var getCode = (function() {
+  var apiCode = '0]Eal(eh&2';    // A secret info we do not want outsiders to be able to modify...
+  
+  return function() {
+    return apiCode;
+  };
+})();
+var apicode = getCode();    // Returns the apiCode.
+
+var createPetWrong = function(name) {  // The outer function defines a variable called "name".
+  return {
+    setName: function(name) {    // The enclosed function also defines a variable called "name".
+      name = name;               // How do we access the "name" defined by the outer function?
+    }
+  }
+}
+var petwrong = createPetWrong("Tom");
+petwrong.setName("Jerry");
 
 
 console.log('');
