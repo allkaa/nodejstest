@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 const fs = require('fs');
 
@@ -263,6 +263,81 @@ var createPetWrong = function(name) {  // The outer function defines a variable 
 }
 var petwrong = createPetWrong("Tom");
 petwrong.setName("Jerry");
+
+// Using the arguments object.
+// The arguments variable is "array-like", but not an array.
+// It is array-like in that it has a numbered index and a length property.
+// However, it does not possess all of the array-manipulation methods.
+function myConcat(separator) {
+  var result = ''; // initialize empty output string.
+  var i;
+  // iterate through arguments skipping the very first - separator itself.
+  for (i = 1; i < arguments.length; i++) {
+    if (i < arguments.length - 1) {
+      result += arguments[i] + separator;
+    }
+    else {
+      result += arguments[i];
+    }
+  }
+  return result;
+}
+var tmpconcat = myConcat(',', 'Tom', 'Jerry');
+
+// Classical JavaScript default parameter.
+function multiplyOld(a, b) {
+  b = typeof b !== 'undefined' ?  b : 1; // setting b default if undefined (not exists in parameters).
+  return a * b;
+}
+multiplyOld(5); // 5
+multiplyOld(5,2); // 10
+// Using new ECMAScript 2015 format for default parameter.
+function multiply(a, b = 1) { // setting b default if undefined (not exists in parameters).
+  return a * b;
+}
+multiply(5); // 5
+multiply(5,2); // 10
+
+// ECMAScript 2015 ...rest parameters as Array object.
+function multiply(multiplier, ...theArgs) {
+  return theArgs.map(x => multiplier * x); // callback arrow function (x=>multiplier*x) is executed for every element of array theArgs.
+}
+var arr = multiply(2, 1, 2, 3);
+
+// Arrow functions.
+'use strict';
+// `this` object (undefined in stirct mode) is created in every function call.
+function Person() {
+  // The Person() constructor defines `this` as itself (Person).
+  //this.age = 0;
+  let self = this; // Some choose `that` instead of `self`. 
+  self.age = 0;
+
+  return {
+    grUp: function growUp() {
+      // In nonstrict mode, the growUp() function defines `this` 
+      // as the global object (Object), which is different from the `this`
+      // defined by the Person() constructor.
+      self.age++;
+      return self.age;
+    }
+  }
+}
+var p = new Person();
+var pt = p.grUp();
+
+function PersonArrow() {
+  this.age = 8;
+  return {
+    grUp: () => { // arrow function does not have `this` object.
+      this.age++; // `this` properly refers to the PersonArrow {age: 8} object.
+      return this.age;
+    }
+  }
+}
+var pa = new PersonArrow(); // PersonArrow {age: 8} object will be created.
+var pat = pa.grUp();
+
 
 
 console.log('');
