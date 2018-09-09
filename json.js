@@ -338,6 +338,30 @@ function PersonArrow() {
 var pa = new PersonArrow(); // PersonArrow {age: 8} object will be created.
 var pat = pa.grUp();
 
+var foo = ['one', 'two', 'three'];
+// without destructuring
+var one   = foo[0];
+var two   = foo[1];
+var three = foo[2];
+// with destructuring
+//var [first, second, third] = foo; // destruction vars from arrow members.
+var [first, ,third] = foo;
+// Object properties destruction.
+let objDest = { a: 10, b: 20, c: 30 };
+var { a, c } = objDest; // destrution vars from object props.
+console.log(a); // 10
+console.log(c); // 30
+
+
+var status = (a >= 18) ? 'adult' : 'minor';
+status = c >= 18 ? 'adult' : 'minor';
+
+var x = [0,1,2,3,4,5,6,7,8,9]
+var a = [x, x, x, x, x];
+
+for (var i = 0, j = 9; i <= j; i++, j--)
+  console.log('a[' + i + '][' + j + ']= ' + a[i][j]);
+
 
 
 console.log('');
