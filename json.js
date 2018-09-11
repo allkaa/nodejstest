@@ -352,15 +352,41 @@ var { a, c } = objDest; // destrution vars from object props.
 console.log(a); // 10
 console.log(c); // 30
 
-
+// tertial operator.
 var status = (a >= 18) ? 'adult' : 'minor';
 status = c >= 18 ? 'adult' : 'minor';
 
+// Comma operator.
 var x = [0,1,2,3,4,5,6,7,8,9]
 var a = [x, x, x, x, x];
-
 for (var i = 0, j = 9; i <= j; i++, j--)
   console.log('a[' + i + '][' + j + ']= ' + a[i][j]);
+
+var nbrVar = 0777; // 511 in strict mode, octal 777 in non-stirct mode.
+nbrVar = 0o777; // ECMA 2015 octal format.
+
+var today = new Date(); // current year.
+var endYear = new Date(1995, 11, 31, 23, 59, 59, 999); // Set last milliseconds of year 1995.
+endYear.setFullYear(today.getFullYear()); // Set year to this year.
+var msPerDay = 24 * 60 * 60 * 1000; // Number of milliseconds per day.
+var daysLeft = (endYear.getTime() - today.getTime()) / msPerDay; // days left in current year.
+//daysLeft = Math.round(daysLeft); //rounded days left in the year.
+daysLeft = Math.floor(daysLeft); //rounded days left in the year.
+
+// Strings
+// JavaScript automatically converts the string literal or primitive to a temporary String object, calls the method,
+// then discards the temporary String object. 
+let s = 'foo'; // Creates a String primitive.
+console.log(s); // Displays: foo
+typeof s; // Returns 'string'.
+s = new String('foo'); // Creates a String object.
+console.log(s); // Displays: {'0': 'f', '1': 'o', '2': 'o'}
+typeof s; // Returns 'object'
+
+var mystring = 'Hello, World!';
+var x = mystring.length;
+mystring[0] = 'L'; // This has no effect, because strings are immutable to changes.
+mystring[0]; // This still returns "H".
 
 
 
