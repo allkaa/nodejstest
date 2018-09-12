@@ -388,6 +388,71 @@ var x = mystring.length;
 mystring[0] = 'L'; // This has no effect, because strings are immutable to changes.
 mystring[0]; // This still returns "H".
 
+// Creating array with non-zero length, but without any items.
+let arrayLength = 3;
+var arr1 = new Array(arrayLength);
+var arr2 = Array(arrayLength); // Array(3);
+// This has exactly the same effect
+var arr3 = [];
+arr3.length = arrayLength;
+console.log(arr3);
+
+var aaobj1 = {};
+// ...
+aaobj1.propo = [1,2,3];
+// OR
+var aaobj2 = {};
+aaobj2 = {propo: [4,5,6]};
+
+//In ES2015, you can use Array.of static method to create arrays with single e.g. Number element.
+var arr4 = Array.of(3);
+// Index must be integer otherwise property will be created.
+var arr = [];
+arr[3.4] = 'Oranges';
+console.log(arr.length);                // 0
+console.log(arr.hasOwnProperty(3.4));   // true
+console.log(arr[3.4]);   // array property 3.4 is Oranges
+console.log(arr['length']);   // brackets notation to access array property length is 0
+
+var array = ['first', 'second', , 'fourth'];
+
+for (i=0; i < array.length; i++) {
+  console.log(array[i]);
+}
+// first
+// second
+// undefined
+// fourth
+// Unassigned values are not iterated in a forEach loop.
+array.forEach(function(element) {
+  console.log(element);
+});
+// first
+// second
+// fourth
+
+array.forEach(element => {
+  console.log(element);
+});
+// first
+// second
+// fourth
+
+if (array[2] === undefined) { 
+  console.log('array[2] is undefined'); // true
+} 
+// But if manually assign array[2] as undefined.
+array = ['first', 'second', undefined, 'fourth'];
+array.forEach(function(element) {
+  console.log(element);
+});
+// first
+// second
+// undefined
+// fourth
+
+
+
 
 
 console.log('');
