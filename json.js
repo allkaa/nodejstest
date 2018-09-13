@@ -431,9 +431,25 @@ array.forEach(function(element) {
 // second
 // fourth
 
+
 array.forEach(element => {
   console.log(element);
 });
+// first
+// second
+// fourth
+
+/*
+callback function is known as iterative methods, because it iterate over the entire array in some fashion.
+Each one takes an optional second argument called thisObject.
+If provided, thisObject becomes the value of the this keyword inside the body of the callback function.
+If not provided, as with other cases where a function is invoked outside of an explicit object context,
+this will refer to the global object (window) when using arrow function as callback,
+or undefined (NB! also global in NodeJs/JavaScript MS Code) when using normal function as callback.
+*/
+array.forEach(element => {
+  console.log(element);
+}, arr);
 // first
 // second
 // fourth
@@ -445,14 +461,25 @@ if (array[2] === undefined) {
 array = ['first', 'second', undefined, 'fourth'];
 array.forEach(function(element) {
   console.log(element);
-});
+}, arr);
 // first
 // second
 // undefined
 // fourth
 
+// Array prototype methods can be called against other array-like objects. for example:
+function printArguments() {
+  Array.prototype.forEach.call(arguments, function(item) {
+    console.log(item);
+  });
+}
+printArguments(1,2,3)
 
-
+// Array prototype methods can be used on strings as well, since they provide sequential access to their characters
+// in a similar way to arrays:
+Array.prototype.forEach.call('a string', function(chr) {
+  console.log(chr);
+});
 
 
 console.log('');
