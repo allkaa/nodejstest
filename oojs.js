@@ -65,3 +65,32 @@ var person = new Object({
   person2.eyes = "green"; // creates new property eyes over __proto__ eyes.
   console.log(person2.eyes);
 
+// four variables are created and assigned in a single go, 
+// separated by commas
+var myObj = new Object(),
+    str = 'myString',
+    rand = Math.random(),
+    obj = new Object();
+
+myObj.type              = 'Dot syntax';
+myObj['date created']   = 'String with space';
+myObj[str]              = 'String value';
+myObj[rand]             = 'Random Number';
+myObj[obj]              = 'Object';
+myObj['']               = 'Even an empty string';
+
+console.log(myObj);
+for (let i in myObj) { // iterate over properties.
+  //let myobjttt = myObj.hasOwnProperty(i);
+  console.log(i);
+}
+// Iterate thru all properties in prototype chain.
+var objectToInspect;     
+var result = [];
+for(objectToInspect = myObj; objectToInspect !== null; objectToInspect = Object.getPrototypeOf(objectToInspect)) {  
+    result = result.concat(Object.getOwnPropertyNames(objectToInspect));  
+}
+
+console.log('----------');
+let dtVar = new Date();
+console.log('====> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
