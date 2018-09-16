@@ -481,6 +481,68 @@ Array.prototype.forEach.call('a string', function(chr) {
   console.log(chr);
 });
 
+// ES2015 Map - new data structure to map values to values. A Map object is a simple key/value map and can iterate
+// its elements in insertion order.
+var sayings = new Map();
+sayings.set('dog', 'woof');
+sayings.set('cat', 'meow');
+sayings.set('elephant', 'toot');
+let maptst = sayings.size; // 3 key/value pairs.
+maptst = sayings.get('fox'); // undefined
+maptst = sayings.has('bird'); // false
+maptst = sayings.get('dog');
+maptst = sayings.delete('dog');
+maptst = sayings.has('dog'); // false
+
+for (var [key, value] of sayings) {
+  console.log(key + ' value is ' + value);
+}
+// "cat goes meow"
+// "elephant goes toot"
+
+sayings.clear();
+sayings.size; // 0
+
+// WeakMap.
+var wm1 = new WeakMap(),
+    wm2 = new WeakMap(),
+    wm3 = new WeakMap();
+var o1 = {},
+    o2 = function() {}
+
+wm1.set(o1, 37); // key object o1 value 37.
+wm1.set(o2, 'azerty'); // key function o2 value 'azerty'.
+wm2.set(o1, o2); // a value can be anything, including an object or a function.
+wm2.set(wm1, wm2); // both keys and values can be any objects. Even WeakMaps!
+
+wm1.get(o2); // "azerty"
+wm2.get(o2); // undefined, because there is no key for o2 on wm2
+
+wm1.has(o2); // true
+wm2.has(o2); // false
+
+wm3.set(o1, 37);
+wm3.get(o1); // 37
+
+wm1.has(o1); // true
+wm1.delete(o1);
+wm1.has(o1); // false
+
+// Set object.
+var mySet = new Set();
+mySet.add(1);
+mySet.add('some text');
+mySet.add('foo');
+
+mySet.has(1); // true
+mySet.delete('foo');
+mySet.size; // 2
+
+for (let item of mySet) console.log(item);
+// 1
+// "some text"
+
+let settst = Array.from(mySet);
 
 console.log('');
 dtVar = new Date();
