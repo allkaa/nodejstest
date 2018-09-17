@@ -13,7 +13,11 @@ console.log(typeof(person01));
 //var arr = ["one", "two"];
 var arr0 = [];
 console.log(arr0);
-console.log(arr0.toString());
+console.log(arr0.toString()); // empty array.
+console.log(typeof(arr0));
+arr0.push(1); arr0.push(2); arr0.push(3);
+console.log(arr0);
+console.log(arr0.toString()); // non-empty array.
 console.log(typeof(arr0));
 
 var person1 = {
@@ -24,7 +28,7 @@ var person1 = {
     bio: function() {
       console.log(this.name[0] + ' ' + this.name[1] + ' is ' + this.gender + " " + this.age + ' years old. He likes ' + this.interests[0] + ' and ' + this.interests[1] + '.');
     },
-    // lambda constuction () => {...} can not be used - it have not access to this keyword.
+    // lambda constuction () => {...} can not be used - it have not access to `this` keyword.
     greeting: function() {
       console.log('Hi! I\'m ' + this.name[0] + '.');
     }
@@ -59,7 +63,8 @@ var person = new Object({
   console.log(person.eyes);
   person.farewell();
 
-  var person2 = Object.create(person); // peson2 is created based on person as __proto__ .
+  // Using Object.create() method.
+  var person2 = Object.create(person); // peson2 is created based on person as __proto__ -> prototype object.
   console.log(person2.eyes); // using  __proto__ eyes property value.
   person2.farewell();
   person2.eyes = "green"; // creates new property eyes over __proto__ eyes.
@@ -90,6 +95,36 @@ var result = [];
 for(objectToInspect = myObj; objectToInspect !== null; objectToInspect = Object.getPrototypeOf(objectToInspect)) {  
     result = result.concat(Object.getOwnPropertyNames(objectToInspect));  
 }
+
+// Using constructor function.
+function Car(makeBy, modelName, yearDone, ownerInfo) {
+  this.make = makeBy;
+  this.model = modelName;
+  this.year = yearDone;
+  this.owner = ownerInfo; // will be object.
+}
+var mycar = new Car('Eagle', 'Talon TSi', 1993, person2); // Instantiate the new object passsing person2 object as argument.
+console.log(mycar.model);
+(mycar.owner.bio());
+mycar[5] = '25 mpg';
+Car.prototype.color = null; // add property to prototype property of the Function object that affects all created objects.
+mycar.color = 'black';
+
+// Defining getters and setters.
+var o = {
+  a: 7,
+  get b() { 
+    return this.a + 1;
+  },
+  set c(x) {
+    this.a = x / 2;
+  }
+};
+
+let ttt = o.a; // 7
+ttt = (o.b); // 8
+o.c = 50;
+ttt = o.a; // 25
 
 console.log('----------');
 let dtVar = new Date();
