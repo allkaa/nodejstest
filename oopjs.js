@@ -66,7 +66,8 @@ Person.prototype.farewell = function() {
     console.log(this.name.first + ' has left the building. Bye for now!');
   };
 
-  console.log("");
+
+console.log("");
 var person4 = new Person('Alex', 'Raven', 65, 'male', ['music', 'sports']);
 console.log(person4.name.first);
 console.log(person4.age);
@@ -78,6 +79,8 @@ person4.bio(); // use second added prototype method.
 person4.greeting(); // use first added prototype method.
 person4.farewell(); // use third added prototype method.
 
+
+// Teacher constuctor calling Person consturtor.
 function Teacher(first, last, age, gender, interests, subject) {
     Person.call(this, first, last, age, gender, interests); // this will be this value for Person.call constructor.
     this.subject = subject; // add new property - subject.
@@ -102,5 +105,111 @@ var teacher1 = new Teacher('Tricky', 'Teacher', 66, 'male', ['entertainment', 'f
 console.log(teacher1.name.first);
 teacher1.greeting();
 
+// Employee -> [Manager | WorkerBee -> [SalesPerson | Engineer]] case study.
+function Employee(nameEmp, deptEmp) {
+  this.name = nameEmp || '';
+  this.dept = deptEmp || 'general';
+}
 
+function Manager(nameM, deptM, repsM) {
+  Employee.call(this, nameM, deptM); // call Employee constructor.
+  this.reports = repsM || [];
+}
+Manager.prototype = Object.create(Employee.prototype); // Set reference to Employee prototype.
+Manager.prototype.constructor = Manager; // overlap Empoyee constructor with Manager constructor.
+
+/*
+function WorkerBee(projs) {
+  Employee.call(this); // call Employee constructor.
+  this.projects = projs || [];
+}
+WorkerBee.prototype = Object.create(Employee.prototype); // Set reference to Employee prototype.
+WorkerBee.prototype.constructor = WorkerBee; // overlap Empoyee constructor with WorkerBee constructor.
+*/
+/*
+function WorkerBee(name, dept, projs) {
+  Employee.call(this); // call Employee constructor.
+  this.projects = projs || [];
+}
+WorkerBee.prototype = new Employee;
+*/
+function WorkerBee(nameW, deptW, projsW) {
+  Employee.call(this, nameW, deptW); // call Employee constructor.
+  this.projects = projsW || [];
+}
+WorkerBee.prototype = Object.create(Employee.prototype); // Set reference to Employee prototype.
+WorkerBee.prototype.constructor = WorkerBee; // overlap Empoyee constructor with WorkerBee constructor.
+
+/*
+function SalesPerson() {
+  WorkerBee.call(this); // call WorkerBee constructor.
+  this.dept = 'sales';
+  this.quota = 100;
+}
+SalesPerson.prototype = Object.create(WorkerBee.prototype); // Set reference to WorkerBee prototype.
+SalesPerson.prototype.constructor = SalesPerson; // overlap WorkerBee constructor with SalesPerson constructor.
+*/
+
+/*
+function Engineer(mach) {
+  WorkerBee.call(this); // call WorkerBee constructor.
+  this.dept = 'engineering';
+  this.machine = mach || '';
+}
+Engineer.prototype = Object.create(WorkerBee.prototype) // Set reference to WorkerBee prototype.
+Engineer.prototype.constructor = Engineer; // overlap WorkerBee constructor with Engineer constructor.
+*/
+/*
+function Engineer(name, projs, mach) {
+  this.base = WorkerBee;
+  this.base(name, 'engineering', projs);
+  this.machine = mach || '';
+}
+Engineer.prototype = new WorkerBee;
+*/
+function Engineer(nameE, projsE, machE) {
+  WorkerBee.call(this, nameE, 'engineering', projsE); // call WorkerBee constructor.
+  //this.dept = 'engineering';
+  this.machine = machE || '';
+}
+Engineer.prototype = Object.create(WorkerBee.prototype) // Set reference to WorkerBee prototype.
+Engineer.prototype.constructor = Engineer; // overlap WorkerBee constructor with Engineer constructor.
+
+//var jim = new Employee; 
+// Parentheses can be omitted if the
+// constructor takes no arguments.
+// jim.name is ''
+// jim.dept is 'general'
+
+//var sally = new Manager;
+// sally.name is ''
+// sally.dept is 'general'
+// sally.reports is []
+
+//var mark = new WorkerBee;
+// mark.name is ''
+// mark.dept is 'general'
+// mark.projects is []
+
+//var fred = new SalesPerson;
+// fred.name is ''
+// fred.dept is 'sales'
+// fred.projects is []
+// fred.quota is 100
+
+//var jane = new Engineer('Kone');
+var jane = new Engineer('Doe, Jane', ['navigator', 'javascript'], 'KONE');
+
+/*
+mark.name = 'Doe, Mark';
+mark.dept = 'admin';
+mark.projects = ['navigator'];
+
+mark.bonus = 3000;
+Employee.prototype.specialty = 'none';
+*/
+Employee.prototype.speciality = 'none';
+jane.speciality = 'guru'; // overlap (hide) Employee.prototype.speciality = 'none'
+
+console.log("");
 console.log("End of Program.");
