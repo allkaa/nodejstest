@@ -136,6 +136,7 @@ Engineer.prototype.constructor = Engineer; // overlap WorkerBee constructor with
 
 //var jane = new Engineer; // Parentheses can be omitted if the constructor takes no arguments.
 var jane = new Engineer('Doe, Jane', ['navigator', 'javascript'], 'KONE');
+var isTrue = (jane instanceof Engineer);
 
 function Manager(nameM, deptM, repsM) {
   Employee.call(this, nameM, deptM); // call Employee constructor.
