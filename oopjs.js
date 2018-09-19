@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 // Constructor function. Typically name starts with capital letter e.g. Person
 function PersonOld(first, last, age, gender, interests) {
     this.name = {
@@ -41,7 +42,9 @@ PersonOld.prototype.farewell = function() {
     console.log(this.name.first + ' has left the building. Bye for now!');
   };
 person1.farewell();
+*/
 
+/*
 // ====================================================================== //
 // Constructor function with only properties. Method will be added later.
 function Person(first, last, age, gender, interests) {
@@ -104,12 +107,35 @@ Teacher.prototype.greeting = function() {
 var teacher1 = new Teacher('Tricky', 'Teacher', 66, 'male', ['entertainment', 'fun'], 'IT');
 console.log(teacher1.name.first);
 teacher1.greeting();
+*/
 
 // Employee -> [Manager | WorkerBee -> [SalesPerson | Engineer]] case study.
 function Employee(nameEmp, deptEmp) {
-  this.name = nameEmp || '';
+  this.name = nameEmp || ''; // constructor property is not possible to change latar for all descendants.
   this.dept = deptEmp || 'general';
 }
+Employee.prototype.company = 'Roga i Kopyta'; // prototype property is possible to change later for all descendants.
+
+function WorkerBee(nameW, deptW, projsW) {
+  Employee.call(this, nameW, deptW); // call Employee constructor.
+  this.projects = projsW || [];
+}
+WorkerBee.prototype = Object.create(Employee.prototype); // Set reference to Employee prototype.
+WorkerBee.prototype.constructor = WorkerBee; // overlap Empoyee constructor with WorkerBee constructor.
+//WorkerBee -> prototype Employee, constructor WorkerBee -> __proto__ constructor Employee
+//WorkerBee.prototype = new Employee; // also works but inheritance chain is not good (duplicates and hided props)
+
+function Engineer(nameE, projsE, machE) {
+  WorkerBee.call(this, nameE, 'engineering', projsE); // call WorkerBee constructor.
+  this.machine = machE || '';
+}
+Engineer.prototype = Object.create(WorkerBee.prototype) // Set reference to WorkerBee prototype.
+Engineer.prototype.constructor = Engineer; // overlap WorkerBee constructor with Engineer constructor.
+//Engineer  -> prototype WorkerBee, constructor Engineer -> __proto__ Employee, constructor WorkerBee -> __proto__ constructor Employee
+//Engineer.prototype = new WorkerBee;  // also works but inheritance chain is not good (duplicates and hided props)
+
+//var jane = new Engineer; // Parentheses can be omitted if the constructor takes no arguments.
+var jane = new Engineer('Doe, Jane', ['navigator', 'javascript'], 'KONE');
 
 function Manager(nameM, deptM, repsM) {
   Employee.call(this, nameM, deptM); // call Employee constructor.
@@ -118,98 +144,30 @@ function Manager(nameM, deptM, repsM) {
 Manager.prototype = Object.create(Employee.prototype); // Set reference to Employee prototype.
 Manager.prototype.constructor = Manager; // overlap Empoyee constructor with Manager constructor.
 
-/*
-function WorkerBee(projs) {
-  Employee.call(this); // call Employee constructor.
-  this.projects = projs || [];
-}
-WorkerBee.prototype = Object.create(Employee.prototype); // Set reference to Employee prototype.
-WorkerBee.prototype.constructor = WorkerBee; // overlap Empoyee constructor with WorkerBee constructor.
-*/
-/*
-function WorkerBee(name, dept, projs) {
-  Employee.call(this); // call Employee constructor.
-  this.projects = projs || [];
-}
-WorkerBee.prototype = new Employee;
-*/
-function WorkerBee(nameW, deptW, projsW) {
-  Employee.call(this, nameW, deptW); // call Employee constructor.
-  this.projects = projsW || [];
-}
-WorkerBee.prototype = Object.create(Employee.prototype); // Set reference to Employee prototype.
-WorkerBee.prototype.constructor = WorkerBee; // overlap Empoyee constructor with WorkerBee constructor.
-
-/*
-function SalesPerson() {
-  WorkerBee.call(this); // call WorkerBee constructor.
-  this.dept = 'sales';
-  this.quota = 100;
+function SalesPerson(nameS, projS, quotaS) {
+  WorkerBee.call(this, nameS, 'sales', projS); // call WorkerBee constructor.
+  this.quota = quotaS;
 }
 SalesPerson.prototype = Object.create(WorkerBee.prototype); // Set reference to WorkerBee prototype.
 SalesPerson.prototype.constructor = SalesPerson; // overlap WorkerBee constructor with SalesPerson constructor.
-*/
 
-/*
-function Engineer(mach) {
-  WorkerBee.call(this); // call WorkerBee constructor.
-  this.dept = 'engineering';
-  this.machine = mach || '';
-}
-Engineer.prototype = Object.create(WorkerBee.prototype) // Set reference to WorkerBee prototype.
-Engineer.prototype.constructor = Engineer; // overlap WorkerBee constructor with Engineer constructor.
-*/
-/*
-function Engineer(name, projs, mach) {
-  this.base = WorkerBee;
-  this.base(name, 'engineering', projs);
-  this.machine = mach || '';
-}
-Engineer.prototype = new WorkerBee;
-*/
-function Engineer(nameE, projsE, machE) {
-  WorkerBee.call(this, nameE, 'engineering', projsE); // call WorkerBee constructor.
-  //this.dept = 'engineering';
-  this.machine = machE || '';
-}
-Engineer.prototype = Object.create(WorkerBee.prototype) // Set reference to WorkerBee prototype.
-Engineer.prototype.constructor = Engineer; // overlap WorkerBee constructor with Engineer constructor.
-
+var jim = new Employee('Jim', 'Security'); 
 //var jim = new Employee; 
-// Parentheses can be omitted if the
-// constructor takes no arguments.
+// Parentheses can be omitted if the constructor takes no arguments.
 // jim.name is ''
 // jim.dept is 'general'
 
-//var sally = new Manager;
-// sally.name is ''
-// sally.dept is 'general'
-// sally.reports is []
+var sally = new Manager('Sally', 'Sales', ['DayReps', 'WeekReps', 'MonthReps']);
 
-//var mark = new WorkerBee;
-// mark.name is ''
-// mark.dept is 'general'
-// mark.projects is []
+var mark = new WorkerBee('Mark','Marketing', ['self service', 'post offices']);
+mark.bonus = 3000; // individual property set.
 
-//var fred = new SalesPerson;
-// fred.name is ''
-// fred.dept is 'sales'
-// fred.projects is []
-// fred.quota is 100
+var fred = new SalesPerson('Fred',['mobile'], 100);
 
-//var jane = new Engineer('Kone');
-var jane = new Engineer('Doe, Jane', ['navigator', 'javascript'], 'KONE');
+Employee.prototype.speciality = 'non-specified'; // property added to prototype will be propagated for all descendants.
+jane.speciality = 'guru'; // overlap (hide) Employee.prototype.speciality = 'none' for jane.
 
-/*
-mark.name = 'Doe, Mark';
-mark.dept = 'admin';
-mark.projects = ['navigator'];
-
-mark.bonus = 3000;
-Employee.prototype.specialty = 'none';
-*/
-Employee.prototype.speciality = 'none';
-jane.speciality = 'guru'; // overlap (hide) Employee.prototype.speciality = 'none'
+Employee.prototype.company = "Vparing Ltd"; // propogates from Employee to jane.
 
 console.log("");
 console.log("End of Program.");
