@@ -7,12 +7,20 @@ class Employee {
     this.name = nameEmp || ''; // constructor property is not possible to change latar for all descendants.
     this.dept = deptEmp || 'general';
   }
+  static getcompany() {
+    return Employee.prototype.company;
+  }
 }
+// Using static methods
+let ttt = Employee.getcompany();
 Employee.prototype.company = 'Roga i Kopyta'; // prototype property is possible to change later for all descendants.
-// using super.
+ttt = Employee.getcompany();
+
+// Sub classing with extends and using super.
 class WorkerBee extends Employee {
   constructor(nameW, deptW, projsW) {
     super(nameW, deptW); // use Employee constructor to set properties.
+    // `super` must be used before using `this`.
     // projects is specific to WorkerBee.
     this._projects = projsW || [];
   }
@@ -27,6 +35,28 @@ class WorkerBee extends Employee {
 var mark = new WorkerBee('Mark','Marketing', ['self service', 'post offices']);
 mark.bonus = 3000; // individual property set.
 mark.projects = ['new', 'next']
+
+class Engineer extends WorkerBee {
+  constructor(nameE, projsE, machE) {
+    super(nameE, 'engineering', projsE); // use Employee constructor to set properties.
+    // `super` must be used before using `this`.
+    // projects is specific to WorkerBee.
+    this._machine = machE || '';
+  }
+  get machine() {
+      return this._machine;
+  }
+  set machine(newMachine) {
+      this._machine = newMachine;
+  }
+}
+
+var jane = new Engineer('Doe, Jane', ['navigator', 'javascript'], 'KONE');
+var isTrue = (jane instanceof Engineer);
+Employee.prototype.speciality = 'non-specified'; // property added to prototype will be propagated for all descendants.
+jane.speciality = 'guru'; // overlap (hide) Employee.prototype.speciality = 'none' for jane.
+
+Employee.prototype.company = "Vparing Ltd"; // propogates from Employee to jane.
 
 
 console.log("Stop of Program.");
