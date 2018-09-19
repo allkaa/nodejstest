@@ -1,5 +1,7 @@
 'use strict';
 
+// Object oriented prototype chains study (native for JavaScript).
+
 /*
 // Constructor function. Typically name starts with capital letter e.g. Person
 function PersonOld(first, last, age, gender, interests) {

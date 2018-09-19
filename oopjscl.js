@@ -1,5 +1,36 @@
 'use strict';
 
+// Usning ES2015 classes to create prototype chains.
+
+class Employee {
+  constructor(nameEmp, deptEmp) {
+    this.name = nameEmp || ''; // constructor property is not possible to change latar for all descendants.
+    this.dept = deptEmp || 'general';
+  }
+}
+Employee.prototype.company = 'Roga i Kopyta'; // prototype property is possible to change later for all descendants.
+// using super.
+class WorkerBee extends Employee {
+  constructor(nameW, deptW, projsW) {
+    super(nameW, deptW); // use Employee constructor to set properties.
+    // projects is specific to WorkerBee.
+    this._projects = projsW || [];
+  }
+  get projects() {
+      return this._projects;
+  }
+  
+  set projects(newProjects) {
+      this._projects = newProjects;
+  }
+}
+var mark = new WorkerBee('Mark','Marketing', ['self service', 'post offices']);
+mark.bonus = 3000; // individual property set.
+mark.projects = ['new', 'next']
+
+
+console.log("Stop of Program.");
+/*
 class Person {
     constructor(first, last, age, gender, interests) {
       this.name = {
@@ -32,23 +63,6 @@ let leia = new Person('Leia', 'Organa', 19, 'female', ['Government']);
 leia.farewell();
 // Leia has left the building. Bye for now
 
-/*
-class Teacher extends Person {
-    constructor(first, last, age, gender, interests, subject, grade) {
-      this.name = {
-        first,
-        last
-      };
-  
-    this.age = age;
-    this.gender = gender;
-    this.interests = interests;
-    // subject and grade are specific to Teacher
-    this.subject = subject;
-    this.grade = grade;
-    }
-  }
-*/
 // using super.
 class Teacher extends Person {
     constructor(first, last, age, gender, interests, subject, grade) {
@@ -78,5 +92,9 @@ let ttt = snape.subject;
 console.log(snape.subject); // Dark arts
 snape.subject = "New subject: Set";
 console.log(snape.subject); // Dark arts
+*/
+
+
+
 
 console.log("End of Program.");
