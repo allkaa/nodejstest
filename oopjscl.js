@@ -7,14 +7,15 @@ class Employee {
     this.name = nameEmp || ''; // constructor property is not possible to change latar for all descendants.
     this.dept = deptEmp || 'general';
   }
-  static getcompany() {
+  static getcompany() { // define static method.
     return Employee.prototype.company;
   }
 }
 // Using static methods
-let ttt = Employee.getcompany();
+let ttt = Employee.getcompany(); // returns undefined.
+// Add prototype property.
 Employee.prototype.company = 'Roga i Kopyta'; // prototype property is possible to change later for all descendants.
-ttt = Employee.getcompany();
+ttt = Employee.getcompany(); // returns Roga i Kopyta
 
 // Sub classing with extends and using super.
 class WorkerBee extends Employee {

@@ -116,7 +116,15 @@ function Employee(nameEmp, deptEmp) {
   this.name = nameEmp || ''; // constructor property is not possible to change latar for all descendants.
   this.dept = deptEmp || 'general';
 }
+// Add static method.
+Employee.getcompany = () => {
+  return Employee.prototype.company;
+}
+// Using static methods
+let ttt = Employee.getcompany(); // returns undefined.
+// Add prototype property.
 Employee.prototype.company = 'Roga i Kopyta'; // prototype property is possible to change later for all descendants.
+ttt = Employee.getcompany(); // returns Roga i Kopyta
 
 function WorkerBee(nameW, deptW, projsW) {
   Employee.call(this, nameW, deptW); // call Employee constructor.
