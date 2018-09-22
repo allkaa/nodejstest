@@ -11,6 +11,8 @@ class Employee {
     return Employee.prototype.company;
   }
 }
+// Static class-side properties and prototype data properties must be defined outside of the ClassBody declaration.
+Employee.staticOKPO = '1001';
 // Using static methods
 let ttt = Employee.getcompany(); // returns undefined.
 // Add prototype property.

@@ -116,6 +116,8 @@ function Employee(nameEmp, deptEmp) {
   this.name = nameEmp || ''; // constructor property is not possible to change latar for all descendants.
   this.dept = deptEmp || 'general';
 }
+// Static properties and prototype data properties must be defined outside of the constructor declaration.
+Employee.staticOKPO = '1001';
 // Add static method.
 Employee.getcompany = () => {
   return Employee.prototype.company;
