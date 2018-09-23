@@ -4,13 +4,16 @@ const fs = require('fs');
 
 let dtVar = new Date();
 console.log('====> process.env start' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+/*
 let envObj = process.env;
 for (let prop in envObj) {
   //console.log(prop + ": " + envObj[prop]);
 }
 dtVar = new Date();
 console.log('====> process.env end' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-//
+/*
+
 /*
 dtVar = new Date();
 console.log('====> readFile' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -43,14 +46,15 @@ fs.readFile('./superheroes.json', function (err, data) {
 //
 */
 
-///*
+/*
 dtVar = new Date();
 console.log('====> readFileSync' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 let data = fs.readFileSync('superheroes.json') // or use fs.readFileSync('./superheroes.json')
 dtVar = new Date();
 console.log('====> readFileSyncEnd' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-//*/
+*/
 
+/*
 console.log('====================================');
 let strVar, strVar2, strVar3;
 // data is Buffer class object.Now when TypedArray has been added in ES6, the Buffer class implements the Uint8Array API
@@ -168,6 +172,7 @@ function TestFunc(x,y){
 }
 var tf = TestFunc(3,4);
 console.log(tf);
+*/
 
 // This construction create globally seen closure keeping outer reference to outer variable testvar=3.
 /*
@@ -179,6 +184,7 @@ var tf2 = TestFunc2(1,1);
 console.log(tf2);
 */
 
+/*
 // nested function forms closure.
 function outside(x) {
   function inside(y) {
@@ -438,6 +444,7 @@ array.forEach(element => {
 // first
 // second
 // fourth
+*/
 
 /*
 callback function is known as iterative methods, because it iterate over the entire array in some fashion.
@@ -447,6 +454,7 @@ If not provided, as with other cases where a function is invoked outside of an e
 this will refer to the global object (window) when using arrow function as callback,
 or undefined (NB! also global in NodeJs/JavaScript MS Code) when using normal function as callback.
 */
+/*
 array.forEach(element => {
   console.log(element);
 }, arr);
@@ -569,6 +577,57 @@ var result = [];
 for(objectToInspect = myObj; objectToInspect !== null; objectToInspect = Object.getPrototypeOf(objectToInspect)) {  
     result = result.concat(Object.getOwnPropertyNames(objectToInspect));  
 }
+*/
+
+/*
+// Using try ... catch for asyn error cath and handling.
+function saySomething(txt) {
+  try {
+    console.log(txt);
+    throw {ErrNo: 1, ErrMsg: "Programmatically thrown error1."};
+  }
+  catch (error) {
+    console.log('Error number: ' + error.ErrNo.toString() + ' , Error message: ' + error.ErrMsg);
+  }
+}
+//setTimeout(() => saySomething("3 seconds passed"), 3000);
+*/
+
+console.log('-------------------------------------------');
+
+// Using Promise for asyn error catch and handling.
+/*
+let myFirstPromise = new Promise((resolve, reject) => {
+  // We call resolve(...) when what we were doing asynchronously was successful, and reject(...) when it failed.
+  // In this example, we use setTimeout(...) to simulate async code. 
+  // In reality, you will probably be using something like XHR or an HTML5 API.
+  setTimeout(function(){
+    resolve("Success!"); // Yay! Everything went well!
+  }, 250);
+});
+myFirstPromise.then((successMessage) => {
+  // successMessage is whatever we passed in the resolve(...) function above.
+  // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+  console.log("Yay! " + successMessage);
+});
+*/
+
+
+function failureCallback (error) {
+  console.log(error);
+}
+function saySomething2(txt) {
+  console.log(txt);
+  throw {ErrNo: 2, ErrMsg: "Programmatically thrown error2."};
+}
+//const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+//wait(2000).then(() => saySomething2("2 seconds")).catch(failureCallback);
+let ms;
+ms = 10000;
+let myPromise = new Promise(resolve => setTimeout(resolve,ms))
+//const wait = myPromise;
+//wait.then(() => saySomething2("2 seconds")).catch(failureCallback);
+
 
 console.log('----------');
 dtVar = new Date();
