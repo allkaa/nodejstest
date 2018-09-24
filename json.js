@@ -613,6 +613,28 @@ console.log('Sleep ended ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseco
 // If an error is thrown in the executor function, the promise is rejected.
 // The return value of the executor is ignored.
 
+// Function passed to then() is put on a microtask queue, which means it runs later when the queue is emptied
+// at the end of the current run of the JavaScript event loop.
+Promise.resolve().then(() => console.log(2)).then(() => console.log(3));
+console.log(1); // 1 immedately,  2 and 3 after END OF PROGRAM at the end of the current run of the JavaScript event loop.
+
+// Add .then after .catch works
+new Promise((resolve, reject) => {
+  console.log('Initial');
+  resolve();
+})
+.then(() => {
+  throw new Error('Something failed simulation');
+  console.log('Do this');
+})
+.catch((failureMessage) => {
+  console.log(failureMessage);
+  console.log('Do that');
+})
+.then(() => {
+  console.log('Do this, no matter what happened before');
+});
+
 let asynRetCode = 0; // 0 success, 1 failure.
 dtVar = new Date();
 console.log('Create promise ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -644,6 +666,7 @@ let myFirstPromise = new Promise((resolve, reject) => {
 }).catch((failureMessage) => { // later if non-success reject will pass control here:
   // failureMessage is whatever we passed in the reject(...) function above.
   // It doesn't have to be a string, but if it is only a failure message, it probably will be.
+  // catch(failureCallback) is short for then(null, failureCallback).
   dtVar = new Date();
   console.log(failureMessage);
   console.log("Promise asyn finished and rejected." + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
