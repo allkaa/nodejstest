@@ -615,10 +615,12 @@ console.log('Sleep ended ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseco
 
 // Function passed to then() is put on a microtask queue, which means it runs later when the queue is emptied
 // at the end of the current run of the JavaScript event loop.
+// Promise.resolve() and Promise.reject() are shortcuts to manually create an already resolved or rejected promise
+// respectively. This can be useful at times.
 Promise.resolve().then(() => console.log(2)).then(() => console.log(3));
 console.log(1); // 1 immedately,  2 and 3 after END OF PROGRAM at the end of the current run of the JavaScript event loop.
 
-// Add .then after .catch works
+// Add .then after .catch  - it works.
 new Promise((resolve, reject) => {
   console.log('Initial');
   resolve();
