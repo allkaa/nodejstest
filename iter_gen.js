@@ -165,6 +165,7 @@ ttt = avg(null, numbers); // gives NaN
 ttt = avg.apply(null, numbers); // gives 3.5
 ttt = avg(...numbers); //gives 3.5
 
+// 
 
 console.log('=========================================================');
 dtVar = new Date();
