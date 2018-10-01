@@ -158,7 +158,7 @@ function avg(...args) { // use rest parameter syntax.
 }
 //ttt = avg(2, 3, 4, 5); // 3.5
 // use apply() with arbitraty params
-ttt = avg.apply(null, [2, 3, 4, 5]); // 3.5
+ttt = avg.apply(null, [2, 3, 4, 5]); // 3.5. The first argument to apply() is the object that should be treated as 'this`.
 let numbers = [2,3,4,5];
 ttt = avg(numbers); // gives NaN
 ttt = avg(null, numbers); // gives NaN
