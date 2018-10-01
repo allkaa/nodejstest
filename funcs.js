@@ -15,6 +15,7 @@ dtVar = new Date();
 console.log('Sleep ended ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 */
 
+/*
 console.log('');
 var factorial = function fac(n) { return n < 2 ? 1 : n * fac(n - 1); };
 console.log('');
@@ -220,6 +221,18 @@ var pat = pa.grUp();
 
 */
 
+let ttt;
+
+function add() {
+  var sum = 0;
+  for (var i = 0, j = arguments.length; i < j; i++) {
+    sum += arguments[i];
+  }
+  return sum;
+}
+ttt = add(); // NaN
+ttt = add(2,3,4) // 9
+
 function avg(...args) { // use rest parameter syntax.
   var sum = 0;
   for (let value of args) { // use for ... of loop.
@@ -227,7 +240,7 @@ function avg(...args) { // use rest parameter syntax.
   }
   return sum / args.length;
 }
-//ttt = avg(2, 3, 4, 5); // 3.5
+ttt = avg(2, 3, 4, 5); // 3.5
 // use apply() with arbitraty params
 ttt = avg.apply(null, [2, 3, 4, 5]); // 3.5. The first argument to apply() is the object that should be treated as 'this`.
 let numbers = [2,3,4,5];
