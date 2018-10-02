@@ -283,6 +283,22 @@ ttt = (function fac(n) {
  })(3);
 
 
+
+/*
+  Objects in JavaScript:
+    Number
+    String
+    Boolean
+    Symbol (new in ES2015)
+    Object
+        Function
+        Array
+        Date
+        RegExp
+    null
+    undefined
+*/
+ 
 console.log('=========================================================');
 dtVar = new Date();
 console.log('=============================> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());

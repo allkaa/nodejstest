@@ -1,4 +1,20 @@
 'use strict';
+
+/*
+  Objects in JavaScript:
+    Number
+    String
+    Boolean
+    Symbol (new in ES2015)
+    Object
+        Function
+        Array
+        Date
+        RegExp
+    null
+    undefined
+*/
+
 //var person0 = {f: "one", s: "two"};
 var person0 = {}; // emtpy object.
 console.log(person0);
