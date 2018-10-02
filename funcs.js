@@ -218,11 +218,11 @@ function PersonArrow() {
 }
 var pa = new PersonArrow(); // PersonArrow {age: 8} object will be created.
 var pat = pa.grUp();
-
 */
 
 let ttt;
 
+/*
 function add() {
   var sum = 0;
   for (var i = 0, j = arguments.length; i < j; i++) {
@@ -233,23 +233,60 @@ function add() {
 ttt = add(); // NaN
 ttt = add(2,3,4) // 9
 
-function avg(...args) { // use rest parameter syntax.
+function avg(...args) { // use rest parameter syntax ...args
   var sum = 0;
   for (let value of args) { // use for ... of loop.
     sum += value;
   }
   return sum / args.length;
 }
-ttt = avg(2, 3, 4, 5); // 3.5
-// use apply() with arbitraty params
-ttt = avg.apply(null, [2, 3, 4, 5]); // 3.5. The first argument to apply() is the object that should be treated as 'this`.
+ttt = avg(2, 3, 4, 5); // gives 3.5 ...args Array(4) [2,3,4,5] and this: undefined
+// JavaScript lets you call a function with an arbitrary array of arguments, using the apply() method of
+// any function object.
+ // The first argument to apply() is the object that should be treated as 'this`.
+ttt = avg.apply(null, [2, 3, 4, 5]); // 3.5 ...args Array(4) [2,3,4,5] and this: null
 let numbers = [2,3,4,5];
-ttt = avg(numbers); // gives NaN
-ttt = avg(null, numbers); // gives NaN
-ttt = avg.apply(null, numbers); // gives 3.5
-ttt = avg(...numbers); //gives 3.5
+ttt = avg(numbers); // gives NaN ...args will be Array(1) [Array(4)] and this: undefined
+ttt = avg(null, numbers); // gives NaN ...args will be Array(2) [null, Array(4)] and this: undefined
+ttt = avg.apply(null, numbers); // gives 3.5 ...args Array(4) [2,3,4,5] and this: null
+// Using the spread operator in the function call.
+ttt = avg(...numbers); // 3.5 ...args Array(4) [2,3,4,5] and this: undefined
+*/
 
-// 
+// Anonymous functions.
+
+// Anonymous function lets you put a full function definition anywhere that you would normally put an expression.
+// This enables all sorts of clever tricks. Here's a way of "hiding" some local variables — like block scope in C.
+/*
+var a = 1;
+var b = 2;
+
+// IIFEs (Immediately Invoked Function Expressions) using.
+(function() {
+  var b = 3; // hiding b in outer scope.
+  a += b;
+})();
+
+a; // 4
+b; // 2
+*/
+
+// Recursion
+var factorial = function fac(n) {
+   return n < 2 ? 1 : n * fac(n - 1); 
+  };
+ttt = factorial(3);
+
+var charsInBody = (function counter(elm) {
+  if (elm.nodeType == 3) { // TEXT_NODE
+    return elm.nodeValue.length;
+  }
+  var count = 0;
+  for (var i = 0, child; child = elm.childNodes[i]; i++) {
+    count += counter(child);
+  }
+  return count;
+})(document.body);
 
 console.log('=========================================================');
 dtVar = new Date();
