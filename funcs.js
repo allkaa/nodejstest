@@ -298,7 +298,30 @@ ttt = (function fac(n) {
     null
     undefined
 */
- 
+
+/*
+  In JavaScript, functions are first-class objects, because they can have properties and methods just like any 
+  other object. What distinguishes them from other objects is that functions can be called.
+  In brief, they are Function objects.
+  Every function in JavaScript is a Function object.
+  See Function for information on properties and methods of Function objects.
+
+  The Function constructor creates a new Function object.
+  Calling the constructor directly can create functions dynamically, but suffers from security and similar
+  (but far less significant) performance issues similar to eval.
+  However, unlike eval, the Function constructor allows executing code in the global scope,
+  prompting better programming habits and allowing for more efficient code minification.
+*/
+
+//var sum = new Function('a','b', 'return a + b'); // calling Function constructor directly.
+// or in this form
+//var sum = new Function('a,b', 'return a + b');
+// or in this form without `new`
+var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
+ttt = sum(2, 6); // expected: 8
+
+
+
 console.log('=========================================================');
 dtVar = new Date();
 console.log('=============================> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
