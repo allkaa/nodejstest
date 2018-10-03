@@ -1,10 +1,127 @@
-'use strict';
+//'use strict';
+let ttt, fff, aaa;
+ttt = this; // empty object
+//var f = () => { 'use strict'; return this; };
+var f = () => { return this; };
+ttt = f();
+function fff2() {
+  ttt = this; // this: undefined in strict mode BUT global in non-strict mode.
+}
+aaa = fff2();
+ttt - 0;
+/*
+function Person() {
+  // The Person() constructor defines `this` as an instance of itself.
+  this.age = 0; // this: Person in stict mode.
+
+  setInterval(function growUp() {
+    // In non-strict mode, the growUp() function defines `this` 
+    // as the global object (because it's where growUp() is executed.), 
+    // which is different from the `this`
+    // defined by the Person() constructor. 
+    this.age++; // this: Timeout in strict mode.
+  }, 1000);
+}
+var p = new Person();
+ttt = 0;
+*/
+
+/*
+function Person() {
+  var that = this; // that refers to this: Person
+  that.age = 0;
+
+  setInterval(function growUp() {
+    // The callback refers to the `that` variable of which
+    // the value is the expected object.
+    that.age++; // this: Timeout, that in closures is Person age.
+  }, 1000);
+}
+*/
+
+///*
+function Person(){
+  this.age = 0; // // `this` properly refers to the Person object.
+  // using arrow function.
+  setInterval(() => {
+    this.age++; // `this` properly still refers to the Person object.
+    console.log(this.age);
+  }, 1000);
+}
+var p = new Person();
+ttt = 0;
+//*/
 
 //const fs = require('fs');
 
 let dtVar = new Date();
 console.log('=============================> START OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 console.log('-------------------------------------------');
+
+//var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
+//var sum = new Function('a','b', 'c = a + b'); // calling Function constructor directly.
+//var sum = Function('a','b', 'c = a + b'); // calling Function constructor directly works exactly same way as above.
+///*
+function sum(a, b) {
+  let c = a + b; // no return statement used case study.
+}
+//*/
+ttt = sum(2,4); // returns undefined as `this` object.
+ttt = new sum(2,4); // returns sum as `this` object/
+ttt = 0;
+
+// Arrow functions.
+//ttt = (a, b) => { return a + b;} // statements as body.
+//ttt = (a, b) =>  (a + b); // or expression as body.
+aaa = (a, b) =>  a + b; // or same expression as body.
+ttt = aaa(2,4); // aaa() is not a constructor can not use `new` and `this` is undefined
+ttt = ((a, b) =>  (a + b))(2,4);
+ttt = 0;
+
+var materials = [
+  'Hydrogen',
+  'Helium',
+  'Lithium',
+  'Beryllium'
+];
+
+ttt = materials.map(material => material.length);
+// expected output: Array (4) [8, 6, 7, 9]
+ttt = 0;
+
+// Destructuring within the parameter list is also supported
+var f = ([a, b] = [1, 2, 9], {x: c} = {x: a + b}) => a + b + c;
+ttt = f(); // 6
+ttt = 0;
+
+// Declare the function 'myFunc'
+function myFunc(theObject) {
+  if (this === undefined) {
+    theObject.brand = "Toyota"; // `this' is undefined object argument must be used instead.
+  }
+  else {
+    this.brand = "Kia"; // `this' is object passed thru apply() method.
+  }
+}
+
+// Declare variable 'mycar'; create and initialize a new Object; assign reference to it to 'mycar'.
+var mycar = {
+  brand: "Honda",
+  model: "Accord",
+  year: 1998
+};
+
+// Logs 'Honda'
+ttt = mycar.brand;
+
+// Pass object reference to the function to ser Toyota.
+myFunc(mycar); // for such calling `this` will be undefined.
+ttt = mycar.brand;
+myFunc.apply(mycar); // for such calling `this` will be undefined as mycar object.
+ttt = mycar.brand;
+ttt = 0;
+
+
 
 //const sleep = require('system-sleep');
 /*
@@ -220,8 +337,6 @@ var pa = new PersonArrow(); // PersonArrow {age: 8} object will be created.
 var pat = pa.grUp();
 */
 
-let ttt;
-
 /*
 function add() {
   var sum = 0;
@@ -317,7 +432,7 @@ ttt = (function fac(n) {
 // or in this form
 //var sum = new Function('a,b', 'return a + b');
 // or in this form without `new`
-var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
+//var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
 ttt = sum(2, 6); // expected: 8
 
 
