@@ -1,4 +1,4 @@
-//'use strict';
+'use strict';
 let ttt, fff, aaa;
 ttt = this; // empty object
 //var f = () => { 'use strict'; return this; };
@@ -51,6 +51,62 @@ function Person(){
 var p = new Person();
 ttt = 0;
 //*/
+
+var adder = {
+  base: 3,
+
+  add: function(a) {
+    var f = v => v + this.base;
+    return f(a);
+  },
+
+  addThruCall: function(a) {
+    var f = v => v + this.base;
+    var b = { base: 2 };
+    return f.call(b, a); // b with base: 2 will be ignored, initial base: 3 will be used.
+  }
+};
+
+ttt = adder.add(1);         // This would log to 4
+ttt = adder.addThruCall(1); // This would log to 4 still
+
+// Arrow functions do not have their own arguments object it is simply a reference to the arguments of the enclosing scope.
+function foo(n) {
+  var f = () => arguments[0] + n; // foo's implicit arguments binding. arguments[0] is 3 (not 10).
+  return f(10);
+}
+ttt = foo(3); // 6
+
+// In most cases, using rest parameters is a good alternative to using an arguments object.
+function foo2(n) { 
+  var f = (...args) => args[0] + n; // args[0] = 10, n = 1.
+  return f(10); 
+}
+ttt = foo2(1); // 11
+
+// Arrow functions do not have their own this:
+var obj = {
+  i: 10,
+  b: () => console.log(this.i, this), // `this` refers to Object {}.
+  c: function() {
+    console.log(this.i, this); // 'this' refers to obj as Object {i: 10, b:, c: }
+  }
+}
+
+obj.b(); // prints undefined, Window {...} (or the global object)
+obj.c(); // prints 10, Object {...}
+
+// Arrow functions cannot be used as constructors and will throw an error when used with new.
+// Arrow functions do not have a prototype property.
+// The `yield` keyword may not be used in an arrow function's body
+// (except when permitted within functions further nested within it).
+// As a consequence, arrow functions cannot be used as generators.
+// Arrow functions can have either a "concise body" (expression) or the usual "block body" {}.
+// In a concise body, only an expression is specified, which becomes the implicit return value.
+// In a block body, you must use an explicit return statement {... return something}.
+// Remember to wrap the object literal in parentheses in case or returning as expression:
+var func = () => ({foo: 1});
+ttt = func();
 
 //const fs = require('fs');
 
