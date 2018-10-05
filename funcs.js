@@ -122,6 +122,7 @@ ttt = simple(16); // 15
 ttt = simple(10); // 10
 
 let max = (a, b) => a > b ? a : b;
+ttt = max(5,13);
 // Easy array filtering, mapping, ...
 var arr = [5, 6, 13, 0, 1, 18, 23];
 var sum = arr.reduce((a, b) => a + b);  // 66
@@ -143,8 +144,8 @@ setTimeout( () => {
   setTimeout( () => {
     // deeper code
     console.log('I happen later');
-  }, 1);
-}, 1);
+  }, 1000);
+}, 3000);
 
 
 
@@ -159,12 +160,12 @@ console.log('-------------------------------------------');
 //var sum = new Function('a','b', 'c = a + b'); // calling Function constructor directly.
 //var sum = Function('a','b', 'c = a + b'); // calling Function constructor directly works exactly same way as above.
 ///*
-function sum(a, b) {
+function sum2(a, b) {
   let c = a + b; // no return statement used case study.
 }
 //*/
-ttt = sum(2,4); // returns undefined as `this` object.
-ttt = new sum(2,4); // returns sum as `this` object/
+ttt = sum2(2,4); // returns undefined as `this` object.
+ttt = new sum2(2,4); // returns sum as `this` object/
 ttt = 0;
 
 // Arrow functions.
@@ -525,12 +526,12 @@ ttt = (function fac(n) {
   prompting better programming habits and allowing for more efficient code minification.
 */
 
-//var sum = new Function('a','b', 'return a + b'); // calling Function constructor directly.
+//var sum3 = new Function('a','b', 'return a + b'); // calling Function constructor directly.
 // or in this form
-//var sum = new Function('a,b', 'return a + b');
+//var sum3 = new Function('a,b', 'return a + b');
 // or in this form without `new`
-//var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
-ttt = sum(2, 6); // expected: 8
+//var sum3 = Function('a','b', 'return a + b'); // calling Function constructor directly.
+//ttt = sum3(2, 6); // expected: 8
 
 
 
