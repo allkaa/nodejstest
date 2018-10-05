@@ -1,4 +1,9 @@
 'use strict';
+let dtVar;
+dtVar = new Date();
+console.log('=============================> START OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('-------------------------------------------');
+
 let ttt, fff, aaa;
 ttt = this; // empty object
 //var f = () => { 'use strict'; return this; };
@@ -108,16 +113,13 @@ obj.c(); // prints 10, Object {...}
 var func = () => ({foo: 1});
 ttt = func();
 
-// An empty arrow function returns undefined
-let empty = (() => {})();
+// Samples of using arrow function:
+let empty = (() => {})(); // An empty arrow function returns undefined
 
+ttt = (() => 'foobar')(); // Returns "foobar" (this is an Immediately Invoked Function Expression see 'IIFE' in glossary).
 
-ttt = (() => 'foobar')(); 
-// Returns "foobar"
-// (this is an Immediately Invoked Function Expression 
-// see 'IIFE' in glossary)
-
-var simple = a => a > 15 ? 15 : a; 
+var simple = a => a > 15 ? 15 : a;
+//var simple = (a) => {return a > 15 ? 15 : a;}; // same block body form.
 ttt = simple(16); // 15
 ttt = simple(10); // 10
 
@@ -129,6 +131,27 @@ var sum = arr.reduce((a, b) => a + b);  // 66
 var even = arr.filter(v => v % 2 == 0); // [6, 0, 18]
 var double = arr.map(v => v * 2); // [10, 12, 26, 0, 2, 36, 46]
 
+fff = function myFunc(arg) {
+  console.log(`arg was => ${arg}`);
+}
+setTimeout(fff, 1500, 'funky');
+//setTimeout(myFunc, 1500, 'funky');
+//setTimeout((arg) => console.log(`arg was => ${arg}`), 1000, 'funky');
+
+
+/*
+// Parameterless arrow functions that are visually easier to parse
+setTimeout( () => {
+  let dtVar1 = new Date();
+  console.log('I happen sooner' + " " + dtVar1.getSeconds() + "." + dtVar1.getMilliseconds());
+  setTimeout( () => {
+    let dtVar2 = new Date();
+    // deeper code
+    console.log('I happen later' + " " + dtVar2.getSeconds() + "." + dtVar2.getMilliseconds());
+  }, 1000);
+}, 3000);
+*/
+
 /*
 // More concise promise chains
 promise.then(a => {
@@ -138,23 +161,11 @@ promise.then(a => {
 });
 */
 
-// Parameterless arrow functions that are visually easier to parse
-setTimeout( () => {
-  console.log('I happen sooner');
-  setTimeout( () => {
-    // deeper code
-    console.log('I happen later');
-  }, 1000);
-}, 3000);
+return;
 
 
-
-
+// Old staff below ===========================================================================================
 //const fs = require('fs');
-
-let dtVar = new Date();
-console.log('=============================> START OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-console.log('-------------------------------------------');
 
 //var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
 //var sum = new Function('a','b', 'c = a + b'); // calling Function constructor directly.
