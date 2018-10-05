@@ -39,7 +39,7 @@ function Person() {
 }
 */
 
-///*
+/*
 function Person(){
   this.age = 0; // // `this` properly refers to the Person object.
   // using arrow function.
@@ -50,7 +50,7 @@ function Person(){
 }
 var p = new Person();
 ttt = 0;
-//*/
+*/
 
 var adder = {
   base: 3,
