@@ -108,6 +108,47 @@ obj.c(); // prints 10, Object {...}
 var func = () => ({foo: 1});
 ttt = func();
 
+// An empty arrow function returns undefined
+let empty = (() => {})();
+
+
+ttt = (() => 'foobar')(); 
+// Returns "foobar"
+// (this is an Immediately Invoked Function Expression 
+// see 'IIFE' in glossary)
+
+var simple = a => a > 15 ? 15 : a; 
+ttt = simple(16); // 15
+ttt = simple(10); // 10
+
+let max = (a, b) => a > b ? a : b;
+// Easy array filtering, mapping, ...
+var arr = [5, 6, 13, 0, 1, 18, 23];
+var sum = arr.reduce((a, b) => a + b);  // 66
+var even = arr.filter(v => v % 2 == 0); // [6, 0, 18]
+var double = arr.map(v => v * 2); // [10, 12, 26, 0, 2, 36, 46]
+
+/*
+// More concise promise chains
+promise.then(a => {
+  // ...
+}).then(b => {
+  // ...
+});
+*/
+
+// Parameterless arrow functions that are visually easier to parse
+setTimeout( () => {
+  console.log('I happen sooner');
+  setTimeout( () => {
+    // deeper code
+    console.log('I happen later');
+  }, 1);
+}, 1);
+
+
+
+
 //const fs = require('fs');
 
 let dtVar = new Date();
