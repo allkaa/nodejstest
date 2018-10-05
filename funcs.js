@@ -131,15 +131,24 @@ var sum = arr.reduce((a, b) => a + b);  // 66
 var even = arr.filter(v => v % 2 == 0); // [6, 0, 18]
 var double = arr.map(v => v * 2); // [10, 12, 26, 0, 2, 36, 46]
 
-fff = function myFunc(arg) {
+/*
+function myFuncT(arg) {
   console.log(`arg was => ${arg}`);
 }
-setTimeout(fff, 1500, 'funky');
-//setTimeout(myFunc, 1500, 'funky');
+let tmId = setTimeout(myFuncT, 1000, 'funky');
+//clearTimeout(tmId);
+*/
+
+/*
+fff = function myFuncT(arg) {
+  console.log(`arg was => ${arg}`);
+}
+*/
+//setTimeout(fff, 1000, 'funky');
 //setTimeout((arg) => console.log(`arg was => ${arg}`), 1000, 'funky');
 
 
-/*
+///*
 // Parameterless arrow functions that are visually easier to parse
 setTimeout( () => {
   let dtVar1 = new Date();
@@ -150,7 +159,7 @@ setTimeout( () => {
     console.log('I happen later' + " " + dtVar2.getSeconds() + "." + dtVar2.getMilliseconds());
   }, 1000);
 }, 3000);
-*/
+//*/
 
 /*
 // More concise promise chains
