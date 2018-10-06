@@ -2,6 +2,15 @@
 
 //const fs = require('fs');
 
+//const sleep = require('system-sleep');
+/*
+dtVar = new Date();
+console.log('Begin sleep ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+sleep(5 * 1000); // sleep for 5 seconds
+dtVar = new Date();
+console.log('Sleep ended ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+*/
+
 let dtVar;
 dtVar = new Date();
 console.log('=============================> START OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -18,7 +27,7 @@ function ff() {
   aaa3 = this; // this: undefined in strict mode BUT global in non-strict mode.
 }
 aaa2 = ff();
-return;
+//return;
 
 /*
 function Person() {
@@ -197,7 +206,7 @@ function sum2(a, b) {
 }
 //*/
 aaa = sum2(2,4); // returns undefined as `this` object.
-aaa = new sum2(2,4); // returns sum as `this` object/
+aaa = new sum2(2,4); // returns sum2 as `this` object/
 aaa = 0;
 
 // Arrow functions.
@@ -225,7 +234,7 @@ aaa = f(); // 6
 aaa = 0;
 
 // Declare the function 'myFunc'
-function myFunc(theObject) {
+function myFuncCar(theObject) {
   if (this === undefined) {
     theObject.brand = "Toyota"; // `this' is undefined object argument must be used instead.
   }
@@ -245,22 +254,22 @@ var mycar = {
 aaa = mycar.brand;
 
 // Pass object reference to the function to ser Toyota.
-myFunc(mycar); // for such calling `this` will be undefined.
+myFuncCar(mycar); // for such calling `this` will be undefined.
 aaa = mycar.brand;
-myFunc.apply(mycar); // for such calling `this` will be undefined as mycar object.
+myFuncCar.apply(mycar); // for such calling `this` will be  mycar object.
 aaa = mycar.brand;
 aaa = 0;
 
-
-
-//const sleep = require('system-sleep');
 /*
-dtVar = new Date();
-console.log('Begin sleep ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-sleep(5 * 1000); // sleep for 5 seconds
-dtVar = new Date();
-console.log('Sleep ended ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+// conditional hoisting is not recommended.
+var hoisted = "foo" in this; // returns false or true.
+console.log(`'foo' name ${hoisted ? "is" : "is not"} hoisted. typeof foo is ${typeof foo}`);
+if (true) { // foo will not hoisted despite true of false.
+  function foo(){ return 1; }
+}
 */
+
+return;
 
 /*
 console.log('');
@@ -516,6 +525,7 @@ a; // 4
 b; // 2
 */
 
+/*
 // Recursion
 var factorial = function fac(n) {
    return n < 2 ? 1 : n * fac(n - 1); 
@@ -526,7 +536,7 @@ aaa = factorial(3);
 aaa = (function fac(n) {
   return n < 2 ? 1 : n * fac(n - 1); 
  })(3);
-
+*/
 
 
 /*
