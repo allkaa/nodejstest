@@ -19,7 +19,7 @@ function Person() {
   // The Person() constructor defines `this` as an instance of itself.
   this.age = 0; // this: Person in stict mode.
 
-  setInterval(function growUp() {
+  setInterval(function growUp() { // repeat body every 1000 miliseconds.
     // In non-strict mode, the growUp() function defines `this` 
     // as the global object (because it's where growUp() is executed.), 
     // which is different from the `this`
@@ -28,6 +28,7 @@ function Person() {
   }, 1000);
 }
 var p = new Person();
+return;
 ttt = 0;
 */
 
@@ -36,7 +37,7 @@ function Person() {
   var that = this; // that refers to this: Person
   that.age = 0;
 
-  setInterval(function growUp() {
+  setInterval(function growUp() { // repeat body every 1000 miliseconds.
     // The callback refers to the `that` variable of which
     // the value is the expected object.
     that.age++; // this: Timeout, that in closures is Person age.
@@ -48,30 +49,28 @@ function Person() {
 function Person(){
   this.age = 0; // // `this` properly refers to the Person object.
   // using arrow function.
-  setInterval(() => {
+  setInterval(() => { // repeat body every 1000 miliseconds.
     this.age++; // `this` properly still refers to the Person object.
     console.log(this.age);
   }, 1000);
 }
 var p = new Person();
+return;
 ttt = 0;
 */
 
 var adder = {
   base: 3,
-
   add: function(a) {
     var f = v => v + this.base;
     return f(a);
   },
-
   addThruCall: function(a) {
     var f = v => v + this.base;
     var b = { base: 2 };
     return f.call(b, a); // b with base: 2 will be ignored, initial base: 3 will be used.
   }
 };
-
 ttt = adder.add(1);         // This would log to 4
 ttt = adder.addThruCall(1); // This would log to 4 still
 
