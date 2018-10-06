@@ -1,19 +1,25 @@
 'use strict';
+
+//const fs = require('fs');
+
 let dtVar;
 dtVar = new Date();
 console.log('=============================> START OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 console.log('-------------------------------------------');
 
-let ttt, fff, aaa;
-ttt = this; // empty object
+let aaa, aaa1, aaa2, aaa3;
+
+// Arrow functions Start Of ============================================================================================
+aaa = this; // empty object -  Object {}
 //var f = () => { 'use strict'; return this; };
-var f = () => { return this; };
-ttt = f();
-function fff2() {
-  ttt = this; // this: undefined in strict mode BUT global in non-strict mode.
+var f = () => { return this; }; // this - Object {}
+aaa1 = f();
+function ff() {
+  aaa3 = this; // this: undefined in strict mode BUT global in non-strict mode.
 }
-aaa = fff2();
-ttt - 0;
+aaa2 = ff();
+return;
+
 /*
 function Person() {
   // The Person() constructor defines `this` as an instance of itself.
@@ -29,7 +35,7 @@ function Person() {
 }
 var p = new Person();
 return;
-ttt = 0;
+aaa = 0;
 */
 
 /*
@@ -56,9 +62,11 @@ function Person(){
 }
 var p = new Person();
 return;
-ttt = 0;
+aaa = 0;
 */
 
+/*
+// Ignoring `this` param in call() or apply() methods.
 var adder = {
   base: 3,
   add: function(a) {
@@ -68,37 +76,39 @@ var adder = {
   addThruCall: function(a) {
     var f = v => v + this.base;
     var b = { base: 2 };
-    return f.call(b, a); // b with base: 2 will be ignored, initial base: 3 will be used.
+    return f.call(b, a); // b with base: 2 as first param will be ignored, initial base: 3 will be used instead.
   }
 };
-ttt = adder.add(1);         // This would log to 4
-ttt = adder.addThruCall(1); // This would log to 4 still
+aaa = adder.add(1);         // This would log to 4
+aaa = adder.addThruCall(1); // This would log to 4 still
+*/
 
+/*
 // Arrow functions do not have their own arguments object it is simply a reference to the arguments of the enclosing scope.
-function foo(n) {
-  var f = () => arguments[0] + n; // foo's implicit arguments binding. arguments[0] is 3 (not 10).
+function foo1(n) {
+  var f = () => arguments[0] + n; // foo1's implicit arguments binding. arguments[0] is 3 (not 10).
   return f(10);
 }
-ttt = foo(3); // 6
+aaa = foo1(3); // 6
 
 // In most cases, using rest parameters is a good alternative to using an arguments object.
 function foo2(n) { 
   var f = (...args) => args[0] + n; // args[0] = 10, n = 1.
   return f(10); 
 }
-ttt = foo2(1); // 11
+aaa = foo2(1); // 11
 
-// Arrow functions do not have their own this:
-var obj = {
+// Arrow functions do not have their own `this`:
+var obj1 = {
   i: 10,
   b: () => console.log(this.i, this), // `this` refers to Object {}.
   c: function() {
     console.log(this.i, this); // 'this' refers to obj as Object {i: 10, b:, c: }
   }
 }
-
-obj.b(); // prints undefined, Window {...} (or the global object)
-obj.c(); // prints 10, Object {...}
+obj1.b(); // prints undefined, Window {...} (or the global object)
+obj1.c(); // prints 10, Object {...}
+*/
 
 // Arrow functions cannot be used as constructors and will throw an error when used with new.
 // Arrow functions do not have a prototype property.
@@ -108,27 +118,30 @@ obj.c(); // prints 10, Object {...}
 // Arrow functions can have either a "concise body" (expression) or the usual "block body" {}.
 // In a concise body, only an expression is specified, which becomes the implicit return value.
 // In a block body, you must use an explicit return statement {... return something}.
+
+/*
 // Remember to wrap the object literal in parentheses in case or returning as expression:
 var func = () => ({foo: 1});
-ttt = func();
+aaa = func();
 
 // Samples of using arrow function:
 let empty = (() => {})(); // An empty arrow function returns undefined
 
-ttt = (() => 'foobar')(); // Returns "foobar" (this is an Immediately Invoked Function Expression see 'IIFE' in glossary).
+aaa = (() => 'foobar')(); // Returns "foobar" (this is an Immediately Invoked Function Expression see 'IIFE' in glossary).
 
 var simple = a => a > 15 ? 15 : a;
 //var simple = (a) => {return a > 15 ? 15 : a;}; // same block body form.
-ttt = simple(16); // 15
-ttt = simple(10); // 10
+aaa = simple(16); // 15
+aaa = simple(10); // 10
 
 let max = (a, b) => a > b ? a : b;
-ttt = max(5,13);
+aaa = max(5,13);
 // Easy array filtering, mapping, ...
 var arr = [5, 6, 13, 0, 1, 18, 23];
 var sum = arr.reduce((a, b) => a + b);  // 66
 var even = arr.filter(v => v % 2 == 0); // [6, 0, 18]
 var double = arr.map(v => v * 2); // [10, 12, 26, 0, 2, 36, 46]
+*/
 
 /*
 function myFuncT(arg) {
@@ -147,7 +160,7 @@ fff = function myFuncT(arg) {
 //setTimeout((arg) => console.log(`arg was => ${arg}`), 1000, 'funky');
 
 
-///*
+/*
 // Parameterless arrow functions that are visually easier to parse
 setTimeout( () => {
   let dtVar1 = new Date();
@@ -158,7 +171,7 @@ setTimeout( () => {
     console.log('I happen later' + " " + dtVar2.getSeconds() + "." + dtVar2.getMilliseconds());
   }, 1000);
 }, 3000);
-//*/
+*/
 
 /*
 // More concise promise chains
@@ -169,31 +182,31 @@ promise.then(a => {
 });
 */
 
-return;
+//return;
+// Arrow functions End Of ============================================================================================
 
 
 // Old staff below ===========================================================================================
-//const fs = require('fs');
 
 //var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
 //var sum = new Function('a','b', 'c = a + b'); // calling Function constructor directly.
 //var sum = Function('a','b', 'c = a + b'); // calling Function constructor directly works exactly same way as above.
 ///*
 function sum2(a, b) {
-  let c = a + b; // no return statement used case study.
+  let c = a + b; // no return statement used - case study.
 }
 //*/
-ttt = sum2(2,4); // returns undefined as `this` object.
-ttt = new sum2(2,4); // returns sum as `this` object/
-ttt = 0;
+aaa = sum2(2,4); // returns undefined as `this` object.
+aaa = new sum2(2,4); // returns sum as `this` object/
+aaa = 0;
 
 // Arrow functions.
-//ttt = (a, b) => { return a + b;} // statements as body.
-//ttt = (a, b) =>  (a + b); // or expression as body.
+//aaa = (a, b) => { return a + b;} // statements as body.
+//aaa = (a, b) =>  (a + b); // or expression as body.
 aaa = (a, b) =>  a + b; // or same expression as body.
-ttt = aaa(2,4); // aaa() is not a constructor can not use `new` and `this` is undefined
-ttt = ((a, b) =>  (a + b))(2,4);
-ttt = 0;
+aaa = aaa(2,4); // aaa() is not a constructor can not use `new` and `this` is undefined
+aaa = ((a, b) =>  (a + b))(2,4);
+aaa = 0;
 
 var materials = [
   'Hydrogen',
@@ -202,14 +215,14 @@ var materials = [
   'Beryllium'
 ];
 
-ttt = materials.map(material => material.length);
+aaa = materials.map(material => material.length);
 // expected output: Array (4) [8, 6, 7, 9]
-ttt = 0;
+aaa = 0;
 
 // Destructuring within the parameter list is also supported
 var f = ([a, b] = [1, 2, 9], {x: c} = {x: a + b}) => a + b + c;
-ttt = f(); // 6
-ttt = 0;
+aaa = f(); // 6
+aaa = 0;
 
 // Declare the function 'myFunc'
 function myFunc(theObject) {
@@ -229,14 +242,14 @@ var mycar = {
 };
 
 // Logs 'Honda'
-ttt = mycar.brand;
+aaa = mycar.brand;
 
 // Pass object reference to the function to ser Toyota.
 myFunc(mycar); // for such calling `this` will be undefined.
-ttt = mycar.brand;
+aaa = mycar.brand;
 myFunc.apply(mycar); // for such calling `this` will be undefined as mycar object.
-ttt = mycar.brand;
-ttt = 0;
+aaa = mycar.brand;
+aaa = 0;
 
 
 
@@ -462,8 +475,8 @@ function add() {
   }
   return sum;
 }
-ttt = add(); // NaN
-ttt = add(2,3,4) // 9
+aaa = add(); // NaN
+aaa = add(2,3,4) // 9
 
 function avg(...args) { // use rest parameter syntax ...args
   var sum = 0;
@@ -472,17 +485,17 @@ function avg(...args) { // use rest parameter syntax ...args
   }
   return sum / args.length;
 }
-ttt = avg(2, 3, 4, 5); // gives 3.5 ...args Array(4) [2,3,4,5] and this: undefined
+aaa = avg(2, 3, 4, 5); // gives 3.5 ...args Array(4) [2,3,4,5] and this: undefined
 // JavaScript lets you call a function with an arbitrary array of arguments, using the apply() method of
 // any function object.
  // The first argument to apply() is the object that should be treated as 'this`.
-ttt = avg.apply(null, [2, 3, 4, 5]); // 3.5 ...args Array(4) [2,3,4,5] and this: null
+aaa = avg.apply(null, [2, 3, 4, 5]); // 3.5 ...args Array(4) [2,3,4,5] and this: null
 let numbers = [2,3,4,5];
-ttt = avg(numbers); // gives NaN ...args will be Array(1) [Array(4)] and this: undefined
-ttt = avg(null, numbers); // gives NaN ...args will be Array(2) [null, Array(4)] and this: undefined
-ttt = avg.apply(null, numbers); // gives 3.5 ...args Array(4) [2,3,4,5] and this: null
+aaa = avg(numbers); // gives NaN ...args will be Array(1) [Array(4)] and this: undefined
+aaa = avg(null, numbers); // gives NaN ...args will be Array(2) [null, Array(4)] and this: undefined
+aaa = avg.apply(null, numbers); // gives 3.5 ...args Array(4) [2,3,4,5] and this: null
 // Using the spread operator in the function call.
-ttt = avg(...numbers); // 3.5 ...args Array(4) [2,3,4,5] and this: undefined
+aaa = avg(...numbers); // 3.5 ...args Array(4) [2,3,4,5] and this: undefined
 */
 
 // Anonymous functions.
@@ -507,10 +520,10 @@ b; // 2
 var factorial = function fac(n) {
    return n < 2 ? 1 : n * fac(n - 1); 
   };
-ttt = factorial(3);
+aaa = factorial(3);
 
 // Using  IIFEs (Immediately Invoked Function Expressions).
-ttt = (function fac(n) {
+aaa = (function fac(n) {
   return n < 2 ? 1 : n * fac(n - 1); 
  })(3);
 
@@ -550,7 +563,7 @@ ttt = (function fac(n) {
 //var sum3 = new Function('a,b', 'return a + b');
 // or in this form without `new`
 //var sum3 = Function('a','b', 'return a + b'); // calling Function constructor directly.
-//ttt = sum3(2, 6); // expected: 8
+//aaa = sum3(2, 6); // expected: 8
 
 
 
