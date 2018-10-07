@@ -200,15 +200,18 @@ promise.then(a => {
 //var sum = Function('a','b', 'return a + b'); // calling Function constructor directly.
 //var sum = new Function('a','b', 'c = a + b'); // calling Function constructor directly.
 //var sum = Function('a','b', 'c = a + b'); // calling Function constructor directly works exactly same way as above.
-///*
+
+/*
+// No return used case.
 function sum2(a, b) {
   let c = a + b; // no return statement used - case study.
 }
-//*/
 aaa = sum2(2,4); // returns undefined as `this` object.
 aaa = new sum2(2,4); // returns sum2 as `this` object/
 aaa = 0;
+*/
 
+/*
 // Arrow functions.
 //aaa = (a, b) => { return a + b;} // statements as body.
 //aaa = (a, b) =>  (a + b); // or expression as body.
@@ -232,8 +235,11 @@ aaa = 0;
 var f = ([a, b] = [1, 2, 9], {x: c} = {x: a + b}) => a + b + c;
 aaa = f(); // 6
 aaa = 0;
+*/
 
-// Declare the function 'myFunc'
+/*
+// Using apply() method.
+// Declare the function 'myFuncCar'
 function myFuncCar(theObject) {
   if (this === undefined) {
     theObject.brand = "Toyota"; // `this' is undefined object argument must be used instead.
@@ -259,6 +265,7 @@ aaa = mycar.brand;
 myFuncCar.apply(mycar); // for such calling `this` will be  mycar object.
 aaa = mycar.brand;
 aaa = 0;
+*/
 
 /*
 // conditional hoisting is not recommended.
@@ -269,8 +276,11 @@ if (true) { // foo will not hoisted despite true of false.
 }
 */
 
+
+
 return;
 
+// Very old staff...
 /*
 console.log('');
 var factorial = function fac(n) { return n < 2 ? 1 : n * fac(n - 1); };
@@ -330,8 +340,6 @@ var result1 = outside(3)(5); // 3 for outside, 5 for insice - returns 8 and new 
 console.log(result1);
 var result2 = outside(1)(5); // 1 for outside, 5 for inside - returns 6 and new closure is created for each call to outside/
 console.log(result2);
-
-
 
 // Counter nested function forms closure.
 function cnt(x) {
