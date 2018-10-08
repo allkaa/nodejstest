@@ -18,6 +18,7 @@ console.log('-------------------------------------------');
 
 let aaa, aaa1, aaa2, aaa3;
 
+/*
 // Arrow functions Start Of ============================================================================================
 aaa = this; // empty object -  Object {}
 //var f = () => { 'use strict'; return this; };
@@ -28,6 +29,7 @@ function ff() {
 }
 aaa2 = ff();
 //return;
+*/
 
 /*
 function Person() {
@@ -276,7 +278,108 @@ if (true) { // foo will not hoisted despite true of false.
 }
 */
 
+// Defining method functions.
+// Getter (accessor) and setter functions.
+/*
+var obj = {
+  log: ['a', 'b', 'c'],
+  get latest() { // pseudo-property latest for object obj.
+    if (this.log.length == 0) {
+      return undefined;
+    }
+    return this.log[this.log.length - 1];
+  }
+}
+aaa = obj.latest; // expected output: "c"
+delete obj.latest; // delete pseudo-property latest.
+*/
 
+/*
+// To append a getter to an existing object later at any time, use Object.defineProperty().
+var o = {a: 0};
+Object.defineProperty(o, 'b', { get: function() { return this.a + 1; } }); // adding getter with property name b.
+aaa = o.b; // Runs the getter, which yields a + 1 (which is 1)
+
+// Using a computed property name.
+var expr = 'foo';
+var obj = {
+  get [expr]() { return 'bar'; }
+};
+aaa = obj.foo; // "bar"
+aaa = obj[expr]; // "bar"
+*/
+
+/*
+// get Vs. defineProperty
+// using class.
+class Example {
+  get hello() {
+    return 'world';
+  }
+}
+const obj = new Example();
+aaa = obj.hello; // "world"
+aaa = Object.getOwnPropertyDescriptor(obj, 'hello'); // undefined obj does not have property hello - prototype has,
+aaa = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(obj), 'hello'); // prototype has.
+// { configurable: true, enumerable: false, get: function get hello() { return 'world'; }, set: undefined }
+
+class Example2 {
+}
+const obj2 = new Example2();
+Object.defineProperty(obj2, 'hello', { get: function() { return 'world';}});
+aaa = obj2.hello; // "world"
+aaa = Object.getOwnPropertyDescriptor(obj2, 'hello'); // hello - obj2 has it,
+aaa = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(obj2), 'hello'); // prototype has not.
+*/
+
+// Setters.
+var language = {
+  log: [],
+  get current() {
+    return this.log;
+  },
+  set current(name) {
+    this.log.push(name);
+  },
+}
+aaa = language.current;
+language.current = 'EN';
+aaa = language.current; // ['EN']
+language.current = 'FA';
+aaa = language.current; // ['EN', 'FA']
+delete language.current;
+Object.defineProperty(language, 'current', {
+   get() { return this.log; }, // Using shorthand method names (ES2015 feature).
+   set(name) { this.log.push(name); }, 
+   configurable: true, // default is false, but true for standard declartion.
+   enumerable: true, // default is false, but true for standard declartion.
+   });
+
+   Object.defineProperty(language, 'shortM', {
+    value: function(i) { return this.log[i]; }, // adding data property shortM as function.
+    configurable: true, // default is false, but true for standard declartion.
+    enumerable: true, // default is false, but true for standard declartion.
+    });
+
+aaa = language.current; // ['EN', 'FA']
+language.current = 'EN'; // ['EN', 'FA', 'EN']
+aaa = language.shortM(1);
+
+//  Using shorthand method names (ES2015 feature).
+var objT = {
+  foo: function() {
+    return 'foo standard';
+  },
+  bar: function() {
+    return 'bar standard';
+  },
+  fooShort() { //  shorthand method (ES2015 feature).
+     return 'foo short';
+  },
+  barShort() {
+     return 'bar short';
+  }
+};
 
 return;
 
