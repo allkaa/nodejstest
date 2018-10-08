@@ -41,25 +41,12 @@ function Person() {
     // as the global object (because it's where growUp() is executed.), 
     // which is different from the `this`
     // defined by the Person() constructor. 
-    this.age++; // this: Timeout in strict mode.
+    this.age++; // this: Timeout not a Person in strict mode.
   }, 1000);
 }
 var p = new Person();
 return;
 aaa = 0;
-*/
-
-/*
-function Person() {
-  var that = this; // that refers to this: Person
-  that.age = 0;
-
-  setInterval(function growUp() { // repeat body every 1000 miliseconds.
-    // The callback refers to the `that` variable of which
-    // the value is the expected object.
-    that.age++; // this: Timeout, that in closures is Person age.
-  }, 1000);
-}
 */
 
 /*
@@ -74,6 +61,34 @@ function Person(){
 var p = new Person();
 return;
 aaa = 0;
+*/
+
+/*
+// Convert function Person() to ES2015 class Person.
+class Person {
+  constructor(ageEmp) {
+    this.age = ageEmp || 0; // constructor property is not possible to change later for all descendants.
+    // use arrow function for correct refer to Person object.
+    setInterval(() => { // repeat body every 1000 miliseconds.
+      aaa = this.age++; // `this` properly still refers to the Person object.
+    }, 1000);
+    }
+}
+var p = new Person();
+return;
+*/
+
+/*
+function Person() {
+  var that = this; // that refers to this: Person
+  that.age = 0;
+
+  setInterval(function growUp() { // repeat body every 1000 miliseconds.
+    // The callback refers to the `that` variable of which
+    // the value is the expected object.
+    that.age++; // this: Timeout, that in closures is Person age.
+  }, 1000);
+}
 */
 
 /*
@@ -332,7 +347,8 @@ aaa = Object.getOwnPropertyDescriptor(obj2, 'hello'); // hello - obj2 has it,
 aaa = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(obj2), 'hello'); // prototype has not.
 */
 
-// Setters.
+/*
+// Gettrs and Setters.
 var language = {
   log: [],
   get current() {
@@ -364,7 +380,9 @@ Object.defineProperty(language, 'current', {
 aaa = language.current; // ['EN', 'FA']
 language.current = 'EN'; // ['EN', 'FA', 'EN']
 aaa = language.shortM(1);
+*/
 
+/*
 //  Using shorthand method names (ES2015 feature).
 var objT = {
   foo: function() {
@@ -380,6 +398,83 @@ var objT = {
      return 'bar short';
   }
 };
+*/
+
+/*
+// Constructor vs. declaration vs. expression
+
+// A function defined with the Function constructor assigned to the variable multiplyConstructor.
+// Create function with name anonymous and assign itn to variable.
+let multiplyConstructor = new Function('x', 'y', 'return x * y');
+
+// A standard function declaration of a function named multiplyDeclaration.
+// Creates a variable with same name as function name in this case multiplyDeclaration.
+// Is hoisted!!!
+function multiplyDeclaration(x, y) {
+  return x * y;
+} // there is no semicolon here!
+
+// A function expression of an anonymous function assigned to the variable.
+let multiplyExpAnonym = function(x, y) {
+  return x * y;
+};
+
+// A function expression of a function named func_name assigned to the variable.
+// NB! func_name can be used only within function body.
+// Otherwise generate error ReferenceError: func_name is not defined
+let multiplyExpNamed = function func_name(x, y) {
+  console.log(typeof func_name); // // NB! func_name can be used only within function body.
+  return x * y;
+};
+//aaa = multiplyExpNamed(3,5); // 15
+//aaa = func_name(5,6); // Generate error ReferenceError: func_name is not defined
+*/
+
+// A function defined by a function expression or by a function declaration inherits the current scope.
+// That is, the function forms a closure.
+// On the other hand, a function defined by a Function constructor does not inherit any scope other than
+// the global scope (which all functions inherit).
+
+/*
+ * Declare and initialize a variable 'p' (global)
+ * and a function 'myFunc' (to change the scope) inside which
+ * declare a varible with same name 'p' (current) and
+ * define three functions using three different ways:-
+ *     1. function declaration
+ *     2. function expression
+ *     3. function constructor
+ * each of which will log 'p'
+ */
+/*
+let p = 5;
+function myFunc() {
+    let p = 9;
+
+    function decl() {
+      return p;
+    }
+    var expr = function() {
+      return p;
+    };
+    var construct = new Function('return p'); // p is not defined.
+
+    aaa = decl(); // 9  - for 'decl' by function declaration (current scope)
+    aaa = expr(); // 9  - for 'expr' by function expression (current scope)
+    aaa = construct(); // Error p is not defined  - for 'cons' by Function constructor (global scope)
+}
+myFunc();
+*/
+
+// Functions defined by function expressions and function declarations are parsed only once,
+// while those defined by the Function constructor are not.
+// That is, the function body string passed to the Function constructor must be parsed each and every time
+// the constructor is called.
+// Although a function expression creates a closure every time, the function body is not reparsed,
+// so function expressions are still faster than "new Function(...)".
+// Therefore the Function constructor should generally be avoided whenever possible.
+
+
+
 
 return;
 
