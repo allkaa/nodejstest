@@ -473,6 +473,74 @@ myFunc();
 // so function expressions are still faster than "new Function(...)".
 // Therefore the Function constructor should generally be avoided whenever possible.
 
+// Function.prototype.bind()
+/*
+this.a = 9; // but does not propogate to function f and `this` will be undefined in strict mode.
+// In non strict mode `this` will be global object but this.a property will be undefined.
+function f() {
+  return this.a
+}
+let b = {
+  a: 111,
+};
+aaa = f(); // ERROR! Cannot read property 'x' of undefined. `this` is undefined.
+//aaa = f(b); // ERROR! Cannot read property 'x' of undefined. `this` is undefined. 
+//let ff = f.bind(b); // create new function object with `this` as b.
+//aaa = ff(); // 111
+aaa = f.bind(b)(); // create new function object with `this` as b and call it - give 111
+*/
+
+// Function.prototype.apply()
+/*
+function f(x, y) {
+  return this.a + x + y;
+}
+let b = {
+  a: 111,
+};
+//aaa = f(222,333); // ERROR! Cannot read property 'x' of undefined. `this` is undefined.
+aaa = f.apply(b,[222,333]); // call function f with `this` as b and params as array, gives 666.
+*/
+
+// Function.prototype.call()
+/*
+function f(x, y) {
+  return this.a + x + y;
+}
+let b = {
+  a: 111,
+};
+//aaa = f(222,333); // ERROR! Cannot read property 'x' of undefined. `this` is undefined.
+aaa = f.call(b,222,333); // call function f with `this` as b and params as list, gives 666.
+*/
+
+// Difference between Function constructor and function declaration.
+/*
+  Functions created with the Function constructor do not create closures to their creation contexts;
+  they always are created in the global scope. When running them, they will only be able to access their own local variables
+  and global ones, NOT the ones from the scope in which the Function constructor was created.
+  This is different from using eval with code for a function expression.
+*/
+aaa = Function(); // empty Function object, methods thru Function.prototype.
+let x = 10;
+function createFunction1() {
+    var x = 20;
+    // Constructor does not create closure.
+    //let f = new Function('return x;'); // this |x| refers global |x| - Reference Error x is not defined.
+    //return f();
+    let f = new Function('x','return x;'); // 20
+    return f(x);
+}
+function createFunction2() {
+    var x = 20;
+    // Declaration creates closure.
+    function f() {
+        return x; // this |x| refers local |x| above
+    }
+    return f();
+}
+aaa = createFunction1(); // Reference Error x is not defined or 20.
+aaa = createFunction2(); // 20
 
 
 
