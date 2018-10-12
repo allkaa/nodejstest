@@ -16,7 +16,10 @@
     Date
     RegExp
 */
-
+/*
+  All types except objects define immutable values (values, which are incapable of being changed).
+  Strings are immutable. We refer to values of these types as "primitive values".
+*/
 //var person0 = {f: "one", s: "two"};
 var person0 = {}; // emtpy object.
 console.log(person0);
