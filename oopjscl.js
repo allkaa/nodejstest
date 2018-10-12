@@ -14,12 +14,12 @@ class Employee {
 // Static class-side properties and prototype data properties must be defined outside of the ClassBody declaration.
 Employee.staticOKPO = '1001';
 // Using static methods
-let ttt = Employee.getcompany(); // returns undefined.
+let aaa = Employee.getcompany(); // returns undefined.
 // Add prototype property.
 Employee.prototype.company = 'Roga i Kopyta'; // prototype property is possible to change later for all descendants.
-ttt = Employee.getcompany(); // returns Roga i Kopyta
+aaa = Employee.getcompany(); // returns Roga i Kopyta
 
-// Sub classing with extends and using super.
+// Sub classing that extends Eployee and using super.
 class WorkerBee extends Employee {
   constructor(nameW, deptW, projsW) {
     super(nameW, deptW); // use Employee constructor to set properties.
@@ -30,15 +30,12 @@ class WorkerBee extends Employee {
   get projects() {
       return this._projects;
   }
-  
   set projects(newProjects) {
       this._projects = newProjects;
   }
 }
-var mark = new WorkerBee('Mark','Marketing', ['self service', 'post offices']);
-mark.bonus = 3000; // individual property set.
-mark.projects = ['new', 'next']
 
+// Sub class that extends Workbee and using super.
 class Engineer extends WorkerBee {
   constructor(nameE, projsE, machE) {
     super(nameE, 'engineering', projsE); // use Employee constructor to set properties.
@@ -54,13 +51,39 @@ class Engineer extends WorkerBee {
   }
 }
 
+var mark = new WorkerBee('Mark','Marketing', ['self service', 'post offices']);
+mark.bonus = 3000; // individual property set.
+mark.projects = ['new', 'next']
+
 var jane = new Engineer('Doe, Jane', ['navigator', 'javascript'], 'KONE');
-var isTrue = (jane instanceof Engineer);
+var isTrue = (jane instanceof Engineer); // true.
 Employee.prototype.speciality = 'non-specified'; // property added to prototype will be propagated for all descendants.
 jane.speciality = 'guru'; // overlap (hide) Employee.prototype.speciality = 'none' for jane.
 
 Employee.prototype.company = "Vparing Ltd"; // propogates from Employee to jane.
 
+// Buit-in object Date modification.
+class formatDate extends Date {
+  constructor(dateStr) {
+    super(dateStr);
+  }
+  getFormattedDate() {
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    return `${this.getDate()}-${months[this.getMonth()]}-${this.getFullYear()}`;
+  }
+}
+
+aaa = new formatDate('August 19, 1975 23:15:30').getFormattedDate();
+// expected output: "19-Aug-1975"
+
+
+
+
+
+
+return;
 
 console.log("Stop of Program.");
 /*
@@ -121,7 +144,7 @@ let snape = new Teacher('Severus', 'Snape', 58, 'male', ['Potions'], 'Old subjec
 snape.greeting(); // Hi! I'm Severus.
 snape.farewell(); // use Teacher own farewell(), not Person farewell().
 console.log(snape.age); // 58
-let ttt = snape.subject;
+let aaa = snape.subject;
 console.log(snape.subject); // Dark arts
 snape.subject = "New subject: Set";
 console.log(snape.subject); // Dark arts
@@ -129,5 +152,6 @@ console.log(snape.subject); // Dark arts
 
 
 
+return;
 
 console.log("End of Program.");
