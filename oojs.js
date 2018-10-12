@@ -1,18 +1,20 @@
 'use strict';
 
 /*
-  Objects in JavaScript:
+  Objects in JavaScript.
+  Primitives:
     Number
     String
     Boolean
     Symbol (new in ES2015)
-    Object
-        Function
-        Array
-        Date
-        RegExp
     null
     undefined
+  Objects:    
+    Object
+    Function
+    Array
+    Date
+    RegExp
 */
 
 //var person0 = {f: "one", s: "two"};
