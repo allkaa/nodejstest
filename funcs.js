@@ -542,7 +542,47 @@ function createFunction2() {
 aaa = createFunction1(); // Reference Error x is not defined or 20.
 aaa = createFunction2(); // 20
 
+// Nested functions.
+// An important detail of nested functions in JavaScript is that they can access variables in their parent function's scope:
+function parentFunc() {
+  var a = 1;
+  function nestedFunc() {
+    var b = 4; // parentFunc can't use this
+    return a + b; 
+  }
+  return nestedFunc(); // 5
+}
+aaa = parentFunc();
 
+// Closures.
+// Whenever JavaScript executes a function, a 'scope' object is created to hold the local variables
+// created within that function. It is initialized with any variables passed in as function parameters.
+// A brand new scope object is created every time a function starts executing, and , unlike the global object
+// (which is accessible as `this` and in browsers as window) these scope objects cannot be directly accessed from
+// your JavaScript code. There is no mechanism for iterating over the properties of the current scope object, for example.
+function makeAdder(a) {
+  return function(b) {
+    return a + b;
+  };
+}
+let aaax = makeAdder(5);
+let aaay = makeAdder(20);
+aaa = aaax(6); // 5(in closure) + 6
+aaa = aaay(7); // 20(in closure) + 7
+
+/*
+So when makeAdder() is called, a scope object is created with one property: a, which is the argument passed
+to the makeAdder() function. makeAdder() then returns a newly created function.
+Normally JavaScript's garbage collector would clean up the scope object created for makeAdder() at this point,
+but the returned function maintains a reference back to that scope object.
+As a result, the scope object will not be garbage-collected until there are no more references to the function object
+that makeAdder() returned.
+
+Scope objects form a chain called the scope chain, similar to the prototype chain used by JavaScript's object system.
+
+A closure is the combination of a function and the scope object in which it was created.
+Closures let you save state — as such, they can often be used in place of objects. 
+*/
 
 return;
 
