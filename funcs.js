@@ -708,7 +708,26 @@ function setupHelp() {
 }
 setupHelp();
 
+// Functions inherit from Function.prototype 
+// (which has methods call, bind, etc.)
+// doSomething ---> Function.prototype ---> Object.prototype ---> null
+function myFuncSampe() {
+  return 777;
+}
 
+// Arrays inherit from Array.prototype 
+// (which has methods indexOf, forEach, etc.)
+// The prototype chain looks like:
+// myArrSample ---> Array.prototype ---> Object.prototype ---> null
+var myArrSample = ['yo', 'whadup', '?'];
+
+// The newly created object o has Object.prototype as its [[Prototype]]
+// o has no own property named 'hasOwnProperty'
+// hasOwnProperty is an own property of Object.prototype. 
+// So o inherits hasOwnProperty from Object.prototype
+// Object.prototype has null as its prototype.
+// myObjSample ---> Object.prototype ---> null
+var myObjSample = {a: 1};
 
 
 return;
