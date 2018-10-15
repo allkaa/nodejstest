@@ -846,7 +846,7 @@ function template(strings, ...keys) {
 }
 
 var t0Closure = template`A${0}B${1}C${0}!`;
-aaa1 =t0Closure('Y', 'A');  // "YAY!"
+aaa1 =t0Closure('Y', 'A');  // "AYBACY!"
 var t1Closure = template`${0}${1}${0}!`;
 aaa2 = t1Closure('Y', 'A');  // "YAY!"
 var t2Closure = template`${0} ${'foo'}!`;
