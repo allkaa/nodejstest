@@ -757,8 +757,39 @@ var fixed = {};
 Object.preventExtensions(fixed);
 //fixed.newProp = 'ohai'; // throws a TypeError
 
+var oDuplicateProps = { p: 1, p: 2 }; // !!! NO syntax error, olny last p: 2 will be set.
+delete oDuplicateProps.p; // no p will be after this action.
 
+//function sumDuplicateParameters(a, a, c) { // SyntaxError: Duplicate parameter name not allowed in this context.
+function sumDuplicateParameters(a, b, c) {
+    'use strict';
+  return a + a + c;
+}
 
+//var aOctalNumber = 010; // SyntaxError: Octal literals are not allowed in strict mode.
+var aOctalNumber = 0o10; // ES2015: Octal numbers - NOT 010 as earlier.
+
+// Strict mode in ECMAScript 2015 forbids setting properties on primitive values:
+//aaa = false;
+//aaa.true = '';         // TypeError: Cannot create property 'true' on boolean 'false'
+//(14).sailing = 'home';   // TypeError: Cannot create property 'sailing' on number '14'
+//'with'.you = 'far away'; // TypeError: Cannot create property 'you' on string 'with'
+
+// Eval
+var xEval = 17;
+var evalX = eval("var xEval = 42; xEval;");
+
+// strict mode forbids deleting plain names. delete name in strict mode is a syntax error.
+var xToDel;
+//delete xToDel; // SyntaxError: Delete of an unqualified identifier in strict mode.
+
+// Strict mode code doesn't alias properties of arguments objects created within it.
+function fNonArgumentsAliasing(a) {
+  //'use strict';
+  a = 42;
+  return [a, arguments[0]];
+}
+var aaaNonAragAli = fNonArgumentsAliasing(17);
 
 
 return;
