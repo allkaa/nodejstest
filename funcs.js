@@ -742,6 +742,13 @@ Further, the native prototypes should never be extended unless it is for the sak
  JavaScript features.
 */
 
+// Strict mode specifics.
+
+
+
+
+
+
 return;
 
 // Very old staff...
