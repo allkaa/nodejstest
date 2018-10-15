@@ -1,12 +1,18 @@
 'use strict';
 
+let aaa, aaa1, aaa2;
+
 // Usning ES2015 classes to create prototype chains.
 
 class Employee {
   constructor(nameEmp, deptEmp) {
-    this.name = nameEmp || ''; // constructor property is not possible to change latar for all descendants.
-    this.dept = deptEmp || 'general';
+    this._name = nameEmp || ''; // constructor properties is not possible to change latar for all descendants.
+    this._dept = deptEmp || 'general';
   }
+  get name() { return this._name;}
+  set name(newName) {this._name = newName;}
+  get dept() {this._dept;}
+  set dept(newDept) {this._dept = newDept}
   static getcompany() { // define static method.
     return Employee.prototype.company;
   }
@@ -14,10 +20,12 @@ class Employee {
 // Static class-side properties and prototype data properties must be defined outside of the ClassBody declaration.
 Employee.staticOKPO = '1001';
 // Using static methods
-let aaa = Employee.getcompany(); // returns undefined.
+aaa = Employee.getcompany(); // returns undefined.
 // Add prototype property.
 Employee.prototype.company = 'Roga i Kopyta'; // prototype property is possible to change later for all descendants.
 aaa = Employee.getcompany(); // returns Roga i Kopyta
+aaa = new Employee('Juliy','Rome');
+aaa1 = aaa.name;
 
 // Sub classing that extends Eployee and using super.
 class WorkerBee extends Employee {
