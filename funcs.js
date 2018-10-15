@@ -791,6 +791,70 @@ function fNonArgumentsAliasing(a) {
 }
 var aaaNonAragAli = fNonArgumentsAliasing(17);
 
+// Template literals (template stings).
+var aTempLiter = 5;
+var bTempLiter = 10;
+// Multiline string with placeholders ${expression} sample:
+//console.log(`Fifteen is ${aTempLiter + bTempLiter} and
+//not ${2 * aTempLiter + bTempLiter}.`);
+aaa = `Fifteen is ${aTempLiter + bTempLiter} and
+not ${2 * aTempLiter + bTempLiter}.`;
+console.log(aaa);
+// "Fifteen is 15 and
+// not 20."
+aaa = (`\`` === '`'); // --> true. Escape for ` is \`
+
+// Tagged templates.
+var person = 'Mike';
+var age = 28;
+
+function myTag(strings, personExp, ageExp) {
+  var str0 = strings[0]; // "That "
+  var str1 = strings[1]; // " is a "
+
+  // There is technically a string after
+  // the final expression in our example,
+  // but it is empty ("") in our case, so disregard.
+  var str2 = strings[2];
+
+  var ageStr;
+  if (ageExp > 99){
+    ageStr = 'centenarian';
+  } else {
+    ageStr = 'youngster';
+  }
+
+  // We can even return a string built using a template literal
+  return `${str0}${personExp}${str1}${ageStr}`;
+}
+var output = myTag`That ${ person } is a ${ age } old`;
+//var output = myTag(`That ${ person } is a ${ age }`); // Such construction is not tagged temlate and does not work as expeicted.
+console.log(output);
+// That Mike is a youngster
+
+// Tag functions don't need to return a string, as shown in the following example.
+function template(strings, ...keys) {
+  return (function(...values) {
+    var dict = values[values.length - 1] || {};
+    var result = [strings[0]];
+    keys.forEach(function(key, i) {
+      var value = Number.isInteger(key) ? values[key] : dict[key];
+      result.push(value, strings[i + 1]);
+    });
+    return result.join('');
+  });
+}
+
+var t0Closure = template`A${0}B${1}C${0}!`;
+aaa1 =t0Closure('Y', 'A');  // "YAY!"
+var t1Closure = template`${0}${1}${0}!`;
+aaa2 = t1Closure('Y', 'A');  // "YAY!"
+var t2Closure = template`${0} ${'foo'}!`;
+aaa3 = t2Closure('Hello', {foo: 'World'});  // "Hello World!"
+
+
+
+
 
 return;
 
