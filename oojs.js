@@ -44,6 +44,24 @@ console.log(arr0.toString()); // non-empty array.
 console.log(typeof(arr0));
 */
 
+// Typed arrays.
+
+// Create user name charCodes array.
+// .from String can be usef only for integers.
+//let usrName = Int16Array.from('123');
+// Int16Array [ 1, 2, 3 ]
+let aaa = 'Alex Raven';
+let aaaArr = Array(16);
+for (let i = 0; i < 16; i++) {
+  if (i < aaa.length) {
+    aaaArr[i] = aaa.charCodeAt(i); // returns integer between 0 and 65535 - UTF-16 code unit at the given index.
+  }
+  else {
+    aaaArr[i] = 0;
+  }
+}                
+//let usrNameArr = Uint8Array.from(aaaArr);                      
+
 // Working with complex data structures.
 /* Consider this C structure:
 struct someStruct {
@@ -52,30 +70,20 @@ struct someStruct {
   float amountDue;
 };
 */
-
-// String
-//let usrName = Int16Array.from('123');
-// Int16Array [ 1, 2, 3 ]
-let aaa = 'Bob Marly';
-let aaaArr = Array(16);
-for (let i = 0; i < 16; i++) {
-  if (i < aaa.length) {
-    aaaArr[i] = aaa.charCodeAt(i);
-  }
-  else {
-    aaaArr[i] = 0;
-  }
-}                
-//let usrNameArr = Uint8Array.from(aaaArr);                      
-
 var arrBuffer = new ArrayBuffer(24);
 // ... read the data into the buffer ...
 var idView = new Uint32Array(arrBuffer, 0, 1);
 var usernameView = new Uint8Array(arrBuffer, 4, 16);
 var amountDueView = new Float32Array(arrBuffer, 20, 1);
+// Artificially fill in stucture.
 idView[0] = 1;
 //usernameView[0] = 31;
-usernameView = Uint8Array.from(aaaArr);
+// Create new typed array usernameView Uint8Array from standard array of user name charCodes.
+//usernameView = Uint8Array.from(aaaArr);
+// Fill in array usernameView Uint8Array from standard array of user name charCodes.
+for (let i=0; i < usernameView.length; i++) {
+  usernameView[i] = aaaArr[i];
+}
 amountDueView[0] = 2500.09;
 
 let userName = "";
@@ -85,6 +93,8 @@ for (let i=0; i<usernameView.length; i++) {
   }
   else break;
 }
+console.log(userName);
+
 
 return;
 
