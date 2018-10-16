@@ -20,6 +20,8 @@
   All types except objects define immutable values (values, which are incapable of being changed).
   Strings are immutable. We refer to values of these types as "primitive values".
 */
+
+/*
 //var person0 = {f: "one", s: "two"};
 var person0 = {}; // emtpy object.
 console.log(person0);
@@ -40,7 +42,53 @@ arr0.push(1); arr0.push(2); arr0.push(3);
 console.log(arr0);
 console.log(arr0.toString()); // non-empty array.
 console.log(typeof(arr0));
+*/
 
+// Working with complex data structures.
+/* Consider this C structure:
+struct someStruct {
+  unsigned long id;
+  char username[16];
+  float amountDue;
+};
+*/
+
+// String
+//let usrName = Int16Array.from('123');
+// Int16Array [ 1, 2, 3 ]
+let aaa = 'Bob Marly';
+let aaaArr = Array(16);
+for (let i = 0; i < 16; i++) {
+  if (i < aaa.length) {
+    aaaArr[i] = aaa.charCodeAt(i);
+  }
+  else {
+    aaaArr[i] = 0;
+  }
+}                
+//let usrNameArr = Uint8Array.from(aaaArr);                      
+
+var arrBuffer = new ArrayBuffer(24);
+// ... read the data into the buffer ...
+var idView = new Uint32Array(arrBuffer, 0, 1);
+var usernameView = new Uint8Array(arrBuffer, 4, 16);
+var amountDueView = new Float32Array(arrBuffer, 20, 1);
+idView[0] = 1;
+//usernameView[0] = 31;
+usernameView = Uint8Array.from(aaaArr);
+amountDueView[0] = 2500.09;
+
+let userName = "";
+for (let i=0; i<usernameView.length; i++) {
+  if (usernameView[i] !== 0) {
+    userName = userName + String.fromCharCode(usernameView[i]);
+  }
+  else break;
+}
+
+return;
+
+/*
 var person1 = {
     name: ['Bob', 'Smith'],
     age: 32,
@@ -150,3 +198,4 @@ ttt = o.a; // 25
 console.log('----------');
 let dtVar = new Date();
 console.log('====> END OF PROGRAM' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+*/
