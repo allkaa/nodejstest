@@ -4,7 +4,7 @@
 // The import statement cannot be used in embedded scripts unless such script has a type="module".
 
 const myModExported = require('./my-module-export.js');
-const myCube = cube(3);
+let aaa = myModExported.cube(3); // 27
 
 /*
 import { cube, foo, graph } from 'my-module-export.js';
@@ -13,7 +13,5 @@ graph.options = {
     thickness:'3px'
 };
 */
-
 //graph.draw();
-let aaa = myCube(3); // 27
 //console.log(foo);    // 4.555806215962888
