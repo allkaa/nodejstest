@@ -3,11 +3,17 @@
 // Imported modules are in strict mode whether you declare them as such or not.
 // The import statement cannot be used in embedded scripts unless such script has a type="module".
 
-import { cube, foo, graph } from './my-module-export';
+const myModExported = require('./my-module-export.js');
+const myCube = cube(3);
+
+/*
+import { cube, foo, graph } from 'my-module-export.js';
 graph.options = {
     color:'blue',
     thickness:'3px'
-}; 
-graph.draw();
-console.log(cube(3)); // 27
-console.log(foo);    // 4.555806215962888
+};
+*/
+
+//graph.draw();
+let aaa = myCube(3); // 27
+//console.log(foo);    // 4.555806215962888
