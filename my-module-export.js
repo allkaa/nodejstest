@@ -3,9 +3,18 @@
 // The export statement cannot be used in embedded scripts.
 
 // assigning to exports will not modify module, must use module.exports
+// assigning to exports will not modify module, must use module.exports
+module.exports = (x) => {
+  return {
+    area: () => x*x*x
+  };
+};
+
+/*
 module.exports = function cube(x) {
   return x*x*x;
 }
+/*
 
 /*
 function cube(x) {
