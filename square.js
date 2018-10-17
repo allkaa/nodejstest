@@ -6,3 +6,5 @@ module.exports = (width) => {
     area: () => width ** 2
   };
 };
+
+
