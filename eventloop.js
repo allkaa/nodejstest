@@ -5,7 +5,7 @@
   Primitives:
     Number
     String
-    Boolean
+    Boolean1wert
     Symbol (new in ES2015)
     null
     undefined
