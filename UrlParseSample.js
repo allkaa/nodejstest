@@ -27,12 +27,23 @@ var objHttpServer = http.createServer(function (req, res) {
     var q = objParsed.query; // parsed url query property object e.g. { f: '1', s: '2' }.
     console.log("parsed url query property object:");
     console.log(q);
-    var txt = '';
+    let txt = '';
     for (var key in q) {
       txt = txt + key + ":" + q[key] + '<br />';
     }
     var dtVar2 = new Date();
-    res.write('<result><br />|<br />' + txt + '<br />' + dtVar2.getSeconds() + "." + dtVar2.getMilliseconds() +'<br />|</result>');
+    let msg;
+    //res.write('<result><br />|<br />' + txt + '<br />' + dtVar2.getSeconds() + "." + dtVar2.getMilliseconds() +'<br />|</result>');
+    msg = '<!DOCTYPE html><html>';
+    msg = msg + ' <head><meta charset="utf-8"><title>My test page</title>';
+    msg = msg + `<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>`;
+    msg = msg + `<link href="styles/style.css" rel="stylesheet" type="text/css"></head>`;
+    msg = msg + `<body>`;
+    msg = msg + `<h1>Mozilla is cool</h1>`;
+    msg = msg + `<img src="images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
+    msg = msg + '<br >' + txt + '</br>';
+    msg = msg + `</body></html>`;
+    res.write(msg);
     res.end();
 }); // return value is HTTP server object.
 var dtVar = new Date();
