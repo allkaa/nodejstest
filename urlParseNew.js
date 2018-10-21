@@ -24,7 +24,7 @@ let port = 8081; // Linux - no default port.
 console.log('set port=' + port + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 dtVar = new Date();
-console.log('before http.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('before http.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 //const server = http.createServer((req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse> ...}
 const server = http.createServer();
@@ -70,18 +70,16 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   res.end();
 })
 
+dtVar = new Date();
+console.log('after http.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
 // Begin accepting connections on the specified port and hostname.
 // If hostname is omitted, server will accept connections on the unspecified IPv6 address (::) when IPv6 is available,
 // or the unspecified IPv4 address (0.0.0.0) otherwise.
-///*
 server.listen(port, hostname, () => {
   // Place holders in template literals are indicated by the $ (Dollar sign) and curly braces e.g. (${expression}).
   console.log(`Server running and listening at http://${hostname}:${port}/`); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
 });
-//*/
-/*
-server.listen(port, () => {
-  // Place holders in template literals are indicated by the $ (Dollar sign) and curly braces e.g. (${expression}).
-  console.log(`Server running and listening at http://0.0.0.0:${port}/`); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
-});
-*/
+
+dtVar = new Date();
+console.log('End main PROGAM after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
