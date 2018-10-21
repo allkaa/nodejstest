@@ -4,7 +4,7 @@ var http = require('http');
 //var formidable = require('formidable');
 //var fs = require('fs');
 var qs = require('querystring');
-var port = process.env.port || 1337;
+var port = 8081; //process.env.port || 1337;
 
 var server = http.createServer(function (req, res) {
   req.on('error', (err) => {
