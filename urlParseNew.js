@@ -42,15 +42,43 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   //const responceBodyStringify = JSON.stringify(responseBody);
   // http://localhost:8081/home/akaarna/nodejs/images/?first=1&second=2 // URL object objUrl.search = "?first=1&second=2"
   // or req.url = "/home/akaarna/nodejs/images/images/firefox-icon.png" // URL object objUrl.search = ""
-  // objUrl.pathname = "/images/firefox-icon.png"
+  // objUrl.pathname = "/styles/style.css" or "/images/firefox-icon.png"
   //let aaa = new Object();
   let objUrl = urlLegacy.parse(req.url, true, true);
   let q = objUrl.query; // parsed url query property object e.g. { fist: '1', second: '2' }.
   //let objParsedNew = new URL(req.url);
   if (objUrl.search == "") {
-    res.writeHead(200, { 'Content-Type': 'text/css' });
-    res.write(`html {font-size: 24px; font-family: 'Open Sans', sans-serif;}`);
-    res.end();
+    if (objUrl.pathname.includes('/styles')) {
+      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
+        if (err) throw err;
+        else {
+          /*
+          let msg;
+          console.log(data);
+          msg = '';
+          for (let i=0; i<data.length; i++) {
+          msg = msg + String.fromCharCode(data[i]);
+          }
+          console.log(msg);
+          */
+          res.writeHead(200, { 'Content-Type': 'text/css' });
+          //res.write(`html {font-size: 24px; font-family: 'Open Sans', sans-serif;}`);
+          //res.write(msg);
+          res.write(data);
+          res.end();
+        }
+      });
+    }
+    else if (objUrl.pathname.includes('/images')) {
+      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
+        if (err) throw err;
+        else {
+          res.writeHead(200, { 'Content-Type': 'image/png' });
+          res.write(data);
+          res.end();
+        }
+      });
+    }
   }
   else {
     console.log("parsed url query property object:");
@@ -71,7 +99,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
     //file:///home/akaarna/nodejs/images/firefox-icon.png
     //msg = msg + `<img src="https://findicons.com/files/icons/783/mozilla_pack/128/firefox.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
     //msg = msg + `<img src="file:///home/akaarna/nodejs/images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
-    //msg = msg + `<img src="images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
+    msg = msg + `<img src="images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
     msg = msg + '<br />' + txt;
     msg = msg + `</body></html>`;
     res.writeHead(200, { 'Content-Type': 'text/html' });
