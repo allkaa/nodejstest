@@ -48,7 +48,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   let q = objUrl.query; // parsed url query property object e.g. { fist: '1', second: '2' }.
   //let objParsedNew = new URL(req.url);
   if (objUrl.search == "") {
-    if (objUrl.pathname.includes('/styles')) {
+    if (objUrl.pathname.includes('/styles/')) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
         if (err) throw err;
         else {
@@ -69,11 +69,31 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         }
       });
     }
-    else if (objUrl.pathname.includes('/images')) {
+    else if (objUrl.pathname.includes('/scripts/')) {
+      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/scripts/main.js"
+        if (err) throw err;
+        else {
+          res.writeHead(200, { 'Content-Type': 'application/javascript' });
+          res.write(data);
+          res.end();
+        }
+      });
+    }
+    else if (objUrl.pathname.includes('/images/')) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
         if (err) throw err;
         else {
           res.writeHead(200, { 'Content-Type': 'image/png' });
+          res.write(data);
+          res.end();
+        }
+      });
+    }
+    else {
+      fs.readFile('./index.html', (err, data) => {
+        if (err) throw err;
+        else {
+          res.writeHead(200, { 'Content-Type': 'text/html' });
           res.write(data);
           res.end();
         }
