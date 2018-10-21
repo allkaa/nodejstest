@@ -49,7 +49,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   //let objParsedNew = new URL(req.url);
   if (objUrl.search == "") {
     res.writeHead(200, { 'Content-Type': 'text/css' });
-    //res.write(msg);
+    res.write(`html {font-size: 24px; font-family: 'Open Sans', sans-serif;}`);
     res.end();
   }
   else {
