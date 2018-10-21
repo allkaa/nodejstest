@@ -111,7 +111,14 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
           txt = txt + key + ":" + q[key] + '<br />';
         }
         //let dtVar2 = new Date();
-        let msg;
+        let msgOrig = '';
+        for (let i=0; i<data.length; i++) {
+          msgOrig = msgOrig + String.fromCharCode(data[i]);
+        }
+        let msg = msgOrig.substring(0,msgOrig.indexOf(`first:`));
+        msg = msg + txt;
+        msg = msg + msgOrig.substring(msgOrig.indexOf(`<script src=`));
+        /*
         msg = '<!DOCTYPE html><html>';
         msg = msg + ' <head><meta charset="utf-8"><title>My test page</title>';
         msg = msg + `<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>`;
@@ -124,6 +131,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         msg = msg + '<br />' + txt;
         msg = msg + `<script src="scripts/main.js"></script>`;
         msg = msg + `</body></html>`;
+        */
         res.writeHead(200, { 'Content-Type': 'text/html' });
         res.write(msg);
         res.end();
