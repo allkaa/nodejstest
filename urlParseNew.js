@@ -43,12 +43,14 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   // http://localhost:8081/home/akaarna/nodejs/images/?first=1&second=2 // URL object objUrl.search = "?first=1&second=2"
   // or req.url = "/home/akaarna/nodejs/images/images/firefox-icon.png" // URL object objUrl.search = ""
   // objUrl.pathname = "/images/firefox-icon.png"
-  let aaa = new Object();
+  //let aaa = new Object();
   let objUrl = urlLegacy.parse(req.url, true, true);
   let q = objUrl.query; // parsed url query property object e.g. { fist: '1', second: '2' }.
   //let objParsedNew = new URL(req.url);
   if (objUrl.search == "") {
-
+    res.writeHead(200, { 'Content-Type': 'text/css' });
+    //res.write(msg);
+    res.end();
   }
   else {
     console.log("parsed url query property object:");
@@ -63,13 +65,13 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
     msg = '<!DOCTYPE html><html>';
     msg = msg + ' <head><meta charset="utf-8"><title>My test page</title>';
     msg = msg + `<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>`;
-    //msg = msg + `<link href="styles/style.css" rel="stylesheet" type="text/css"></head>`;
+    msg = msg + `<link href="styles/style.css" rel="stylesheet" type="text/css"></head>`;
     msg = msg + `<body>`;
     msg = msg + `<h1>Mozilla is cool</h1>`;
     //file:///home/akaarna/nodejs/images/firefox-icon.png
     //msg = msg + `<img src="https://findicons.com/files/icons/783/mozilla_pack/128/firefox.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
     //msg = msg + `<img src="file:///home/akaarna/nodejs/images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
-    msg = msg + `<img src="images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
+    //msg = msg + `<img src="images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
     msg = msg + '<br />' + txt;
     msg = msg + `</body></html>`;
     res.writeHead(200, { 'Content-Type': 'text/html' });
