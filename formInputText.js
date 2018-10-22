@@ -4,6 +4,7 @@ var http = require('http');
 //var formidable = require('formidable');
 //var fs = require('fs');
 var qs = require('querystring');
+const hostname = 'localhost';
 var port = 8081; //process.env.port || 1337;
 
 var server = http.createServer(function (req, res) {
@@ -57,7 +58,7 @@ var server = http.createServer(function (req, res) {
   }
 });
 
-server.listen(port, () => {
+server.listen(port, hostname, () => {
   // Place holders in template literals are indicated by the $ (Dollar sign) and curly braces e.g. (${expression}).
-  console.log(`Server running at http://${port}/`); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
+  console.log(`server.listen: Server running and listening at http://${hostname}:${port}/`); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
 });
