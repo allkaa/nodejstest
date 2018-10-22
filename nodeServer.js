@@ -85,7 +85,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   } // end of // no query /?first=1...  case.
   // <==================== end of very first case and rendering results case ================================================>
   // Begin of POST or GET form submit case.
-  if (req.url.includes('/submitFormAK')) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=alex&sname=Raven"
+  if (req.url.includes('/submitFormAK')) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
     if (req.method == "POST") {
       let body = '';
       req.on('data', function (data) {
@@ -117,9 +117,19 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
             }
             let msg = msgOrig.substring(0,msgOrig.indexOf(`</body>`));
             msg += 'LAST ENTERED by method ' + req.method + ':<br />';
-            msg += 'Name = ' + objBody.fname + '<br />';
-            msg += 'Surname = ' + objBody.sname;
-            msg += msgOrig.substring(msgOrig.indexOf(`</body>`));
+            if (objBody.fname == "") {
+              msg += 'Name = ' + 'not entered!' + '<br />';
+            }
+            else {
+              msg += 'Name = ' + objBody.fname + '<br />';
+            }
+            if (objBody.sname == "") {
+              msg += 'Surname = ' + 'not entered!' + '<br />';
+            }
+            else {
+              msg += 'Surname = ' + objBody.sname + '<br />';
+            }
+              msg += msgOrig.substring(msgOrig.indexOf(`</body>`));
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write(msg);
             return res.end();
@@ -139,8 +149,18 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
           }
           let msg = msgOrig.substring(0,msgOrig.indexOf(`</body>`));
           msg += 'LAST ENTERED by method ' + req.method + ':<br />';
-          msg += 'Name = ' + q.fname + '<br />';
-          msg += 'Surname = ' + q.sname;
+          if (q.fname == "") {
+            msg += 'Name = ' + 'not entered!' + '<br />';
+          }
+          else {
+            msg += 'Name = ' + q.fname + '<br />';
+          }
+          if (q.sname == "") {
+            msg += 'Surname = ' + 'not entered!' + '<br />';
+          }
+          else {
+            msg += 'Surname = ' + q.sname + '<br />';
+          }
           msg += msgOrig.substring(msgOrig.indexOf(`</body>`));
           res.writeHead(200, { 'Content-Type': 'text/html' });
           res.write(msg);
