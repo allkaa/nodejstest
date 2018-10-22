@@ -10,9 +10,18 @@
     <h1>Mozilla is cool</h1>
     <img src="images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >
     <p>Read <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla Manifesto</a> for more...</p>
-    <br> first: 0
-    <br> second: 0
-    <br>
     <script src="scripts/main.js"></script>
-    </body>
+    <!-- NB! Set method="post" or method="get" in form. -->
+    <form action="submitTest" method="get" enctype="text/plain">
+      First name:
+      <br />
+      <input type="text" name="fname">
+      <br />
+      Last name:
+      <br />
+      <input type="text" name="sname">
+      <br />
+      <input type="submit">
+    </form>
+  </body>
 </html>
