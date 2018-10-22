@@ -57,9 +57,9 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         res.write('Surname = ' + objBody.sname);
         res.write(`</body>`);
         res.write(`</htm>`);
-          return res.end();
+        return res.end();
       });
-      }
+    }
     else if (req.method = "GET") {
       let objUrl = urlLegacy.parse(req.url, true, true);
       let q = objUrl.query; // parsed url query property object e.g. { fist: '1', second: '2' }.

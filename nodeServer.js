@@ -4,8 +4,8 @@ const http = require('http');
 const urlLegacy = require('url');
 //const { URL } = require('url');
 const fs = require('fs');
+const qs = require('querystring');
 //const formidable = require('formidable');
-//const qs = require('querystring');
 
 let dtVar = new Date();
 console.log('Program starts ==================================== ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -38,34 +38,17 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   // The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays,
   // or properties from objects, into distinct variables.
   const { method, url, headers } = req;
-  //const responseBody = { headers, method, url };
-  //const responceBodyStringify = JSON.stringify(responseBody);
-  // http://localhost:8081/home/akaarna/nodejs/images/?first=1&second=2 // URL object objUrl.search = "?first=1&second=2"
-  // or req.url = "/home/akaarna/nodejs/images/images/firefox-icon.png" // URL object objUrl.search = ""
-  // objUrl.pathname = "/styles/style.css" or "/images/firefox-icon.png"
+  // http://localhost:8081
   //let aaa = new Object();
   let objUrl = urlLegacy.parse(req.url, true, true);
-  let q = objUrl.query; // parsed url query property object e.g. { fist: '1', second: '2' }.
-  //let objParsedNew = new URL(req.url);
-  if (objUrl.search == "") { // no query /?first=1...  case.
+  if ((req.method != "POST") && (objUrl.search == "")) { // if req.method == "POST" then ObjUrl.search will be "" always.
     if (objUrl.pathname.includes('/styles/')) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
         if (err) throw err;
         else {
-          /*
-          let msg;
-          console.log(data);
-          msg = '';
-          for (let i=0; i<data.length; i++) {
-          msg = msg + String.fromCharCode(data[i]);
-          }
-          console.log(msg);
-          */
           res.writeHead(200, { 'Content-Type': 'text/css' });
-          //res.write(`html {font-size: 24px; font-family: 'Open Sans', sans-serif;}`);
-          //res.write(msg);
           res.write(data);
-          res.end();
+          return res.end();
         }
       });
     }
@@ -75,7 +58,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         else {
           res.writeHead(200, { 'Content-Type': 'application/javascript' });
           res.write(data);
-          res.end();
+          return res.end();
         }
       });
     }
@@ -85,7 +68,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         else {
           res.writeHead(200, { 'Content-Type': 'image/png' });
           res.write(data);
-          res.end();
+          return res.end();
         }
       });
     }
@@ -95,49 +78,78 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         else {
           res.writeHead(200, { 'Content-Type': 'text/html' });
           res.write(data);
-          res.end();
+          return res.end();
         }
       });
-    }
+      }
   } // end of // no query /?first=1...  case.
-  else { // modifying default index.html template with query params.
-    fs.readFile('./index.html', (err, data) => { // file index.html reading.
-      if (err) throw err;
-      else { // file index.html read ok.
-        //console.log("parsed url query property object:");
-        //console.log(q);
-        let txt = '';
-        for (let key in q) {
-          txt = txt + key + ":" + q[key] + '<br />';
+  // <==================== end of very first case and rendering results case ================================================>
+  // Begin of POST or GET form submit case.
+  if (req.url.includes('/submitFormAK')) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=alex&sname=Raven"
+    if (req.method == "POST") {
+      let body = '';
+      req.on('data', function (data) {
+        body += data;
+        // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB.
+        if (body.length > 1e6) {
+          // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST.
+          req.connection.destroy();
         }
-        //let dtVar2 = new Date();
-        let msgOrig = '';
-        for (let i=0; i<data.length; i++) {
-          msgOrig = msgOrig + String.fromCharCode(data[i]);
-        }
-        let msg = msgOrig.substring(0,msgOrig.indexOf(`first:`));
-        msg = msg + txt;
-        msg = msg + msgOrig.substring(msgOrig.indexOf(`<script src=`));
+      });
+      req.on('end', function () {
+        // e.g. body = 'fname=Alex\r\nsname=Raven\r\n'
         /*
-        msg = '<!DOCTYPE html><html>';
-        msg = msg + ' <head><meta charset="utf-8"><title>My test page</title>';
-        msg = msg + `<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>`;
-        msg = msg + `<link href="styles/style.css" rel="stylesheet" type="text/css"></head>`;
-        msg = msg + `<body>`;
-        msg = msg + `<h1>Mozilla is cool</h1>`; // NB! h1 will be changed from client script.
-        //msg = msg + `<img src="https://findicons.com/files/icons/783/mozilla_pack/128/firefox.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
-        msg = msg + `<img src="images/firefox-icon.png" alt="Firefox logo: a flaming fox surrounding the Earth." width="200" >`;
-        msg = msg + `<p>Read <a href="https://www.mozilla.org/en-US/about/manifesto/">Mozilla Manifesto</a> for more...</p>`;
-        msg = msg + '<br />' + txt;
-        msg = msg + `<script src="scripts/main.js"></script>`;
-        msg = msg + `</body></html>`;
+        console.log(body);
+        let strVar = '';
+        for (let i = 0; i < body.length; i++) {
+          strVar = strVar + body.charCodeAt(i) + ",";
+        }
+        console.log(strVar);
         */
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(msg);
-        res.end();
-      } // end  of file index.html read OK.
-    }); // end of file index.html reading.
-  } // end of modifying default index.html template with query params.
+        let objBody = qs.parse(body, "\r\n", "="); // using const qs = require('querystring').
+        //console.log(objBody);
+        fs.readFile('./index.html', (err, data) => { // file index.html reading.
+          if (err) throw err;
+          else { // file index.html read OK.
+            let msgOrig = '';
+            for (let i=0; i<data.length; i++) {
+              msgOrig = msgOrig + String.fromCharCode(data[i]);
+            }
+            let msg = msgOrig.substring(0,msgOrig.indexOf(`</body>`));
+            msg += 'LAST ENTERED by method ' + req.method + ':<br />';
+            msg += 'Name = ' + objBody.fname + '<br />';
+            msg += 'Surname = ' + objBody.sname;
+            msg += msgOrig.substring(msgOrig.indexOf(`</body>`));
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write(msg);
+            return res.end();
+          } // end  of file index.html read OK.
+        }); // end of file index.html reading.
+      });
+    } // end of if req.method == "POST".
+    // <==================================== end of POST, begin of GET =====================================>
+    else if (req.method = "GET") {
+      let q = objUrl.query; // formerly parsed query property object e.g. Object {fname: "Alex", sname: "Raven"}.
+      fs.readFile('./index.html', (err, data) => { // file index.html reading.
+        if (err) throw err;
+        else { // file index.html read OK.
+          let msgOrig = '';
+          for (let i=0; i<data.length; i++) {
+            msgOrig = msgOrig + String.fromCharCode(data[i]);
+          }
+          let msg = msgOrig.substring(0,msgOrig.indexOf(`</body>`));
+          msg += 'LAST ENTERED by method ' + req.method + ':<br />';
+          msg += 'Name = ' + q.fname + '<br />';
+          msg += 'Surname = ' + q.sname;
+          msg += msgOrig.substring(msgOrig.indexOf(`</body>`));
+          res.writeHead(200, { 'Content-Type': 'text/html' });
+          res.write(msg);
+          return res.end();
+        } // end  of file index.html read OK.
+      }); // end of file index.html reading.
+    } // end of req.method = "GET".
+  } // end of if req.url.includes('/submitForm...')
+  // <==================================== End of POST or GET form submit case.  =====================================>
 }) // end of server.on('request'...)
 
 dtVar = new Date();
@@ -148,7 +160,7 @@ console.log('after http.createServer ' + dtVar.getSeconds() + "." + dtVar.getMil
 // or the unspecified IPv4 address (0.0.0.0) otherwise.
 server.listen(port, hostname, () => {
   // Place holders in template literals are indicated by the $ (Dollar sign) and curly braces e.g. (${expression}).
-  console.log(`server.listen: Server running and listening at http://${hostname}:${port}/`); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
+  console.log(`server.listen: Server running and listening at http://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
 });
 
 dtVar = new Date();
