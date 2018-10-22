@@ -1,26 +1,27 @@
 'use strict';
 
 const http = require('http');
-const urlLegacy = require('url');
-//const { URL } = require('url');
+const urlLegacy = require('url'); // Legacy url module.
+//const { URL } = require('url'); // ES6 url module
 const fs = require('fs');
 const qs = require('querystring');
 //const formidable = require('formidable');
 
 let dtVar = new Date();
 console.log('Program starts ==================================== ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+/*
 //var envObj = process.env;
 for (let prop in process.env) {
   //console.log(prop + ": " + process.env[prop]);
 }
 dtVar = new Date();
 console.log('==================================== ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+*/
 
+// http://localhost:8081
 const hostname = 'localhost';
-//console.log('set port=' + process.env.PORT + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-//var port = process.env.PORT; //  Windows - default port is 1337 for WebApp and 1542 for ConsoleApp;
-const port = 8081; // process.env.Port;
-console.log('set port=' + port);
+//const port = process.env.PORT; //  Windows - default port is 1337 for WebApp and 1542 for ConsoleApp;
+const port = 8081; // for Linux must be set manually;
 
 dtVar = new Date();
 console.log('before http.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -38,9 +39,10 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   // The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays,
   // or properties from objects, into distinct variables.
   const { method, url, headers } = req;
-  // http://localhost:8081
   //let aaa = new Object();
   let objUrl = urlLegacy.parse(req.url, true, true);
+  // Verify that it is very first page request or rendering page after GET or POST form submit processed.
+  // After POST form submit will be processed rendering page will be as GET.
   if ((req.method != "POST") && (objUrl.search == "")) { // if req.method == "POST" then ObjUrl.search will be "" always.
     if (objUrl.pathname.includes('/styles/')) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
@@ -106,11 +108,11 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         }
         console.log(strVar);
         */
-        let objBody = qs.parse(body, "\r\n", "="); // using const qs = require('querystring').
+        let objBody = qs.parse(body, "\r\n", "="); // using const qs = require('querystring') module.
         //console.log(objBody);
-        fs.readFile('./index.html', (err, data) => { // file index.html reading.
+        fs.readFile('./index.html', (err, data) => { // index.html reading.
           if (err) throw err;
-          else { // file index.html read OK.
+          else { // file index.html read OK -  modify template file.
             let msgOrig = '';
             for (let i=0; i<data.length; i++) {
               msgOrig = msgOrig + String.fromCharCode(data[i]);
@@ -133,7 +135,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write(msg);
             return res.end();
-          } // end  of file index.html read OK.
+          } // end  of file index.html read OK - modify template file.
         }); // end of file index.html reading.
       });
     } // end of if req.method == "POST".
@@ -142,7 +144,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       let q = objUrl.query; // formerly parsed query property object e.g. Object {fname: "Alex", sname: "Raven"}.
       fs.readFile('./index.html', (err, data) => { // file index.html reading.
         if (err) throw err;
-        else { // file index.html read OK.
+        else { // file index.html read OK - modify template file.
           let msgOrig = '';
           for (let i=0; i<data.length; i++) {
             msgOrig = msgOrig + String.fromCharCode(data[i]);
@@ -165,7 +167,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
           res.writeHead(200, { 'Content-Type': 'text/html' });
           res.write(msg);
           return res.end();
-        } // end  of file index.html read OK.
+        } // end  of file index.html read OK - modify template file.
       }); // end of file index.html reading.
     } // end of req.method = "GET".
   } // end of if req.url.includes('/submitForm...')
