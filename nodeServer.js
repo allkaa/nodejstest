@@ -142,7 +142,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
               }
             }
             if (blnOk) {
-              fs.readFile('./index.html', (err, data) => {
+              fs.readFile('./pages/index.html', (err, data) => {
                 if (err) throw err;
                 else {
                   res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -163,7 +163,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
             }
           } // end of if (req.url.includes('/submitFormAK-Ini'))
           else { // if (req.url.includes('/submitFormAK'))
-            fs.readFile('./index.html', (err, data) => { // index.html reading.
+            fs.readFile('./pages/index.html', (err, data) => { // index.html reading.
               if (err) throw err;
               else { // file index.html read OK -  modify template file.
                 let msgOrig = '';
