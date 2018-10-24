@@ -48,8 +48,12 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   if ((req.method != "POST") && (objUrl.search == "")) { // if req.method == "POST" then ObjUrl.search will be "" always.
     if (objUrl.pathname.includes('.css')) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
-        if (err) throw err;
-        else {
+      if (err) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
+        return res.end();
+          } // throw err;
+      else {
           res.writeHead(200, { 'Content-Type': 'text/css' });
           res.write(data);
           return res.end();
@@ -58,8 +62,12 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
     }
     else if (objUrl.pathname.includes('.js')) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/scripts/main.js"
-        if (err) throw err;
-        else {
+      if (err) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
+        return res.end();
+          } // throw err;
+      else {
           res.writeHead(200, { 'Content-Type': 'application/javascript' });
           res.write(data);
           return res.end();
@@ -68,8 +76,12 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
     }
     else if (objUrl.pathname.includes('.png')) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/images/firefox-icon.png"
-        if (err) throw err;
-        else {
+      if (err) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
+        return res.end();
+          } // throw err;
+      else {
           res.writeHead(200, { 'Content-Type': 'image/png' });
           res.write(data);
           return res.end();
@@ -78,8 +90,12 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
     }
     else if (objUrl.pathname.includes('.jpg' || objUrl.pathname.includes('.jpeg'))) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/images/firefox-icon.jpg"
-        if (err) throw err;
-        else {
+      if (err) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
+        return res.end();
+          } // throw err;
+      else {
           res.writeHead(200, { 'Content-Type': 'image/jpeg' });
           res.write(data);
           return res.end();
@@ -88,7 +104,11 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
     }
     else if (objUrl.pathname.includes('.htm' || objUrl.pathname.includes('.html'))) {
       fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/app.html"
-        if (err) throw err;
+        if (err) {
+          res.writeHead(200, { 'Content-Type': 'text/plain' });
+          res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
+          return res.end();
+            } // throw err;
         else {
           res.writeHead(200, { 'Content-Type': 'text/html' });
           res.write(data);
