@@ -2,7 +2,8 @@
 
 let methodType = 'post'; // or 'get'.
 
-const http = require('http');
+//const http = require('http');
+const https = require('https');
 const urlLegacy = require('url'); // Legacy url module.
 //const { URL } = require('url'); // ES6 url module
 const fs = require('fs');
@@ -21,22 +22,47 @@ dtVar = new Date();
 console.log('==================================== ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 */
 
-// http://localhost:8081
+// https://localhost:8081
 const hostname = 'localhost';
 //const port = process.env.PORT; //  Windows - default port is 1337 for WebApp and 1542 for ConsoleApp;
 const port = 8081; // for Linux must be set manually;
 
 dtVar = new Date();
-console.log('before http.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('before https.createServer() ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+const options = {
+  pfx: fs.readFileSync('./unl_works.pfx'), // '../../unl_works.pfx'
+  passphrase: 'unl'
+};
 
 //const server = http.createServer((req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse> ...}
-const server = http.createServer();
+const server = https.createServer(options);
+
+server.on('error', (err) => {
+  var dtVar = new Date();
+  //throw err;
+  console.log(`httpsServer 'error' event - error code:` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log(err.code);
+  console.log('httpsServer error stack:');
+  console.log(err.stack);
+});
+
+/*
+server.on('connection', (socket) => {
+  var dtVar = new Date();
+  console.log(`httpsServer 'connection' event - client connected at` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log(socket.remoteAddress + ' ' + socket.remoteFamily + ' ' + socket.remotePort);
+});
+*/
+
 server.on('request', (req, res) => { // request is <http.IncomingMessage>, response is <http.ServerResponse>
   req.on('error', (err) => {
     // This prints the error message and stack trace to `stderr`.
+    console.log(`httpsServer request 'error' event - error stack:` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.error(err.stack);
   });
   res.on('error', (err) => {
+    console.log(`httpsServer response 'error' event - error code:` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.error(err);
   });
   // The destructuring assignment syntax is a JavaScript expression that makes it possible to unpack values from arrays,
@@ -225,14 +251,14 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
 }) // end of server.on('request'...)
 
 dtVar = new Date();
-console.log('after http.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('after https.createServer ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 // Begin accepting connections on the specified port and hostname.
 // If hostname is omitted, server will accept connections on the unspecified IPv6 address (::) when IPv6 is available,
 // or the unspecified IPv4 address (0.0.0.0) otherwise.
 server.listen(port, hostname, () => {
   // Place holders in template literals are indicated by the $ (Dollar sign) and curly braces e.g. (${expression}).
-  console.log(`Server running and listening at http://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
+  console.log(`Server running and listening at https://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
 });
 
 dtVar = new Date();
