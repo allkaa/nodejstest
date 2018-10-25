@@ -46,66 +46,27 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   // After POST form submit will be processed rendering page will be as GET.
   // objUrl.search is ? and query e.g. "?fname=Alex&sname=Raven" or ""
   if ((req.method != "POST") && (objUrl.search == "")) { // if req.method == "POST" then ObjUrl.search will be "" always.
-    if (objUrl.pathname.includes('.css')) {
-      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/styles/style.css"
-      if (err) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
-        return res.end();
-          } // throw err;
-      else {
-          res.writeHead(200, { 'Content-Type': 'text/css' });
-          res.write(data);
-          return res.end();
-        }
-      });
+    let contType = '';
+    if (objUrl.pathname.endsWith('.css')) {
+      contType = 'text/css';
     }
-    else if (objUrl.pathname.includes('.js')) {
-      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/scripts/main.js"
-      if (err) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
-        return res.end();
-          } // throw err;
-      else {
-          res.writeHead(200, { 'Content-Type': 'application/javascript' });
-          res.write(data);
-          return res.end();
-        }
-      });
+    else if (objUrl.pathname.endsWith('.js')) {
+      contType = 'application/javascript';
     }
-    else if (objUrl.pathname.includes('.png')) {
-      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/images/firefox-icon.png"
-      if (err) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
-        return res.end();
-          } // throw err;
-      else {
-          res.writeHead(200, { 'Content-Type': 'image/png' });
-          res.write(data);
-          return res.end();
-        }
-      });
+    else if (objUrl.pathname.endsWith('.png')) {
+      contType = 'image/png';
     }
-    else if (objUrl.pathname.includes('.jpg' || objUrl.pathname.includes('.jpeg'))) {
-      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/images/firefox-icon.jpg"
-      if (err) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
-        return res.end();
-          } // throw err;
-      else {
-          res.writeHead(200, { 'Content-Type': 'image/jpeg' });
-          res.write(data);
-          return res.end();
-        }
-      });
+    else if (objUrl.pathname.endsWith('.jpg') || objUrl.pathname.endsWith('.jpeg')) {
+      contType = 'image/jpeg';
     }
-    else if (objUrl.pathname.includes('.htm' || objUrl.pathname.includes('.html'))) {
-      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/app.html"
+    else if (objUrl.pathname.endsWith('.htm') || objUrl.pathname.endsWith('.html')) {
+      contType = 'text/html';
+    }
+    if (contType == '') {  // default app.html.
+      contType = 'text/plain';
+      fs.readFile('./app.html', (err, data) => {
         if (err) {
-          res.writeHead(200, { 'Content-Type': 'text/plain' });
+          res.writeHead(200, { 'Content-Type': `${contType}` });
           res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
           return res.end();
             } // throw err;
@@ -116,17 +77,21 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         }
       });
     }
-    else { // default index.html.
-      fs.readFile('./app.html', (err, data) => {
-        if (err) throw err;
-        else {
-          res.writeHead(200, { 'Content-Type': 'text/html' });
+    else {
+      fs.readFile('.' + objUrl.pathname, (err, data) => { //'.' + "/path/name.type"
+      if (err) {
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.write(`Who cares what the idiots says!\nWho cares what the idiots do!\n (c) Paul McCartney`);
+        return res.end();
+          } // throw err;
+      else {
+          res.writeHead(200, { 'Content-Type': `${contType}` });
           res.write(data);
           return res.end();
         }
       });
-      }
-  } // end of empty search ""  case.
+    }
+  } // end of non-POST method and  empty search ""  case.
   // <==================== end of very first case and rendering results case ================================================>
   // Non empty objUrl.search (search is ? and query) e.g. "?fname=Alex&sname=Raven"
   else {
@@ -233,7 +198,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
       // HACKER ATTACK OR FAULTY CLIENT.
       //req.connection.destroy();
       res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write(`Who cares what the idiot says!\n (c) Paul McCartney`);
+      res.write(`Who cares what the idiots says!\nWho cares what the idiots do!\n (c) Paul McCartney`);
       return res.end();
     }
     // <==================================== End of POST or GET form submit case.  =====================================>
