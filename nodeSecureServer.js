@@ -99,8 +99,9 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   // POST method or Non empty objUrl.search (search is ? and query) e.g. "?fname=Alex&sname=Raven"
   else {
     // Begin of POST or GET form submit case.
+    // /submitFormAK-Ini/submitFormAK-Ini - hacks.
     if (req.url.includes('/submitFormAK') || req.url.includes('/submitFormAK-Ini')) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
-      if (req.method == "POST" && methodType == 'post') {
+      if (req.method == "POST" && methodType == 'post' && (req.url.lastIndexOf('/submitFormAK') == 0)) {
         let body = '';
         req.on('data', function (data) {
           body += data;
