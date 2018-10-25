@@ -1,5 +1,7 @@
 'use strict';
 
+let methodType = 'post'; // or 'get'.
+
 const http = require('http');
 const urlLegacy = require('url'); // Legacy url module.
 //const { URL } = require('url'); // ES6 url module
@@ -98,7 +100,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   else {
     // Begin of POST or GET form submit case.
     if (req.url.includes('/submitFormAK') || req.url.includes('/submitFormAK-Ini')) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
-      if (req.method == "POST") {
+      if (req.method == "POST" && methodType == 'post') {
         let body = '';
         req.on('data', function (data) {
           body += data;
@@ -177,7 +179,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         }); // end req.on('end', function ()...
       } // end of if req.method == "POST".
       // <==================================== end of POST, begin of GET =====================================>
-      else if (req.method = "GET") {
+      else if (req.method = "GET" && methodType == 'get') {
         let q = objUrl.query; // formerly parsed query property object e.g. Object {fname: "Alex", sname: "Raven"}.
         fs.readFile('./pages/index.html', (err, data) => { // file index.html reading.
           if (err) throw err;
@@ -202,6 +204,13 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
           } // end  of file index.html read OK - modify template file.
         }); // end of file index.html reading.
       } // end of req.method = "GET".
+      else { // POST != methodType='post' or GET != methodType='get'
+      // HACKER ATTACK OR FAULTY CLIENT.
+      //req.connection.destroy();
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.write(`Who cares what the idiots says!\nWho cares what the idiots do!\n (c) Paul McCartney`);
+      return res.end();
+      }
     } // end of if req.url.includes('/submitForm...')
     else { // no "/submitFormAK" but search is not emty e.g. "?fname=Alex&sname=Raven"
       // HACKER ATTACK OR FAULTY CLIENT.
