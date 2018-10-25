@@ -6,6 +6,7 @@ const urlLegacy = require('url'); // Legacy url module.
 const fs = require('fs');
 const qs = require('querystring');
 //const formidable = require('formidable');
+const {userInfo} = require('./appWeb.js');
 
 let dtVar = new Date();
 console.log('Program starts ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -151,7 +152,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
             fs.readFile('./pages/index.html', (err, data) => { // index.html reading.
               if (err) throw err;
               else { // file index.html read OK -  modify template file.
-                let msgOrig = '';
+                let msgOrig = ''; msgT = '';
                 for (let i=0; i<data.length; i++) {
                   msgOrig = msgOrig + String.fromCharCode(data[i]);
                 }
