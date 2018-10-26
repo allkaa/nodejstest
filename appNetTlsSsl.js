@@ -1,17 +1,17 @@
 'use strict';
 
-var dtVar = new Date();
+let dtVar = new Date();
 console.log('==================================== main PROGRAM NetTlsSsl source text started' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 const fs = require('fs');
 const querystring = require('querystring');
 const sleep = require('system-sleep');
 
-var port; //const port = 1337;
-var hostname; //const hostname = '127.0.0.1';
-var confInfo = fs.readFileSync('./config.txt', 'ascii'); // or 'utf8' .
+let port; //const port = 1337;
+let hostname; //const hostname = '127.0.0.1';
+let confInfo = fs.readFileSync('./config.txt', 'ascii'); // or 'utf8' .
 console.log(confInfo);
-var objConfInfo = querystring.parse(confInfo, '&', '=', { maxKeys: 10 }); // defaults are  '&', '=', { maxKeys: 1000 }
+let objConfInfo = querystring.parse(confInfo, '&', '=', { maxKeys: 10 }); // defaults are  '&', '=', { maxKeys: 1000 }
 // Note: The object returned by the querystring.parse() method does not prototypically inherit from the JavaScript Object.
 // This means that typical Object methods such as obj.toString(), obj.hasOwnProperty(), and others are not defined and will not work.
 console.log(objConfInfo.port);
@@ -41,18 +41,18 @@ else {
 
 //return;  // NB!!! for test only!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-var dtVar = new Date();
+dtVar = new Date();
 console.log(`Get tsl module require('tls') ` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 // Implementation of the Transport Layer Security (TLS) and Secure Socket Layer (SSL) protocols.
 // TLS/SSL is a public/private key infrastructure (PKI).
 const tls = require('tls');
 console.log(tls.getCiphers());
 console.log(tls.DEFAULT_ECDH_CURVE);
-var dtVar = new Date();
+dtVar = new Date();
 console.log('tls.createServer' + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 const options = {
-  pfx: fs.readFileSync('../../unl_works.pfx'),
+  pfx: fs.readFileSync('./unl_works.pfx'),
   passphrase: 'unl'
 };
 
@@ -60,7 +60,7 @@ const options = {
 const server = new tls.Server(options); // socket 'data' event handler must be set.
 // Server 'error' listener (event handler).
 server.on('error', (err) => {
-  var dtVar = new Date();
+  dtVar = new Date();
   //throw err;
   console.log(`Server 'error' event - error code:` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   console.log(err.code);
@@ -70,7 +70,7 @@ server.on('error', (err) => {
 
 // Server 'connection' listener (event handler).
 server.on('connection', (socket) => { // socket is an instance of net.Socket.
-  var dtVar = new Date();
+  dtVar = new Date();
   console.log(`Server 'connection' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   console.log(socket.address());
 });
@@ -82,7 +82,7 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
   // The tls.TLSSocket is a subclass of net.Socket that performs transparent encryption of written data and all required TLS negotiation.
   // Instances of tls.TLSSocket implement the duplex Stream interface.
   // Note: Methods that return TLS connection metadata e.g. tls.TLSSocket.getPeerCertificate() will only return data while the connection is open.
-  var dtVar = new Date();
+  dtVar = new Date();
   console.log(`Server 'secureConnection' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   console.log(tlsSocket.address());
   console.log(tlsSocket.getCipher());
@@ -91,7 +91,7 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
   // tlsSocket listeners (event handlers).
   // tlsSocket 'error' listener.
   tlsSocket.on('error', (err) => {
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`tlsSocket 'error' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     //throw err;
     if (err.code == 'ECONNRESET') {
@@ -109,15 +109,15 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
   });
   // tlsSocket 'end' listener.
   tlsSocket.on('end', () => {
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log("tlsSocket 'end' event - Client Disconnected" + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.log(tlsSocket.remoteAddress + ' ' + tlsSocket.remoteFamily + ' ' + tlsSocket.remotePort);
   });
   // tlsSocket 'data' listener (event handler).
   // NB! Adding event handler tlsSocket.on('data') both 'readable' event and 'data' event will be activated but 'data' work faster!!!
-  var msgInfo = '';
+  let msgInfo = '';
   tlsSocket.on('data', function (data) {
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`tlsSocket 'data' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     msgInfo += data;
     // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB.
@@ -126,15 +126,15 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
       tlsSocket.end(); // send empty message "" back to client.
       tlsSocket.destroy();
     }
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`Received ${msgInfo.length} bytes of msgInfo using event tlsSocket.on data.` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.log('|' + msgInfo + '|');
     sleep(10 * 1000); // sleep for 5 seconds.
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`Awaiking after sleep tlsSocket 'data' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     tlsSocket.write('Info tlsSocket.on data received:\r\n' + '|' + msgInfo + '|');
     tlsSocket.end(); // send empty message "" to client.
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log('finished tlsSocket.on data processing with client' + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.log(tlsSocket.remoteAddress + ' ' + tlsSocket.remoteFamily + ' ' + tlsSocket.remotePort);
   });
@@ -143,13 +143,13 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
 //const port = 1337;
 //const hostname = '127.0.0.1';
 server.listen(port, hostname, () => { // server.listen(port, '127.0.0.1', ...
-  var dtVar = new Date();
+  dtVar = new Date();
   console.log('Server server.listen() callback event - server bound to port ' + port + ', hostname ' + hostname + " ==> " +
     dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   console.log(server.address());
 });
 
-var dtVar = new Date();
+dtVar = new Date();
 console.log('==================================== END OF main PROGRAM NetTlsSsl source text' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 /*
@@ -167,12 +167,12 @@ NB!!! It is not correct for socket to use both 'readable' event with socket.read
 //const server = new net.Server({ allowHalfOpen: false, pauseOnConnect: false }); // socket 'data' event handler must be set.
 // Server 'connection' listener (event handler).
 server.on('connection', (socket) => { // socket is an instance of net.Socket.
-  var dtVar = new Date();
+  dtVar = new Date();
   console.log(`Server 'connection' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   // Socket listeners (event handlers).
   // Socket 'error' listener.
   socket.on('error', (err) => {
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`socket 'error' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     //throw err;
     if (err.code == 'ECONNRESET') {
@@ -190,7 +190,7 @@ server.on('connection', (socket) => { // socket is an instance of net.Socket.
   });
   // Socket 'end' listener.
   socket.on('end', () => {
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log("Socket 'end' event - Client Disconnected" + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.log(socket.remoteAddress + ' ' + socket.remoteFamily + ' ' + socket.remotePort);
   });
@@ -198,7 +198,7 @@ server.on('connection', (socket) => { // socket is an instance of net.Socket.
   // Socket 'readable' listener (event handler).
   // If socket Readable stream is in paused mode use socket.on('readable') event handler and socket.read() method.
   socket.on('readable', () => {
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`socket 'readable' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     socket.setEncoding('utf8');
     let chunk;
@@ -216,9 +216,9 @@ server.on('connection', (socket) => { // socket is an instance of net.Socket.
   //
   // Socket 'data' listener (event handler).
   // NB! Adding event handler socket.on('data') both 'readable' event and 'data' event will be activated but 'data' work faster!!!
-  var msgInfo = '';
+  let msgInfo = '';
   socket.on('data', function (data) {
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`socket 'data' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     msgInfo += data;
     // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB.
@@ -227,29 +227,29 @@ server.on('connection', (socket) => { // socket is an instance of net.Socket.
       socket.end(); // send empty message "" back to client.
       socket.destroy();
     }
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`Received ${msgInfo.length} bytes of msgInfo using event socket.on data.` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.log('|' + msgInfo + '|');
     //let strVar;
-    //strVar = fs.readFileSync('../../Protocol sample.txt', 'ascii'); // or 'utf8' .
-    //for (var i = 0; i < 9000000000; i++) {
+    //strlet = fs.readFileSync('../../Protocol sample.txt', 'ascii'); // or 'utf8' .
+    //for (let i = 0; i < 9000000000; i++) {
     //  //console.log(i);
     //  // more statements
     //}
     //console.log(strVar);
     //console.log(" EOF "  + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     sleep(10 * 1000); // sleep for 5 seconds.
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log(`Awaiking after sleep` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     socket.write('Info socket.on data received:\r\n' + '|' + msgInfo + '|');
     socket.end(); // send empty message "" to client.
-    var dtVar = new Date();
+    dtVar = new Date();
     console.log('finished socket.on data processing with client' + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.log(socket.remoteAddress + ' ' + socket.remoteFamily + ' ' + socket.remotePort);
   });
   //
   // Server 'connection' listener (event handler) continued working immediate after connection before (any?) socket events.
-  var dtVar = new Date();
+  dtVar = new Date();
   console.log(`Server 'connection' event continued - client connected at` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   console.log(socket.remoteAddress + ' ' + socket.remoteFamily + ' ' + socket.remotePort);
   // work with socket immediate after connection.
