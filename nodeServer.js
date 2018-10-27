@@ -14,7 +14,7 @@ const qs = require('querystring');
 const {userInfo} = require('./appWeb.js');
 
 let dtVar = new Date();
-console.log('Program starts ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('Server starts ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 /*
 //var envObj = process.env;
 for (let prop in process.env) {
@@ -264,4 +264,4 @@ server.listen(port, hostname, () => {
 });
 
 dtVar = new Date();
-console.log('End main PROGAM after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('End Serer main PROGAM path after server.listen(port, hostname, callback) ' + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
