@@ -1,5 +1,6 @@
 'use strict';
 
+/*
 // NB! The const declaration creates a read-only reference to a value. It does not mean the value it holds is immutable,
 // just that the variable identifier cannot be reassigned.
 // For instance, in the case where the content is an object, this means the object's contents (e.g., its parameters) can be altered.
@@ -26,16 +27,31 @@ const { method, url } = req; // two new constsants - method and url will be set 
 
 //if (true) return;
 
-var dtVar = new Date();
-console.log('====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+*/
+
+let dtVar = new Date();
+console.log('Begin of PROGRAM ====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 const envObj = process.env;
-
-for (var prop in envObj) {
-  console.log(prop + ": " + envObj[prop]);
+for (let prop in envObj) {
+  //console.log(prop + ": " + envObj[prop]);
 }
-console.log(prop + " <== for availability test"); // NB! prop is available outside of for/in loop!!!
-console.log('====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+//console.log(prop + " <== for availability test"); // NB! prop is NOT available outside of for/in loop!!!
+//dtVar = new Date();
+//console.log('====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+
+// Class sample.
+const EventEmitter = require('events');
+
+class MyEmitter extends EventEmitter { } // MyEmitter class is child on EventEmitter class.
+
+const myEmitter = new MyEmitter(); // new MyEmitter (EventEmitter child) class instance created.
+
+myEmitter.on('eventForTest', () => { // Register listener for myEmitter instance of class MyEmitter to catch 'eventForTest' event.
+  console.log('an eventForTest event occurred!');
+});
+myEmitter.emit('eventForTest'); // fire 'eventForTest' event.
 
 //  Non class (protoype object model) sample.
 /*
@@ -64,16 +80,5 @@ eventEmitter.on('data_received', function () {
 eventEmitter.emit('connection');
 */
 
-// Class sample.
-const EventEmitter = require('events');
-
-class MyEmitter extends EventEmitter { } // MyEmitter is child on EventEmitter class.
-
-const myEmitter = new MyEmitter(); // new MyEmitter (EventEmitter child) class instance created.
-
-myEmitter.on('eventTest', () => { // Register listener (e.g. ES6 Arrow Function) to 'eventTest' event.
-  console.log('an eventTest occurred!');
-});
-myEmitter.emit('eventTest'); // fire 'eventTest' 
-
-console.log("Program Ended." + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+dtVar = new Date();
+console.log("Program Ended ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
