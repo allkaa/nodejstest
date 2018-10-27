@@ -10,12 +10,12 @@ const sleep = require('system-sleep');
 let port; //const port = 1337;
 let hostname; //const hostname = '127.0.0.1';
 let confInfo = fs.readFileSync('./config.txt', 'ascii'); // or 'utf8' .
-console.log(confInfo);
+//console.log(confInfo);
 let objConfInfo = querystring.parse(confInfo, '&', '=', { maxKeys: 10 }); // defaults are  '&', '=', { maxKeys: 1000 }
 // Note: The object returned by the querystring.parse() method does not prototypically inherit from the JavaScript Object.
 // This means that typical Object methods such as obj.toString(), obj.hasOwnProperty(), and others are not defined and will not work.
-console.log(objConfInfo.port);
-console.log(objConfInfo.host);
+//console.log(objConfInfo.port);
+//console.log(objConfInfo.host);
 port = Number.parseInt(objConfInfo.port);
 if (!Number.isNaN(port)) {
   console.log(`Port parameter: ${port}`);
@@ -46,8 +46,9 @@ console.log(`Get tsl module require('tls') ` + " ==> " + dtVar.getSeconds() + ".
 // Implementation of the Transport Layer Security (TLS) and Secure Socket Layer (SSL) protocols.
 // TLS/SSL is a public/private key infrastructure (PKI).
 const tls = require('tls');
-console.log(tls.getCiphers());
-console.log(tls.DEFAULT_ECDH_CURVE);
+//console.log(tls.getCiphers());
+//console.log(tls.DEFAULT_ECDH_CURVE);
+
 dtVar = new Date();
 console.log('tls.createServer' + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
@@ -72,7 +73,7 @@ server.on('error', (err) => {
 server.on('connection', (socket) => { // socket is an instance of net.Socket.
   dtVar = new Date();
   console.log(`Server 'connection' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  console.log(socket.address());
+  //console.log(socket.address());
 });
 
 // Server 'secureConnection' listener (event handler).
@@ -84,9 +85,9 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
   // Note: Methods that return TLS connection metadata e.g. tls.TLSSocket.getPeerCertificate() will only return data while the connection is open.
   dtVar = new Date();
   console.log(`Server 'secureConnection' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  console.log(tlsSocket.address());
-  console.log(tlsSocket.getCipher());
-  console.log(tlsSocket.getEphemeralKeyInfo()); //  It returns null when the key exchange is not ephemeral. 
+  //console.log(tlsSocket.address());
+  //console.log(tlsSocket.getCipher());
+  //console.log(tlsSocket.getEphemeralKeyInfo()); //  It returns null when the key exchange is not ephemeral. 
   console.log(tlsSocket.getProtocol());
   // tlsSocket listeners (event handlers).
   // tlsSocket 'error' listener.
@@ -104,10 +105,14 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
       console.log('tlsSocket error stack:');
       console.log(err.stack);
     }
-    console.log(tlsSocket.remoteAddress + ' ' + tlsSocket.remoteFamily + ' ' + tlsSocket.remotePort);
+    console.log('tlsSocket.destroy() ' + tlsSocket.remoteAddress + ' ' + tlsSocket.remoteFamily + ' ' + tlsSocket.remotePort);
     tlsSocket.destroy();
   });
   // tlsSocket 'end' listener.
+  // Emitted when the other end of the socket sends a FIN packet, thus ending the readable side of the socket.
+  // By default (allowHalfOpen is false) the socket will send a FIN packet back and destroy its file descriptor once it has written out its pending write queue.
+  // However, if allowHalfOpen is set to true, the socket will not automatically end() its writable side, allowing the user to write arbitrary amounts of data.
+  // The user must call end() explicitly to close the connection (i.e. sending a FIN packet back).
   tlsSocket.on('end', () => {
     dtVar = new Date();
     console.log("tlsSocket 'end' event - Client Disconnected" + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -115,11 +120,11 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
   });
   // tlsSocket 'data' listener (event handler).
   // NB! Adding event handler tlsSocket.on('data') both 'readable' event and 'data' event will be activated but 'data' work faster!!!
-  let msgInfo = '';
-  tlsSocket.on('data', function (data) {
+  tlsSocket.on('data', function (data) { // data: Uint8Array(...) [...]
     dtVar = new Date();
     console.log(`tlsSocket 'data' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-    msgInfo += data;
+    let msgInfo = '';
+    msgInfo += data; // data Buffer will be converted to string msgInfo explicitly.
     // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB.
     if (msgInfo.length > 1e6) {
       // Memory FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST!!!
@@ -129,7 +134,7 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
     dtVar = new Date();
     console.log(`Received ${msgInfo.length} bytes of msgInfo using event tlsSocket.on data.` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     console.log('|' + msgInfo + '|');
-    sleep(10 * 1000); // sleep for 5 seconds.
+    sleep(1 * 1000); // simulte processing time sleep for 1 seconds.
     dtVar = new Date();
     console.log(`Awaiking after sleep tlsSocket 'data' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     tlsSocket.write('Info tlsSocket.on data received:\r\n' + '|' + msgInfo + '|');
@@ -146,7 +151,7 @@ server.listen(port, hostname, () => { // server.listen(port, '127.0.0.1', ...
   dtVar = new Date();
   console.log('Server server.listen() callback event - server bound to port ' + port + ', hostname ' + hostname + " ==> " +
     dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  console.log(server.address());
+  //console.log(server.address());
 });
 
 dtVar = new Date();
