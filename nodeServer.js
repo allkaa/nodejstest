@@ -208,7 +208,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         }); // end req.on('end', function ()...
       } // end of if req.method == "POST".
       // <==================================== end of POST, begin of GET =====================================>
-      else if (req.method = "GET") {
+      else if (req.method = "GET") { // for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
         let q = objUrl.query; // formerly parsed query property object e.g. Object {fname: "Alex", sname: "Raven"}.
         fs.readFile('./pages/index.html', (err, data) => { // file index.html reading.
           if (err) throw err;

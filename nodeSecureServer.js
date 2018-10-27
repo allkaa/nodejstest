@@ -1,6 +1,8 @@
 'use strict';
 
 let methodType = 'post'; // or 'get'.
+let formNameIni = 'submitFormAK-Ini';
+let formName = 'submitFormAK';
 
 //const http = require('http');
 const https = require('https');
@@ -126,8 +128,8 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
   else {
     // Begin of POST or GET form submit case.
     // /submitFormAK-Ini/submitFormAK-Ini - hacks.
-    if (req.url.includes('/submitFormAK') || req.url.includes('/submitFormAK-Ini')) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
-      if (req.method == "POST" && methodType == 'post' && (req.url.lastIndexOf('/submitFormAK') == 0)) {
+    if (req.url.includes('/'  + formName) || req.url.includes('/' + formNameIni)) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
+      if (req.method == "POST" && methodType == 'post' && (req.url.lastIndexOf('/' + formName) == 0)) {
         let body = '';
         req.on('data', function (data) {
           body += data;
@@ -149,7 +151,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
           */
           let objBody = qs.parse(body, "\r\n", "="); // using const qs = require('querystring') module.
           //console.log(objBody);
-          if (req.url.includes('/submitFormAK-Ini')) {
+          if (req.url.includes('/' + formNameIni)) {
             let blnOk = false;
             if (objBody.userId == "Unl") {
               if (objBody.passWord == "123qwe!") {
@@ -206,7 +208,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
         }); // end req.on('end', function ()...
       } // end of if req.method == "POST".
       // <==================================== end of POST, begin of GET =====================================>
-      else if (req.method = "GET" && methodType == 'get') {
+      else if (req.method = "GET" && methodType == 'get') { // for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
         let q = objUrl.query; // formerly parsed query property object e.g. Object {fname: "Alex", sname: "Raven"}.
         fs.readFile('./pages/index.html', (err, data) => { // file index.html reading.
           if (err) throw err;
