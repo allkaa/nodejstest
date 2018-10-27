@@ -1,6 +1,6 @@
 'use strict';
 
-console.log("Start of main Program " + Date.now())
+console.log("Start of main Program text " + Date.now())
 
 const fs = require('fs');
 
@@ -37,10 +37,12 @@ setTimeout(() => {
 }, 100);
 
 
-// do someAsyncOperation which takes 95 ms to complete
-someAsyncOperation(() => {
+// call someAsyncOperation function with arrow function callback which takes 95 ms to complete
+someAsyncOperation((err, data) => {
   const startCallback = Date.now();
   console.log('callback started ' + startCallback);
+  let msg = '';
+  msg += data; // convert data Buffer to string.
   // do something that will take 10ms...
   while (Date.now() - startCallback < 10) {
     // do nothing
