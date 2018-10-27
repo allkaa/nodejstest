@@ -21,7 +21,7 @@ if (!Number.isNaN(port)) {
   console.log(`Port parameter: ${port}`);
 }
 else {
-  console.log(`wrong port parameter: ${objConfInfo.port}`);
+  console.log(`Wrong port parameter: ${objConfInfo.port}`);
   return;
 }
 if (typeof (objConfInfo.host) !== 'string') {
