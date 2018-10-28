@@ -137,6 +137,7 @@ server.on('secureConnection', (tlsSocket) => { // tlsSocket  is an instance of n
     sleep(1 * 1000); // simulte processing time sleep for 1 seconds.
     dtVar = new Date();
     console.log(`Awaiking after sleep tlsSocket 'data' event` + " ==> " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    // asyn processing.
     tlsSocket.write('Info tlsSocket.on data received:\r\n' + '|' + msgInfo + '|');
     tlsSocket.end(); // send empty message "" to client.
     dtVar = new Date();

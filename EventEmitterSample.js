@@ -30,7 +30,7 @@ const { method, url } = req; // two new constsants - method and url will be set 
 */
 
 let dtVar = new Date();
-console.log('Begin of PROGRAM ====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('Begin of PROGRAM text ====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 const envObj = process.env;
 for (let prop in envObj) {
@@ -41,17 +41,51 @@ for (let prop in envObj) {
 //console.log('====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 
-// Class sample.
-const EventEmitter = require('events');
-
-class MyEmitter extends EventEmitter { } // MyEmitter class is child on EventEmitter class.
-
+const events = require('events'); // // Import events module.
+// Prototype stype.
+//const myEmitter = new events.EventEmitter(); // prototype style new myEmitter class instance created also works.
+// Class style.
+class MyEmitter extends events { } // MyEmitter class is child on EventEmitter class - events function is used as class constructor.
 const myEmitter = new MyEmitter(); // new MyEmitter (EventEmitter child) class instance created.
 
-myEmitter.on('eventForTest', () => { // Register listener for myEmitter instance of class MyEmitter to catch 'eventForTest' event.
-  console.log('an eventForTest event occurred!');
+// Create an event handler for 'connectioin' event as follows.
+const connectionHandler = function connected() {
+  dtVar = new Date;
+  console.log('connection succesful.' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  // Fire the data_received event internally from connection event handler. 
+  myEmitter.emit('data_received');
+}
+
+// Bind the connection event with the handler.
+myEmitter.on('connection', connectionHandler);
+
+///*
+// Bind the data_received event with anonymous function.
+myEmitter.on('data_received', function () {
+  dtVar = new Date;
+  console.log('data received succesfully.' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 });
-myEmitter.emit('eventForTest'); // fire 'eventForTest' event.
+//*/
+
+/*
+// Bind the data_received event with arrow-function function.
+myEmitter.on('data_received', () => {
+  dtVar = new Date;
+  console.log('data received succesfully.' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+});
+*/
+
+// Test using setTimeout().
+dtVar = new Date;
+let delay = 3000; // delay in milliseconds.
+console.log(`Set ${delay} milliseconds Timeout for an 'connection' event` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+setTimeout(() => {
+  myEmitter.emit('connection'); // fire 'connectoin' event.
+}, delay);
+
+dtVar = new Date();
+console.log("End of PROGRAM text ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
 
 //  Non class (protoype object model) sample.
 /*
@@ -79,6 +113,3 @@ eventEmitter.on('data_received', function () {
 // Fire the connection event 
 eventEmitter.emit('connection');
 */
-
-dtVar = new Date();
-console.log("Program Ended ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
