@@ -43,10 +43,10 @@ for (let prop in envObj) {
 
 const events = require('events'); // // Import events module.
 // Prototype stype.
-//const myEmitter = new events.EventEmitter(); // prototype style new myEmitter class instance created also works.
+const myEmitter = new events.EventEmitter(); // prototype style new myEmitter class instance created also works.
 // Class style.
-class MyEmitter extends events { } // MyEmitter class is child on EventEmitter class - events function is used as class constructor.
-const myEmitter = new MyEmitter(); // new MyEmitter (EventEmitter child) class instance created.
+//class MyEmitter extends events { } // MyEmitter class is child on events class --> events is function EventEmitter() and it is used as class constructor.
+//const myEmitter = new MyEmitter(); // new MyEmitter (EventEmitter child) class instance created.
 
 // Create an event handler for 'connectioin' event as follows.
 const connectionHandler = function connected() {
@@ -59,21 +59,21 @@ const connectionHandler = function connected() {
 // Bind the connection event with the handler.
 myEmitter.on('connection', connectionHandler);
 
-///*
+/*
 // Bind the data_received event with anonymous function.
 myEmitter.on('data_received', function () {
   dtVar = new Date;
   console.log('data received succesfully.' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 });
-//*/
+*/
 
-/*
+//*
 // Bind the data_received event with arrow-function function.
 myEmitter.on('data_received', () => {
   dtVar = new Date;
   console.log('data received succesfully.' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 });
-*/
+//*/
 
 // Test using setTimeout().
 dtVar = new Date;
