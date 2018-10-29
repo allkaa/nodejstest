@@ -9,7 +9,7 @@ fs.readFile('./app.html', (err, data) => {
   setTimeout(() => {
     console.log('setTimeout callback');
   }, 0);
-  // setImmediate() is designed to execute a script once the current poll phase completes.
+  // setImmediate() is designed to execute a code once the current poll phase completes.
   setImmediate(() => { // will be always executed BEFORE setTimeout insice I/O cycle!
     console.log('setImmediate callback');
   });
@@ -71,6 +71,36 @@ myEmitter.on('event', () => {
 dtVar = new Date();
 console.log('an event callback handler assigned!' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 //myEmitter.emit('event'); // an event fired in main script!!!
+
+// Partitioned average, each of the n asynchronous steps costs O(1).
+function asyncAvg(first, last, avgCB) { // callback avgCB will be function(avg)
+  // Save ongoing sum in JS closure.
+  var sum = 0;
+  function asynExecutor(i, cb) { // callback cb will be function(sum) than will in turn call AvgCB that will be function(avg).
+    sum += i;
+    if (i == last) {
+      cb(sum);
+      return;
+    }
+    // "Asynchronous recursion" - setImmediate() is designed to execute a code once the current poll phase completes.
+    // Using setImmediate schedule next iteration asynchronously to be executed once the current poll phase completes.
+    setImmediate(asynExecutor.bind(null, i+1, cb)); //  Schedule to call asynExecutor(i,cb)  where i=i+1, cb=function(sum) and `this` will be `null`.
+  }
+
+  // Start the asynExecutor, with callback to call avgCB.
+  asynExecutor(first, function(sum){ // call asynExecutor with parameters first and function(sum) as callback (cb)
+      var avg = sum/n;
+      avgCB(avg);
+  });
+}
+
+let m,n;
+m = 1; // first to calculate.
+n = 3; // last to calculate.
+asyncAvg(m, n, function(avg){ // call asyncAvg with parameters: m, n and function(avg) as callback (avgCB)
+  console.log(`Average of ${m} to ${n} incl. is ` + avg);
+});
+
 
 dtVar = new Date();
 console.log("End of MAIN script ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
