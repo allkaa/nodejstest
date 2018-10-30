@@ -1,8 +1,15 @@
 'use strict';
 
-// returning new Promoie with only resolve.
+let dtVar = new Date();
+console.log('Begin of MAIN script ====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+
+// returning new Promise with only resolve.
 function getUser(userId) {
+  dtVar = new Date();
+  console.log("start getUser(userId)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   return new Promise(resolve => {
+    dtVar = new Date();
+    console.log("inside getUser(userId) return new Promise thru setTimeout 1 sec with resolve 'john'" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     setTimeout(() => {
       resolve('john');
     }, 1000);
@@ -11,8 +18,12 @@ function getUser(userId) {
 
 // returning new Promisse wieh resolve or reject.
 function getBankBalance(user) {
+  dtVar = new Date();
+  console.log("start getBankBalance(user)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
+    dtVar = new Date();
+    console.log("inside getBankBalance(user) return new Promise thru setTimeout 1 sec with resolve $1,000 or reject 'unknown user'" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+      setTimeout(() => {
       if (user == 'john') {
         resolve('$1,000');
       }
@@ -25,6 +36,8 @@ function getBankBalance(user) {
 
 // Using ES2015 Promise constuction .then() 
 function getAmount(userId) {
+  dtVar = new Date();
+  console.log("inside getAmount(usereId) start Promise getUser(userId) then Promise getBankBalace then log amount " + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   getUser(userId)
     .then(getBankBalance)
     .then(amount => {
@@ -39,10 +52,26 @@ function getAmount(userId) {
   It assumes that the expression after await will return a promise and waits until the promise is resolved or rejected before moving further.
 */
 async function getAmount2(userId) {
+  dtVar = new Date();
+  console.log("start await getUser()" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   let user = await getUser(userId);
+  dtVar = new Date();
+  console.log("start getBankBalance(user)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   let amount = await getBankBalance(user);
-  console.log(amount);
+  dtVar = new Date();
+  console.log("start getAmount('1')" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    console.log(amount);
 }
 
+dtVar = new Date();
+console.log("start getAmount('1')" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 getAmount('1'); // $ 1,000
+
+/*
+dtVar = new Date();
+console.log("start getAmount2('1')" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 getAmount2('1'); // $1,000
+*/
+
+dtVar = new Date();
+console.log("End of MAIN script ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
