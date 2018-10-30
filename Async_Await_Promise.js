@@ -40,6 +40,7 @@ new Promise((resolve, reject) => {
 });
 */
 
+/*
 dtVar = new Date();
 console.log('Create promise ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
@@ -88,18 +89,21 @@ console.log('Promise object myFirstPromise created and asyn code scheduled ' + "
 dtVar = new Date();
 console.log("retrun in MAIN script ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 return;
+*/
 
 // Asyn/await ES2017
 
 // returning new Promise with only resolve.
 function getUser(userId) {
   dtVar = new Date();
-  console.log("start getUser(userId)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  return new Promise(resolve => {
+  console.log(`start getUser(${userId})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  return new Promise((resolve, reject) => { // returns only resolve as 'john'
     dtVar = new Date();
-    console.log("inside getUser(userId) return new Promise thru setTimeout 1 sec with resolve 'john'" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    console.log(`inside getUser(${userId}) return new Promise thru setTimeout 1 sec with resolve 'john or mary' or reject 'unknown userId'` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     setTimeout(() => {
-      resolve('john');
+      if (userId === 1) resolve('john');
+      else if (userId === 2) resolve('mary');
+      else reject(`unknown userId ${userId}`)
     }, 1000);
   });
 }
@@ -107,16 +111,17 @@ function getUser(userId) {
 // returning new Promisse wieh resolve or reject.
 function getBankBalance(user) {
   dtVar = new Date();
-  console.log("start getBankBalance(user)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log(`start getBankBalance(${user})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   return new Promise((resolve, reject) => {
     dtVar = new Date();
-    console.log("inside getBankBalance(user) return new Promise thru setTimeout 1 sec with resolve $1,000 or reject 'unknown user'" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    console.log(`inside getBankBalance(${user}) return new Promise thru setTimeout 1 sec with resolve $1,000 or 2,000 or reject 'unknown user'` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
       setTimeout(() => {
       if (user == 'john') {
-        resolve('$1,000');
+        resolve(`user ${user} salary $1,000`);
       }
+      else if (user == 'mary') resolve(`user ${user} salary $2,000`)
       else {
-        reject('unknown user');
+        reject(`unknown user` );
       }
     }, 1000);
   });
@@ -125,11 +130,19 @@ function getBankBalance(user) {
 // Using ES2015 Promise constuction .then() 
 function getAmount(userId) {
   dtVar = new Date();
-  console.log("inside getAmount(usereId) start Promise getUser(userId) then Promise getBankBalace then log amount " + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  getUser(userId)
-    .then(getBankBalance)
-    .then(amount => {
-      console.log(amount)
+  console.log("inside getAmount(userId) create Promise getUser(userId) then Promise getBankBalace then log amount " + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  getUser(userId) // create Promise getUser(userId) and then...
+    .then((successMessageOrObject) => {  // capture resolve from getUser Promise and call getBankBalance Promise
+      getBankBalance(successMessageOrObject) // creaate Promise getBankBalance(user) and then...
+      .then(amount => { // capture resolve from getBankBalance as amount and log it.
+        console.log(amount)
+      })
+      .catch((rejectMsgOrBlock) => { // or catch reject from getBankBalance as errMsgOrObject and log it.
+        console.log(rejectMsgOrBlock);
+      });
+    })
+    .catch((rejectMsgOrBlock) => { // or catch reject from getUser(userId) Promise
+      console.log(rejectMsgOrBlock);
     });
 }
 
@@ -141,25 +154,39 @@ function getAmount(userId) {
 */
 async function getAmount2(userId) {
   dtVar = new Date();
-  console.log("start await getUser()" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  let user = await getUser(userId);
-  dtVar = new Date();
-  console.log("start getBankBalance(user)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  let amount = await getBankBalance(user);
-  dtVar = new Date();
-  console.log("start getAmount('1')" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-    console.log(amount);
+  console.log(`start await getUser(${userId})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  let user;
+  try {
+    user = await getUser(userId);
+    dtVar = new Date();
+    console.log(`start await getBankBalance(${user})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    let amount;
+    try {
+      amount = await getBankBalance(user);
+      dtVar = new Date();
+      console.log("log user BankBalance amount" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+      console.log(amount);
+    }
+    catch (rejectMsgOrBlock) { // catch getBAnkBalance(user) reject.
+      console.log(rejectMsgOrBlock);
+    }
+  }
+  catch (rejectMsgOrBlock) { // catch getUser(userId) reject.
+    console.log(rejectMsgOrBlock);
+  }
 }
-
-dtVar = new Date();
-console.log("start getAmount('1')" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-getAmount('1'); // $ 1,000
 
 /*
 dtVar = new Date();
-console.log("start getAmount2('1')" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-getAmount2('1'); // $1,000
+console.log("start getAmount(userId)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+getAmount(2); // 1 -> $1,000, 2 -> $2,000, 3 -> rejected as "unknown user"
 */
+
+///*
+dtVar = new Date();
+console.log("start getAmount2(userId)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+getAmount2(1); // $1,000
+//*/
 
 dtVar = new Date();
 console.log("End of MAIN script ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
