@@ -16,27 +16,30 @@ console.log('Begin of MAIN script ====================================' + " " + 
 // at the end of the current run of the JavaScript event loop.
 // Promise.resolve() and Promise.reject() are shortcuts to manually create an already resolved or rejected promise
 // respectively. This can be useful at times.
+/*
 Promise.resolve().then(() => console.log(2)).then(() => console.log(3));
-console.log(1); // 1 immedately,  2 and 3 after END OF PROGRAM at the end of the current run of the JavaScript event loop.
+console.log(1); // 1 immedately,  2 and 3 after END or return in MAIN script code at the end of the current run of the JavaScript event loop.
+*/
 
+/*
 // Add .then after .catch  - it works.
 new Promise((resolve, reject) => {
   console.log('Initial');
   resolve();
 })
 .then(() => {
-  throw new Error('Something failed simulation');
+  throw new Error('Something failed simulation'); // create and throw new error object;
   console.log('Do this');
 })
-.catch((failureMessage) => {
-  console.log(failureMessage);
+.catch((failureErrorObject) => {
+  console.log(failureErrorObject);
   console.log('Do that');
 })
 .then(() => {
-  console.log('Do this, no matter what happened before');
+  console.log('Do this even after catch, no matter what happened before');
 });
+*/
 
-let asynRetCode = 0; // 0 success, 1 failure.
 dtVar = new Date();
 console.log('Create promise ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
@@ -46,42 +49,45 @@ let myFirstPromise = new Promise((resolve, reject) => {
   //throw {ErrNo: 1, ErrMsg: "Programmatically thrown error in Promise executor."}; // reject(...) will be implicitly called.
   setTimeout(() => { // Simulate asynchronous prodess. Sleep for 3 secs.
     // Asyn process.
-    // For next throw reject(...) will NOT be implicitly called because it isfired inside Asyn process.
+    // For next throw reject(...) will NOT be implicitly called because it is fired inside Asyn process.
     //throw {ErrNo: 10, ErrMsg: "Programmatically thrown error in Asyn process."};
-    let asynRetCode2 = Math.round(Math.random()); // Generates 0 or 1 randomly.
-    if (asynRetCode2 === 0) { // Simulate success or failure asynchronous prodess.
-      //resolve('Success');
-      resolve({ErrNo: 0, ErrMsg: "No errors - resolve(...) used."});
+    let asynRetCode = 1; // Generates 0 or 1 randomly, 0 success, 1 failure.
+    //let asynRetCode = Math.round(Math.random()); // Generates 0 or 1 randomly, 0 success, 1 failure.
+    if (asynRetCode === 0) { // Simulate success of asynchronous code and call resolve(...)
+      //resolve('Success'); // resolve with string message.
+      // resolve with object
+      resolve({ErrNo: 0, ErrMsg: "No errors so resolve(...) was called"}); // resolve case can be detected using .then(successMessageOrObject)
     }
-    else {
-      //reject('Failure');
-      reject({ErrNo: 100, ErrMsg: "reject(...) used and thrown error that cached."}); // generate exception seen in Debug mode.
+    else { //  1 simulate errors in asynchronous code and call reject(...)
+      //reject('Failure'); // reject with string message.
+      // reject with object and generate exception seen in Debug mode.
+      reject({ErrNo: 100, ErrMsg: "Errors occured so reject(...) was called"}); // and thrown error that will be cached using .catch(failureMessageOrObject)
     }
-  }, 3000);
-}).then((successMessage) => { // later if successfully fulfilled resolve will pass control here:
-  // successMessage is whatever we passed in the resolve(...) function above.
+  }, 1000);
+  dtVar = new Date();
+  console.log('myFirstPromise promise created, asyn code scheduled at 1 second, return to main path ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+}).then((successMessageOrObject) => { // later if successfully fulfilled resolve(...) will pass control here:
+  // successMsuccessMessageOrObjectessage is whatever we passed in the resolve(...) function above.
   // It doesn't have to be a string, but if it is only a succeed message, it probably will be.
   dtVar = new Date();
-  console.log(successMessage);
-  console.log("Promise asyn finished and fulfilled." + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-}).catch((failureMessage) => { // later if non-success reject will pass control here:
-  // failureMessage is whatever we passed in the reject(...) function above.
+  console.log(successMessageOrObject);
+  console.log("Promise myFirstPromise asyn finished and resolved (fulfilled)." + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+}).catch((failureMessageOrObject) => { // later if non-success reject(...) will pass control here:
+  // failureMessageOrObject is whatever we passed in the reject(...) function above.
   // It doesn't have to be a string, but if it is only a failure message, it probably will be.
   // catch(failureCallback) is short for then(null, failureCallback).
   dtVar = new Date();
-  console.log(failureMessage);
-  console.log("Promise asyn finished and rejected." + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log(failureMessageOrObject);
+  console.log("Promise myFirstPromise asyn finished and rejected." + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 });
-/* Not exists:
-.finally((someObj) => {
-  console.log(someObj);
-});
-*/
 
 // Immediately return control to main path.
 dtVar = new Date();
-console.log('Promise object asyn process started ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('Promise object myFirstPromise created and asyn code scheduled ' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
+dtVar = new Date();
+console.log("retrun in MAIN script ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+return;
 
 // Asyn/await ES2017
 
