@@ -93,7 +93,7 @@ return;
 
 // Asyn/await ES2017
 
-// returning new Promise with only resolve.
+// returning new Promise with resolve or reject.
 function getUser(userId) {
   dtVar = new Date();
   console.log(`start getUser(${userId})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -108,7 +108,7 @@ function getUser(userId) {
   });
 }
 
-// returning new Promisse wieh resolve or reject.
+// returning new Promisse with resolve or reject.
 function getBankBalance(user) {
   dtVar = new Date();
   console.log(`start getBankBalance(${user})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
