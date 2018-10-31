@@ -1,7 +1,7 @@
 'use strict';
 
 let dtVar = new Date();
-console.log('Begin of MAIN script ====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log('Begin of MAIN script ====================================' + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 // A ES2015 Promise is an object representing the eventual completion or failure of an asynchronous operation.
 // Using Promise for asyn error catch and handling.
@@ -99,7 +99,7 @@ function getUser(userId) {
   console.log(`start getUser(${userId})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   return new Promise((resolve, reject) => { // returns only resolve as 'john'
     dtVar = new Date();
-    console.log(`inside getUser(${userId}) return new Promise thru setTimeout 1 sec with resolve 'john or mary' or reject 'unknown userId'` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    console.log(`inside getUser(${userId}) return new Promise thru setTimeout 1 sec with resolve 'john or mary' or reject 'unknown userId'` + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     setTimeout(() => {
       if (userId === 1) resolve('john');
       else if (userId === 2) resolve('mary');
@@ -114,7 +114,7 @@ function getBankBalance(user) {
   console.log(`start getBankBalance(${user})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   return new Promise((resolve, reject) => {
     dtVar = new Date();
-    console.log(`inside getBankBalance(${user}) return new Promise thru setTimeout 1 sec with resolve $1,000 or 2,000 or reject 'unknown user'` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    console.log(`inside getBankBalance(${user}) return new Promise thru setTimeout 1 sec with resolve $1,000 or 2,000 or reject 'unknown user'` + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
       setTimeout(() => {
       if (user == 'john') {
         resolve(`user ${user} salary $1,000`);
@@ -130,7 +130,7 @@ function getBankBalance(user) {
 // Using ES2015 Promise constuction .then() 
 function getAmount(userId) {
   dtVar = new Date();
-  console.log("inside getAmount(userId) create Promise getUser(userId) then Promise getBankBalace then log amount " + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log("inside getAmount(userId) create Promise getUser(userId) then Promise getBankBalace then log amount " + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   getUser(userId) // create Promise getUser(userId) and then...
     .then((successMessageOrObject) => {  // capture resolve from getUser Promise and call getBankBalance Promise
       getBankBalance(successMessageOrObject) // creaate Promise getBankBalance(user) and then...
@@ -154,17 +154,17 @@ function getAmount(userId) {
 */
 async function getAmount2(userId) {
   dtVar = new Date();
-  console.log(`start await getUser(${userId})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log(`start await getUser(${userId})` + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   let user;
   try {
     user = await getUser(userId);
     dtVar = new Date();
-    console.log(`start await getBankBalance(${user})` + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    console.log(`start await getBankBalance(${user})` + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
     let amount;
     try {
       amount = await getBankBalance(user);
       dtVar = new Date();
-      console.log("log user BankBalance amount" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+      console.log("log user BankBalance amount" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
       console.log(amount);
     }
     catch (rejectMsgOrBlock) { // catch getBAnkBalance(user) reject.
@@ -182,11 +182,63 @@ console.log("start getAmount(userId)" + " " + dtVar.getSeconds() + "." + dtVar.g
 getAmount(2); // 1 -> $1,000, 2 -> $2,000, 3 -> rejected as "unknown user"
 */
 
-///*
+/*
 dtVar = new Date();
 console.log("start getAmount2(userId)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 getAmount2(1); // $1,000
-//*/
+*/
+
+// Async functions themselves return a Promise!
+
+function doubleAfter1Sec(param) {
+  return new Promise (resolve => { // resolve only Promise.
+    setTimeout(() => resolve(param*2),1000); // callback function for setTimeout first param: () => resolve(param*2)
+  });
+}
+
+async function doubleAndAdd(a, b) {
+  dtVar = new Date();
+  console.log("start await doubleAfter1Sec(a)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  a = await doubleAfter1Sec(a); // create then wait and use resolve only Promise.
+  dtVar = new Date();
+  console.log("await doubleAfter1Sec(a) finished, now start await doubleAfter1Sec(b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  b = await doubleAfter1Sec(b); // create wait then and use resolve only Promise.
+  dtVar = new Date();
+  console.log("return a + b" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  return a + b;
+}
+
+/*
+// Usage:
+dtVar = new Date();
+console.log("start doubleAndAdd(a, b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+//doubleAndAdd(1,2).then(console.log); // this will also log successMessageOrObject by default.
+doubleAndAdd(3,4).then((successMessageOrObject) => {
+  console.log(successMessageOrObject);
+});
+*/
+
+async function doubleAndAddParallel(a, b) {
+  dtVar = new Date();
+  console.log("start await Promise.all([doubleAfter1Sec(a),doubleAfter1Sec(b)])" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  // Notice that Promise.all is used
+  // Also Array destucting is used to capture the results.
+  [a, b] = await Promise.all([doubleAfter1Sec(a),doubleAfter1Sec(b)]);
+  dtVar = new Date();
+  console.log("return a + b" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  return a + b;
+}
+
+// Usage:
+dtVar = new Date();
+console.log("start doubleAndAddParallel(a, b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+doubleAndAddParallel(3,4).then((successMessageOrObject) => {
+  console.log(successMessageOrObject);
+});
+
+
+
+
 
 dtVar = new Date();
-console.log("End of MAIN script ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+console.log("End of MAIN script ====================================" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
