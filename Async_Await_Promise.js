@@ -191,29 +191,46 @@ getAmount2(1); // $1,000
 // Async functions themselves return a Promise!
 
 function doubleAfter1Sec(param) {
-  return new Promise (resolve => { // resolve only Promise.
-    setTimeout(() => resolve(param*2),1000); // callback function for setTimeout first param: () => resolve(param*2)
+  return new Promise ((resolve, reject) => {
+    setTimeout(() => {
+      let val = param*2;
+      isNaN(val) ? reject(NaN) : resolve(param*2);
+    },1000); // callback function for setTimeout first param: () => resolve(param*2)
   });
 }
 
 async function doubleAndAdd(a, b) {
+  try {
+    dtVar = new Date();
+    console.log("start await doubleAfter1Sec(a)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    a = await doubleAfter1Sec(a); // create then wait and use resolve only Promise.
+    try {
+      dtVar = new Date();
+      console.log("await doubleAfter1Sec(a) finished, now start await doubleAfter1Sec(b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+      b = await doubleAfter1Sec(b); // create wait then and use resolve only Promise.
+    }
+    catch (e) {
+      dtVar = new Date();
+      console.log("await doubleAfter1Sec(b) rejected return NaN" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+      return NaN; // return something.
+    }
+  }
+  catch (e) {
+    console.log("await doubleAfter1Sec(a) rejected return NaN" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    return NaN; // return something.
+  }
   dtVar = new Date();
-  console.log("start await doubleAfter1Sec(a)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  a = await doubleAfter1Sec(a); // create then wait and use resolve only Promise.
-  dtVar = new Date();
-  console.log("await doubleAfter1Sec(a) finished, now start await doubleAfter1Sec(b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-  b = await doubleAfter1Sec(b); // create wait then and use resolve only Promise.
-  dtVar = new Date();
-  console.log("return a + b" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log("resolved: return a + b" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   return a + b;
 }
 
 /*
-// Usage:
+// Usage one after one takes 1+1 sec.:
 dtVar = new Date();
-console.log("start doubleAndAdd(a, b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+//console.log("start doubleAndAdd(a, b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 //doubleAndAdd(1,2).then(console.log); // this will also log successMessageOrObject by default.
-doubleAndAdd(3,4).then((successMessageOrObject) => {
+console.log("start doubleAndAdd('a', b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+doubleAndAdd(3,'x').then((successMessageOrObject) => {
   console.log(successMessageOrObject);
 });
 */
@@ -223,19 +240,32 @@ async function doubleAndAddParallel(a, b) {
   console.log("start await Promise.all([doubleAfter1Sec(a),doubleAfter1Sec(b)])" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   // Notice that Promise.all is used
   // Also Array destucting is used to capture the results.
-  [a, b] = await Promise.all([doubleAfter1Sec(a),doubleAfter1Sec(b)]);
+  try {
+    dtVar = new Date();
+    console.log("start await Promise.all([doubleAfter1Sec(a),doubleAfter1Sec(b)])" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    [a, b] = await Promise.all([doubleAfter1Sec(a),doubleAfter1Sec(b)]);
+  }
+  catch (e) {
+    console.log("await Promise.all([doubleAfter1Sec(a),doubleAfter1Sec(b)]) rejected return NaN" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+    return NaN; // return someting.
+  }
   dtVar = new Date();
-  console.log("return a + b" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+  console.log("resolved: return a + b" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
   return a + b;
 }
 
-// Usage:
+///*
+// Usage in paralles - faster than 1+1 sec.:
 dtVar = new Date();
 console.log("start doubleAndAddParallel(a, b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 doubleAndAddParallel(3,4).then((successMessageOrObject) => {
   console.log(successMessageOrObject);
 });
-
+console.log("start doubleAndAddParallel('a', b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
+doubleAndAddParallel('three',4).then((successMessageOrObject) => {
+  console.log(successMessageOrObject);
+});
+//*/
 
 
 
