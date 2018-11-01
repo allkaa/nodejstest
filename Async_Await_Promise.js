@@ -254,7 +254,7 @@ async function doubleAndAddParallel(a, b) {
   return a + b;
 }
 
-///*
+/*
 // Usage in paralles - faster than 1+1 sec.:
 dtVar = new Date();
 console.log("start doubleAndAddParallel(a, b)" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
@@ -265,10 +265,22 @@ console.log("start doubleAndAddParallel('a', b)" + " at " + dtVar.getSeconds() +
 doubleAndAddParallel('three',4).then((successMessageOrObject) => {
   console.log(successMessageOrObject);
 });
-//*/
+*/
 
-
-
+// // Async functions themselves return Promise and every await expression alse returns Promise, you can catch errors on each line as shown below.
+async function doubleAndAdd2(a, b) {
+  a = await doubleAfter1Sec(a).catch(e => console.log('"a" is NaN'));
+  b = await doubleAfter1Sec(b).catch(e => console.log('"b" is NaN'));
+  if (isNaN(a) || isNaN(b)) { // if (!a || !b)
+   return NaN;
+  }
+  return a + b;
+ }
+ 
+//Usage:
+doubleAndAdd2('one', 2).then(console.log); // NaN  and logs:  "a" is NaN
+doubleAndAdd2(1, 'two').then(console.log); // NaN  and logs:  "b" is NaN
+doubleAndAdd2(1, 2).then(console.log); // logs 6
 
 dtVar = new Date();
 console.log("End of MAIN script ====================================" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
