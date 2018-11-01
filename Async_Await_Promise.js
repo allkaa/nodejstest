@@ -290,7 +290,6 @@ async function doubleAndAdd3(a, b) {
   console.log(a, b);
   a = await doubleAfter1Sec(a);
   b = await doubleAfter1Sec(b);
-  console.log(a, b);
   return a + b;
  }
  
