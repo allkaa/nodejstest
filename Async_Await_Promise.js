@@ -267,7 +267,7 @@ doubleAndAddParallel('three',4).then((successMessageOrObject) => {
 });
 */
 
-// // Async functions themselves return Promise and every await expression alse returns Promise, you can catch errors on each line as shown below.
+// Option 2 - Async functions themselves return Promise and every await expression alse returns Promise, you can catch errors on each line as shown below.
 async function doubleAndAdd2(a, b) {
   a = await doubleAfter1Sec(a).catch(e => console.log('"a" is NaN'));
   b = await doubleAfter1Sec(b).catch(e => console.log('"b" is NaN'));
@@ -277,10 +277,36 @@ async function doubleAndAdd2(a, b) {
   return a + b;
  }
  
+/*
 //Usage:
 doubleAndAdd2('one', 2).then(console.log); // NaN  and logs:  "a" is NaN
 doubleAndAdd2(1, 'two').then(console.log); // NaN  and logs:  "b" is NaN
 doubleAndAdd2(1, 2).then(console.log); // logs 6
+*/
+
+//Option 3 - Dont do anything but handle outside the function
+//since async/await returns a Promise, we can catch the whole function's error
+async function doubleAndAdd3(a, b) {
+  console.log(a, b);
+  a = await doubleAfter1Sec(a);
+  b = await doubleAfter1Sec(b);
+  console.log(a, b);
+  return a + b;
+ }
+ 
+//Usage:
+doubleAndAdd3('one', 2)
+.then(console.log)
+.catch(console.log);
+
+doubleAndAdd3(1, "two")
+.then(console.log)
+.catch(console.log);
+
+doubleAndAdd3(1, 2)
+.then(console.log)
+.catch(console.log);
+
 
 dtVar = new Date();
 console.log("End of MAIN script ====================================" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
