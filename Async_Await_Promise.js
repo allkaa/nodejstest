@@ -176,11 +176,11 @@ async function getAmount2(userId) {
   }
 }
 
-/*
+///*
 dtVar = new Date();
 console.log("start getAmount(userId)" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 getAmount(2); // 1 -> $1,000, 2 -> $2,000, 3 -> rejected as "unknown user"
-*/
+//*/
 
 /*
 dtVar = new Date();
@@ -306,6 +306,23 @@ doubleAndAdd3(1, 2)
 .then(console.log)
 .catch(console.log);
 
+const promises = [
+  new Promise (resolve => resolve(1)),
+  new Promise (resolve => resolve(2)),
+  new Promise (resolve => resolve(3))
+];
+async function test1 () {
+  for (const obj of promises) console.log(obj);
+}
+test1();
+
+/*
+// ES2018
+async function test2() {
+  for await (const obj of promises) console.log(obj);
+}
+test2();
+*/
 
 dtVar = new Date();
 console.log("End of MAIN script ====================================" + " at " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
