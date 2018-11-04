@@ -47,6 +47,7 @@ const server = http.createServer((req, res) => {
   });
 });
 server.listen(1337);
+// using curl sending data in POST method body.
 // $ curl localhost:1337 -d "{}"
 // object
 // $ curl localhost:1337 -d "\"foo\""
