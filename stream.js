@@ -35,8 +35,7 @@ const server = http.createServer((req, res) => {
   // the end event indicates that the entire body has been received
   req.on('end', () => {
     try {
-      const data = 
-      JSON.parse(body);
+      const data = JSON.parse(body);
       // write back something interesting to the user:
       res.write(typeof data);
       res.end();
@@ -48,6 +47,12 @@ const server = http.createServer((req, res) => {
   });
 });
 server.listen(1337);
+// $ curl localhost:1337 -d "{}"
+// object
+// $ curl localhost:1337 -d "\"foo\""
+// string
+// $ curl localhost:1337 -d "not json"
+
 
 
 dtVar = new Date();
