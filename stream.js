@@ -35,7 +35,8 @@ const server = http.createServer((req, res) => {
   // the end event indicates that the entire body has been received
   req.on('end', () => {
     try {
-      const data = JSON.parse(body);
+      const data = 
+      JSON.parse(body);
       // write back something interesting to the user:
       res.write(typeof data);
       res.end();
