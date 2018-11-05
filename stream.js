@@ -12,10 +12,11 @@ for (let prop in envObj) {
 //console.log('====================================' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
 // Streams can be readable, writable, or both. All streams are instances of EventEmitter.
-const stream = require('stream'); // accessing stream module.
+//const stream = require('stream');  // accessing stream module. It has functions: PassThrough, Readable and Stream. Prototype EventEmitter.
 // Normally all streams created by Node.js APIs operate exclusively on strings and Buffer (or Uint8Array) objects.
 // Stream instances may be switched into object mode using the objectMode option when the stream is created.
 
+/*
 // using streams in a Node.js application that implements an HTTP server.
 const http = require('http');
 const server = http.createServer((req, res) => {
@@ -53,8 +54,46 @@ server.listen(1337);
 // $ curl localhost:1337 -d "\"foo\""
 // string
 // $ curl localhost:1337 -d "not json"
+*/
 
+//const stream = require('stream'); // accessing stream module. It has functions: PassThrough, Readable and Writable. Prototype EventEmitter.
 
+/*
+const { PassThrough, Writable } = require('stream'); // Destructing.  Functions PassThrough and Writable uset to declare class prototypes.
+const passthu = new PassThrough(); // PassThrough class instance _readableState.flowing: null, readable:true, writable:true.
+//const writable = new Writable(); // Writable class instance.
+
+passthu.on('data', (chunk) => { // _readableState.flowing: true arger attacheng listener callbak to event 'data';
+  console.log(chunk.toString());
+});
+passthu.emit('data','test2');
+passthu.write('test3');
+
+//passthu.pipe(writable); // pipe passthu to writable. _readableState.flowing: true
+//passthu.unpipe(writable); // uppipe passthu from writable. _readableState.flowing: false data may be accumulating within the streams internal buffer.
+//passthu.write('test1'); // will not emit 'data' data may be accumulating within the streams internal buffer.
+//passthu.resume(); // must be called to make 'data' being emitted
+//
+*/
+
+const fs = require('fs');
+const stream = require('stream'); // accessing stream module. It has functions: PassThrough, Readable and Writable. Prototype EventEmitter.
+const readable = new stream.Readable();
+const writable = fs.createWriteStream('file.txt');
+// All the data from readable goes into 'file.txt'
+//readable.pipe(writable);
+let msg = '';
+readable.on('data', (chunk) => { // _readableState.flowing: true arger attacheng listener callbak to event 'data';
+  //console.log(chunk.toString());
+  msg =+ chunk;
+  //readable.close;
+});
+readable.on('end', () => {
+  writable.write(msg);
+  //writable.close();
+});
+readable.emit('data','test2');
+//readable.write('test3');
 
 dtVar = new Date();
 console.log("End of PROGRAM text ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
