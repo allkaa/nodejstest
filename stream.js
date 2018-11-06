@@ -81,20 +81,31 @@ const stream = require('stream'); // accessing stream module. It has functions: 
 const readable = new stream.Readable();
 const writable = fs.createWriteStream('file.txt');
 // All the data from readable goes into 'file.txt'
+
+/*
+writable.write('test msg2');
+writable.end('EOF');
+*/
+
 //readable.pipe(writable);
 let msg = '';
 readable.on('data', (chunk) => { // _readableState.flowing: true arger attacheng listener callbak to event 'data';
   //console.log(chunk.toString());
-  msg =+ chunk;
-  //readable.close;
+  msg += chunk;
 });
 readable.on('end', () => {
+  //console.log(msg);
+  //msg += ' already logged!'
   writable.write(msg);
-  //writable.close();
+  writable.end();
 });
-readable.emit('data','test2');
-//readable.write('test3');
+readable.emit('data','test1\n');
+readable.emit('data','EOF');
+//readable.emit('end'); // NB! After end of main program script readable 'end' event will be emitted implicitlyl!!!
+readable.destroy(); // NB!!! Must be otherwise error thrown.
+
 
 dtVar = new Date();
 console.log("End of PROGRAM text ====================================" + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 
+// NB! After end of main program script readable 'end' event will be emitted implicitlyl!!!
