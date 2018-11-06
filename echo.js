@@ -2,6 +2,8 @@
 
 const http = require('http');
 
+/*
+// Using request 'data' and 'end' event handelrs.
 http.createServer((request, response) => {
   if (request.method === 'POST' && request.url === '/echo') { // routing sample.
     let body = [];
@@ -16,4 +18,15 @@ http.createServer((request, response) => {
     response.end();
   }
 }).listen(8080);
+*/
 // use e.g.: curl -d "test of echo" localhost:8080/echo
+
+// Using pipe.
+http.createServer((request, response) => {
+  if (request.method === 'POST' && request.url === '/echo') {
+    request.pipe(response);
+  } else {
+    response.statusCode = 404;
+    response.end();
+  }
+}).listen(8080);
