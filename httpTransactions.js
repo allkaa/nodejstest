@@ -20,10 +20,14 @@ server.on('request', (request, response) => {
     // This prints the error message and stack trace to `stderr`.
     console.error(err.stack);
   });
-  const { method, url } = request; // request object is an instance of IncomingMessage.
+  response.on('error', (err) => {
+    // This prints the error message and stack trace to `stderr`.
+    console.error(err.stack);
+  });
+  const { headers, method, url } = request; // request object is an instance of IncomingMessage.
   // url is the full URL without the server, protocol or port. For a typical URL, this means everything after and including the third forward slash.
-  const { headers } = request;
-  const userAgent = headers['user-agent'];
+  //const { headers } = request;
+  //const userAgent = headers['user-agent'];
   let body = '';
   request.on('data', (chunk) => {
     body += chunk;
@@ -33,6 +37,7 @@ server.on('request', (request, response) => {
     // At this point, we have the headers, method, url and body, and can now
     // do whatever we need to in order to respond to this request.
     // The response object is an instance of ServerResponse, which is a WritableStream.
+    /*
     response.writeHead(200, {
       'Content-Type': 'application/html'
     });
@@ -41,6 +46,16 @@ server.on('request', (request, response) => {
     response.write('<h1>Hello, World!</h1>');
     response.write('</body>');
     response.write('</html>');
+    response.end();
+    */
+    let responseBody = { headers, method, url, body };
+    let responseString = JSON.stringify(responseBody);
+    console.log(responseBody);
+    console.log(responseString);
+    response.writeHead(200, {
+      'Content-Type': 'application/json'
+    });
+    response.write(JSON.stringify(responseString));
     response.end();
   });
 });
