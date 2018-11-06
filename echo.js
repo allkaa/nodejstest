@@ -5,6 +5,14 @@ const http = require('http');
 /*
 // Using request 'data' and 'end' event handelrs.
 http.createServer((request, response) => {
+  request.on('error', (err) => {
+    console.error(err);
+    response.statusCode = 400;
+    response.end();
+  });
+  response.on('error', (err) => {
+    console.error(err);
+  });
   if (request.method === 'POST' && request.url === '/echo') { // routing sample.
     let body = [];
     request.on('data', (chunk) => {
@@ -23,6 +31,14 @@ http.createServer((request, response) => {
 
 // Using pipe.
 http.createServer((request, response) => {
+  request.on('error', (err) => {
+    console.error(err);
+    response.statusCode = 400;
+    response.end();
+  });
+  response.on('error', (err) => {
+    console.error(err);
+  });
   if (request.method === 'POST' && request.url === '/echo') {
     request.pipe(response);
   } else {
