@@ -17,7 +17,7 @@
 
 
 // Using CommonJS foobar:
-const test = require('./my-mod-export.js')('express-locallibrary-tutorial:server'); // require and immediately execute imported function.
+const test = require('./my-mod-export.js')('express-locallibrary-tutorial:server'); // require (load and compile) and AFTER immediately execute imported function.
 const {foo, bar, cube} = require('./my-module-export.js');
 console.log(foo());
 console.log(bar());
