@@ -17,6 +17,8 @@
 
 
 // Using CommonJS foobar:
+const debug = require('./my-mod-export')('express-locallibrary-tutorial:server');
+return;
 const {foo, bar, cube} = require('./my-module-export.js');
 console.log(foo());
 console.log(bar());
