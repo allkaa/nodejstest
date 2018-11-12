@@ -46,15 +46,15 @@ fs.readFile('./superheroes.json', function (err, data) {
 //
 */
 
-/*
+///*
 dtVar = new Date();
 console.log('====> readFileSync' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
 let data = fs.readFileSync('superheroes.json') // or use fs.readFileSync('./superheroes.json')
 dtVar = new Date();
 console.log('====> readFileSyncEnd' + " " + dtVar.getSeconds() + "." + dtVar.getMilliseconds());
-*/
+//*/
 
-/*
+///*
 console.log('====================================');
 let strVar, strVar2, strVar3;
 // data is Buffer class object.Now when TypedArray has been added in ES6, the Buffer class implements the Uint8Array API
@@ -86,7 +86,11 @@ let objVar2 = JSON.parse('"test string1"');
 let strVarJson3 = JSON.stringify('test string2')
 let objVar3 = JSON.parse("[1,2.3]");
 let strVarJson4 = JSON.stringify([3,4,5])
+//*/
 
+return;
+
+/*
 // Function expression.
 let baz = function() {
   console.log("baz function expression called");
