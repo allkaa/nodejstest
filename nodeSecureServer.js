@@ -25,7 +25,8 @@ console.log('==================================== ' + dtVar.getSeconds() + "." +
 */
 
 // https://localhost:8081
-const hostname = 'localhost';
+//const hostname = 'localhost'; // debian930
+const hostname = 'unl.test';
 //const port = process.env.PORT; //  Windows - default port is 1337 for WebApp and 1542 for ConsoleApp;
 const port = 8081; // for Linux must be set manually;
 
@@ -130,7 +131,7 @@ server.on('request', (req, res) => { // request is <http.IncomingMessage>, respo
     // Begin of POST or GET form submit case.
     // /submitFormAK-Ini/submitFormAK-Ini - hacks.
     if (req.url.includes('/'  + formName) || req.url.includes('/' + formNameIni)) { // For method="post" req.url = "/submitFormAK", for method="get" e.g. req.url = "/submitFormAK?fname=Alex&sname=Raven"
-      if (req.method =r= "POST" && methodType == 'post' && (req.url.lastIndexOf('/' + formName) == 0)) {
+      if (req.method == "POST" && methodType == 'post' && (req.url.lastIndexOf('/' + formName) == 0)) {
         let body = '';
         req.on('data', function (data) {
           body += data;
@@ -259,6 +260,7 @@ console.log('after https.createServer ' + dtVar.getSeconds() + "." + dtVar.getMi
 // Begin accepting connections on the specified port and hostname.
 // If hostname is omitted, server will accept connections on the unspecified IPv6 address (::) when IPv6 is available,
 // or the unspecified IPv4 address (0.0.0.0) otherwise.
+console.log(`Strart listening at https://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
 server.listen(port, hostname, () => {
   // Place holders in template literals are indicated by the $ (Dollar sign) and curly braces e.g. (${expression}).
   console.log(`Server running and listening at https://${hostname}:${port}/ ` + dtVar.getSeconds() + "." + dtVar.getMilliseconds()); // ${expression} is place holders in template literal enclosed by the back-tick (` `) (grave accent) characters.
