@@ -25,7 +25,7 @@ console.log('==================================== ' + dtVar.getSeconds() + "." +
 */
 
 // https://localhost:8081
-//const hostname = 'localhost'; // debian930
+//const hostname = 'localhost'; // debian930 installation hostname
 const hostname = 'unl.test';
 //const port = process.env.PORT; //  Windows - default port is 1337 for WebApp and 1542 for ConsoleApp;
 const port = 8081; // for Linux must be set manually;
