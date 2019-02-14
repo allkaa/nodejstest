@@ -14,14 +14,14 @@ function bar() {
 function cubeEx(x) {
   return x * x * x;
 }
-///*
+/*
 // simple CommonJS module exports:
 module.exports.foo = foo;
 module.exports.bar = bar;
 module.exports.cube = cubeEx;
-//*/
+*/
 
-/*
+///*
 //Here is the “equivalent” module written using ES6 syntax:
 export function foo() { // SyntaxError: Unexpected token export!!! in vscode.
   return 'bar';
@@ -32,7 +32,7 @@ export function bar() {
 export function cube() {
   return 'cubeEx';
 }
-*/
+//*/
 
 /*
 module.exports.cube = (x) => cubeEx(x);
