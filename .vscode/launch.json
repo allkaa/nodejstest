@@ -17,6 +17,14 @@
             "name": "Launch File",
             "program": "${file}",
             "cwd":"${workspaceFolder}"
+        },
+        {
+            "type": "node",
+            "request":"launch",
+            "name": "Launch --experimental-modules File",
+            "program": "${file}",
+            "cwd":"${workspaceFolder}",
+            "runtimeArgs": ["--experimental-modules"]
         }
-    ]
+        ]
 }
