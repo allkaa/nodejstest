@@ -3,7 +3,6 @@
 // Imported modules are in strict mode whether you declare them as such or not.
 // The import statement cannot be used in embedded scripts unless such script has a type="module".
 
-
 // File is a CommonJS module; it may be converted to an ES6 module.
 // Putting it at every require is just not right, as still in many cases it's better to stick to CJS than to ESM.
 // So putting such message is quite annoying.
