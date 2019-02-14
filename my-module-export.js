@@ -32,7 +32,7 @@ export function bar() {
 export function cube() {
   return 'cubeEx';
 }
-/*
+*/
 
 /*
 module.exports.cube = (x) => cubeEx(x);
