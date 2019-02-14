@@ -15,21 +15,24 @@
 // ESM still doesn't work reliably in many enviroments (e.g. in Node.js it's just behind experimental-flag,
 // and it's likely this implementation will change)
 
-
+///*
 // Using CommonJS foobar:
-const test = require('./my-mod-export.js')('express-locallibrary-tutorial:server'); // require (load and compile) and AFTER immediately execute imported function.
+//const test = require('./my-mod-export.js')('express-locallibrary-tutorial:server'); // require (load and compile) and AFTER immediately execute imported function.
 const {foo, bar, cube} = require('./my-module-export.js');
 console.log(foo());
 console.log(bar());
 let aaa = cube(3); // 27
+console.log(aaa);
+//*/
 
 /*
 // Using ES6 foobar:
-import {foo, bar} from 'foobar'; // SyntaxError: Unexpected token import!!! in vscode
+import {foo, bar} from 'my-mod-export'; // SyntaxError: Unexpected token import!!! in vscode
 console.log(foo());
 console.log(bar());
+let aaa = cube(3); // 27
+console.log(aaa);
 */
-
 
 return;
 

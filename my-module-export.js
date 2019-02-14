@@ -2,6 +2,7 @@
 // Exported modules are in strict mode whether you declare them as such or not.
 // The export statement cannot be used in embedded scripts.
 
+
 // simple CommonJS module (let’s call the module 'foobar') :
 function foo() {
   return 'hi from foo';
@@ -9,13 +10,16 @@ function foo() {
 function bar() {
   return 'hi from bar';
 }
-module.exports.foo = foo;
-module.exports.bar = bar;
 
 function cubeEx(x) {
   return x * x * x;
 }
+///*
+// simple CommonJS module exports:
+module.exports.foo = foo;
+module.exports.bar = bar;
 module.exports.cube = cubeEx;
+//*/
 
 /*
 //Here is the “equivalent” module written using ES6 syntax:
@@ -24,6 +28,9 @@ export function foo() { // SyntaxError: Unexpected token export!!! in vscode.
 }
 export function bar() {
   return 'foo';
+}
+export function cube() {
+  return 'cubeEx';
 }
 /*
 
