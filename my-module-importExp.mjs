@@ -26,14 +26,14 @@ console.log(aaa);
 
 ///*
 // Using ES6 foobar:
-import {foo, bar} from 'my-mod-export'; // SyntaxError: Unexpected token import!!! in vscode
+import {foo, bar} from 'my-module-exportExp.mjs'; // SyntaxError: Unexpected token import!!! in vscode
 console.log(foo());
 console.log(bar());
 let aaa = cube(3); // 27
 console.log(aaa);
 //*/
 
-return;
+//return;
 
 /*
 const myModExported = require('./my-module-export.js');
