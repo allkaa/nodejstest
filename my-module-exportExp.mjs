@@ -12,7 +12,7 @@ function bar() {
   return 'hi from bar';
 }
 
-function cube(x) {
+function cubeEx(x) {
   return x * x * x;
 }
 /*
@@ -24,7 +24,7 @@ module.exports.cube = cubeEx;
 
 ///*
 //Here is the “equivalent” module written using ES6 syntax:
-export {foo, bar, cube};
+export {foo, bar, cubeEx as cube};
 //*/
 
 /*
