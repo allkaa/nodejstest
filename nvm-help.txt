@@ -1,3 +1,67 @@
+akaarna@unl:~$ nvm install --lts
+Installing latest LTS version.
+Downloading and installing node v10.15.1...
+Downloading https://nodejs.org/dist/v10.15.1/node-v10.15.1-linux-x64.tar.xz...
+######################################################################## 100.0%
+Computing checksum with sha256sum
+Checksums matched!
+Now using node v10.15.1 (npm v6.4.1)
+akaarna@unl:~$ nvm current
+v10.15.1
+akaarna@unl:~$ nvm ls
+         v8.9.4
+->     v10.15.1
+default -> 8.9.4 (-> v8.9.4)
+node -> stable (-> v10.15.1) (default)
+stable -> 10.15 (-> v10.15.1) (default)
+iojs -> N/A (default)
+lts/* -> lts/dubnium (-> v10.15.1)
+lts/argon -> v4.9.1 (-> N/A)
+lts/boron -> v6.16.0 (-> N/A)
+lts/carbon -> v8.15.0 (-> N/A)
+lts/dubnium -> v10.15.1
+
+akaarna@unl:~$ node -v
+v10.15.1
+
+akaarna@unl:~$ node --version
+v10.15.1
+
+akaarna@unl:~$ nvm alias
+default -> 8.9.4 (-> v8.9.4)
+node -> stable (-> v10.15.1) (default)
+stable -> 10.15 (-> v10.15.1) (default)
+iojs -> N/A (default)
+lts/* -> lts/dubnium (-> v10.15.1)
+lts/argon -> v4.9.1 (-> N/A)
+lts/boron -> v6.16.0 (-> N/A)
+lts/carbon -> v8.15.0 (-> N/A)
+lts/dubnium -> v10.15.1
+
+akaarna@unl:~$ nvm alias default node
+default -> node (-> v10.15.1)
+
+akaarna@unl:~$ nvm alias
+default -> node (-> v10.15.1)
+node -> stable (-> v10.15.1) (default)
+stable -> 10.15 (-> v10.15.1) (default)
+iojs -> N/A (default)
+lts/* -> lts/dubnium (-> v10.15.1)
+lts/argon -> v4.9.1 (-> N/A)
+lts/boron -> v6.16.0 (-> N/A)
+lts/carbon -> v8.15.0 (-> N/A)
+lts/dubnium -> v10.15.1
+
+Example:
+  nvm install 8.0.0                     Install a specific version number
+  nvm use 8.0                           Use the latest available 8.0.x release
+  nvm run 6.10.3 app.js                 Run app.js using node 6.10.3
+  nvm exec 4.8.3 node app.js            Run `node app.js` with the PATH pointing to node 4.8.3
+  nvm alias default 8.1.0               Set default node version on a shell
+  nvm alias default node                Always default to the latest available node version on a shell
+
+=================================================================================================================================
+
 akaarna@debian930:~$ nvm help
 
 Node Version Manager
@@ -77,5 +141,4 @@ lts/* -> lts/carbon (-> N/A)
 lts/argon -> v4.9.1 (-> N/A)
 lts/boron -> v6.14.4 (-> N/A)
 lts/carbon -> v8.12.0 (-> N/A)
-akaarna@debian930:~$ ^C
 akaarna@debian930:~$ 
