@@ -2,6 +2,7 @@
 // Exported modules are in strict mode whether you declare them as such or not.
 // The export statement cannot be used in embedded scripts.
 
+console.log('Test')
 
 // simple CommonJS module (let’s call the module 'foobar') :
 function foo() {
