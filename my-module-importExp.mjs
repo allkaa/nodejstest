@@ -26,7 +26,7 @@ console.log(aaa);
 
 ///*
 // Using ES6 foobar:
-import {foo, bar} from 'my-module-exportExp.mjs'; // SyntaxError: Unexpected token import!!! in vscode
+import {foo, bar} from './my-module-exportExp.mjs'; // SyntaxError: Unexpected token import!!! in vscode
 console.log(foo());
 console.log(bar());
 let aaa = cube(3); // 27

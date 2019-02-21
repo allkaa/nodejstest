@@ -12,7 +12,7 @@ function bar() {
   return 'hi from bar';
 }
 
-function cubeEx(x) {
+function cube(x) {
   return x * x * x;
 }
 /*
@@ -24,15 +24,7 @@ module.exports.cube = cubeEx;
 
 ///*
 //Here is the “equivalent” module written using ES6 syntax:
-export function foo() { // SyntaxError: Unexpected token export!!! in vscode.
-  return 'bar';
-}
-export function bar() {
-  return 'foo';
-}
-export function cube() {
-  return 'cubeEx';
-}
+export {foo, bar, cube};
 //*/
 
 /*
