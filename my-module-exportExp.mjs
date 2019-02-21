@@ -4,7 +4,6 @@
 
 //console.log('Test')
 
-// simple CommonJS module (let’s call the module 'foobar') :
 function foo() {
   return 'hi from foo';
 }
